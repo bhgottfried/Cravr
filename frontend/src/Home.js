@@ -5,7 +5,6 @@ import{
     Link
     
   } from "react-router-dom"
-
 class RestaurantContainer extends React.Component{
 //essentially scrollable list of restaurants
 }
@@ -19,14 +18,14 @@ export default function Home(){
                 <ul id="nav">
                     <li><a href="/Home">Find</a></li>
                     <li><a href="/Review">Review</a></li>
-                    <li><a href="/Prefrences">Prefrences</a></li>
+                    <li><a href="/Preferences">Preferences</a></li>
                     <li><a href="#">About</a></li>
                 </ul>
             </nav>
             <h1>Home</h1>
             <Link to="/">
                <button renderas="button"className="login-button">
-                   <span>back</span>
+                   <span>Back</span>
                </button>
            </Link>
         </div>

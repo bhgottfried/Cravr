@@ -13,11 +13,11 @@ class QuizContainer extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-    fetchPrefrences(email, pass) {
+    fetchPreferences(email, pass) {
         //fetch this users answers to the quiz
     }
     handleChange(event){
-        this.setState({value: event.target.value});
+        this.setState({[event.target.name]: event.target.value});
     }
     handleSubmit(event){
         //send data to server
@@ -28,8 +28,8 @@ class QuizContainer extends React.Component {
             <div id="Quiz">
                 <form onSubmit={this.handleSubmit}>
                     <label id="Question 1">
-                        1. Pick your favorite flood:
-                        <select value={this.state.value} onChange={this.handleChange}>            
+                        1. Pick your favorite food:
+                        <select value={this.state.value} onChange={this.handleChange}>
                             <option value="American">American</option>
                             <option value="Mexican">Mexican</option>
                             <option value="Asian">Asian</option>
@@ -39,7 +39,7 @@ class QuizContainer extends React.Component {
                     <br/>
                     <label id="Question 2">
                         2. Pick your least favorite food:
-                        <select value={this.state.value} onChange={this.handleChange}>            
+                        <select value={this.state.value} onChange={this.handleChange}>
                             <option value="American">American</option>
                             <option value="Mexican">Mexican</option>
                             <option value="Asian">Asian</option>
@@ -60,15 +60,15 @@ export default function review() {
                 <ul id="nav">
                     <li><a href="/Home">Find</a></li>
                     <li><a href="/Review">Review</a></li>
-                    <li><a href="/Prefrences">Prefrences</a></li>
+                    <li><a href="/Preferences">Preferences</a></li>
                     <li><a href="#">About</a></li>
                 </ul>
             </nav>
-            <h1>User Prefrences</h1>
+            <h1>User Preferences</h1>
             <QuizContainer></QuizContainer>
             <Link to="/">
                 <button renderas="button" className="login-button">
-                    <span>back</span>
+                    <span>Back</span>
                 </button>
             </Link>
         </div>

@@ -13,4 +13,4 @@ def login():
     userpass = request.json
     password = userpass.split(' ')
     #check if matches database
-    return 1
+    return {'result': "Login page"}

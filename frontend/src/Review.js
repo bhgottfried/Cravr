@@ -18,14 +18,14 @@ export default function review(){
                 <ul id="nav">
                     <li><a href="/Home">Find</a></li>
                     <li><a href="/Review">Review</a></li>
-                    <li><a href="/Prefrences">Prefrences</a></li>
+                    <li><a href="/Preferences">Preferences</a></li>
                     <li><a href="#">About</a></li>
                 </ul>
             </nav>
             <h1>Review</h1>
             <Link to="/">
                <button renderas="button"className="login-button">
-                   <span>back</span>
+                   <span>Back</span>
                </button>
            </Link>
         </div>

@@ -9,7 +9,7 @@ import {
 function Login() {
   const [placeholder, setPlaceholder] = useState('Error: Invalid request');
   useEffect(() => {
-    fetch('/hello').then(res => res.json()).then(data => {
+    fetch('/login').then(res => res.json()).then(data => {
       setPlaceholder(data.result);
     });
   }, []);
@@ -17,7 +17,7 @@ function Login() {
   const [password, setPassword] = useState("");
 
   function handleSubmit(event) {
-    //fetch inside here to verify with flask if crdentials are correct
+    //fetch inside here to verify with flask if credentials are correct
     //THIS DOESN'T RUN WHEN USING LINK on BUTTON, NEED TO FIND ANOTHER WAY TO IMPLEMENT PAGE SWITCHING probably with history.push
     /*
       fetch("/login",{
@@ -33,7 +33,7 @@ function Login() {
     })
     });
     */
-   fetch('/hello').then(res => res.json()).then(data => {
+   fetch('/login').then(res => res.json()).then(data => {
     setPlaceholder(data.result);
   });
     event.preventDefault();
@@ -82,7 +82,7 @@ function Login() {
     </div>
     <div name="register" className="register">
         <button renderas="button" className="login-button" onClick={registerUser()}>
-          <span>register</span>
+          <span>Register</span>
         </button>
     </div>
   </div>
