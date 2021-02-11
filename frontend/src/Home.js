@@ -11,9 +11,13 @@ class RestaurantContainer extends React.Component{
 class Restaurant extends React.Component{
     
 }
+export function getCookie(key) {
+    var b = document.cookie.match("(^|;)\\s*" + key + "\\s*=\\s*([^;]+)");
+    return b ? b.pop() : "";
+}
 export default function Home(){
     return(
-        <div className="Home">
+        <div>         
             <nav>
                 <ul id="nav">
                     <li><a href="/Home">Find</a></li>
@@ -22,7 +26,10 @@ export default function Home(){
                     <li><a href="#">About</a></li>
                 </ul>
             </nav>
-            <h1>Home</h1>
+
+            <h1>{getCookie("Username")}</h1>
+            <h1>{getCookie("Password")}</h1>
+            <h1>Find</h1>
             <Link to="/">
                <button renderas="button"className="login-button">
                    <span>Back</span>
