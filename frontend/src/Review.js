@@ -1,34 +1,60 @@
 import React from 'react';
 import './Home.css';
 //import { Navbar,  Nav} from 'rsuite';
-import {getCookie} from "./Home"
-import{
+import { getCookie } from "./Home"
+import {
     Link
-    
-  } from "react-router-dom"
-class reviewContainer extends React.Component{
-//essentially scrollable list of reviews
+
+} from "react-router-dom"
+class reviewContainer extends React.Component {
+    //essentially scrollable list of reviews
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (
+            <ol>
+                <li>
+                    <userRev></userRev>
+                    <form>
+                        <label id="Question 1">
+                            1. Pick your favorite food:
+                                <input type="text">
+                                </input>
+                        </label>
+                    </form>
+                    <button>Rate!</button>
+                </li>
+                <li>
+                    <userRev></userRev>
+                    <button>Yummy!</button> <button>Rate!</button>
+                </li>
+            </ol>
+        );
+    }
 }
-class userRev extends React.Component{
-    
+class userRev extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (<h1>hello</h1>);
+    }
 }
-export default function review(){
-    return(
+export default function review() {
+    return (
         <div className="Home">
-             <nav>
+            <nav>
                 <ul id="nav">
                     <li><a href="/Home">Find</a></li>
                     <li><a href="/Review">Review</a></li>
                     <li><a href="/Preferences">Preferences</a></li>
                     <li><a href="#">About</a></li>
+                    <li><a href="/">Logout</a></li>
                 </ul>
             </nav>
             <h1>Review</h1>
-            <Link to="/">
-               <button renderas="button"className="login-button">
-                   <span>Back</span>
-               </button>
-           </Link>
+            <reviewContainer></reviewContainer>
         </div>
-        );
+    );
 }

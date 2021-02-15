@@ -4,7 +4,7 @@
 }
 
 .bar{
-  background-color:rgb(163, 83, 37);
+  background-color:rgb(236, 98, 17);
   color:rgb(248, 211, 0);
   font-size:xx-large;
 }
@@ -15,6 +15,8 @@
 
 .login-button{
   font-size:xx-large;
-  background-color:rgb(163, 83, 37);
+  text-align: center;
+  font-family:'Courier New', Courier, monospace;
+  background-color:rgb(236, 98, 17);
   color:rgb(248, 211, 0);
 }

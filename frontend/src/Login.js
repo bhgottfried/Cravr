@@ -19,14 +19,14 @@ function Login() {
 
   function handleSubmit(event) {
     //fetch inside here to verify with flask if credentials are correct
-    //THIS DOESN'T RUN WHEN USING LINK on BUTTON, NEED TO FIND ANOTHER WAY TO IMPLEMENT PAGE SWITCHING probably with history.push
-      fetch("/login",{
-      method:"POST",
-      cache:"no-cache",
-      headers:{
-        "content_type":"application/json"
+    //TODO: Add verigfication to amke sure they actually put in a legit email
+    fetch("/login", {
+      method: "POST",
+      cache: "no-cache",
+      headers: {
+        "content_type": "application/json"
       },
-      body:JSON.stringify(email +" "+password)
+      body: JSON.stringify(email + " " + password)
     }).then(response => response.json()).then(data => {
       //if credentials were correct go to home screen and pass values to next screen
       //else go back to login page 
@@ -35,10 +35,11 @@ function Login() {
     cookies.set('Password', password, { path: '/' });
     console.log(cookies.get('Username'));
     Login.props.navigation.navigate('Home', {
-      cookie: cookies, });
+      cookie: cookies,
+    });
     event.preventDefault();
-    }
-    
+  }
+
 
   return (
     <div className="App">
@@ -75,8 +76,8 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
-            <a href="/Home" onClick={handleSubmit}>
-              Login
+          <a href="/Home" onClick={handleSubmit}>
+            Login
             </a>
         </Form>
       </div>

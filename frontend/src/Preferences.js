@@ -1,7 +1,7 @@
 import React from 'react';
 import './Home.css';
 //import { Navbar,  Nav} from 'rsuite';
-import {getCookie} from "./Home"
+import { getCookie } from "./Home"
 import {
     Link
 
@@ -10,17 +10,17 @@ class QuizContainer extends React.Component {
     //essentially scrollable list of reviews
     constructor(props) {
         super(props);
-        this.state = { q1: '', q2: '' };
+        this.state = { q1: '', q2: '',q3:'',q4:'' };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     fetchPreferences(email, pass) {
         //fetch this users answers to the quiz
     }
-    handleChange(event){
-        this.setState({[event.target.name]: event.target.value});
+    handleChange(event) {
+        this.setState({ [event.target.name]: event.target.value });
     }
-    handleSubmit(event){
+    handleSubmit(event) {
         //send data to server
         event.preventDefault();
     }
@@ -30,49 +30,65 @@ class QuizContainer extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     <label id="Question 1">
                         1. Pick your favorite food:
-                        <select value={this.state.value} onChange={this.handleChange}>
+                        <select value={this.state.q1.value} onChange={this.handleChange}>
                             <option value="American">American</option>
                             <option value="Mexican">Mexican</option>
                             <option value="Asian">Asian</option>
                             <option value="Italian">Italian</option>
+                            <option value="Pizza">Pizza</option>
+                            <option value="Subs">Subs</option>
+                            <option value="Fast Food">Fast Food</option>
                         </select>
                     </label>
-                    <br/>
+                    <br />
                     <label id="Question 2">
                         2. Pick your least favorite food:
-                        <select value={this.state.value} onChange={this.handleChange}>
+                        <select value={this.state.q2.value} onChange={this.handleChange}>
                             <option value="American">American</option>
                             <option value="Mexican">Mexican</option>
                             <option value="Asian">Asian</option>
                             <option value="Italian">Italian</option>
+                            <option value="Pizza">Pizza</option>
+                            <option value="Subs">Subs</option>
+                            <option value="Fast Food">Fast Food</option>
                         </select>
                     </label>
-                    <br/>
-                    <input type="submit" value="Submit" className="login-button"/>
+                    <br />
+                    <label id="Question 3">
+                        3. Preffered budget?
+                        <select value={this.state.q3.value} onChange={this.handleChange}>
+                            <option value="$">$</option>
+                            <option value="$$">$$</option>
+                            <option value="$$$">$$$</option>
+                        </select>
+                    </label>
+                    <br />
+                    <label id="Question 4">
+                        4. Maximum Distance you are willing to travel (in miles)?
+                        <input type="text" pattern="[0-9]*"value={this.state.q4.value} onChange={this.handleChange}></input>
+                    </label>
+                    <br />
+                    <input type="submit" value="Submit" className="login-button" />
                 </form>
             </div>
         );
     }
 }
-export default function review() {
+export default function preferences() {
     return (
         <div className="Home">
-             <nav>
+            <nav>
                 <ul id="nav">
                     <li><a href="/Home">Find</a></li>
                     <li><a href="/Review">Review</a></li>
                     <li><a href="/Preferences">Preferences</a></li>
                     <li><a href="#">About</a></li>
+                    <li><a href="/">Logout</a></li>
                 </ul>
             </nav>
             <h1>User Preferences</h1>
             <h1>{getCookie("Username")}</h1>
             <QuizContainer></QuizContainer>
-            <Link to="/">
-                <button renderas="button" className="login-button">
-                    <span>Back</span>
-                </button>
-            </Link>
         </div>
     );
 }

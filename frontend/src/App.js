@@ -1,8 +1,8 @@
 
 
 //eslint-disable-next-line
-import React, {Component} from 'react';
-import{
+import React, { Component } from 'react';
+import {
   BrowserRouter,
   Switch,
   Route
@@ -14,20 +14,20 @@ import Prefr from './Preferences';
 //import Contact from './components/Contact';
 
 class App extends React.Component {
-    render() {
-    return (      
-       <BrowserRouter>
+  render() {
+    return (
+      <BrowserRouter>
         <div>
-            <Switch>
-             <Route exact path="/Home" exact component={Home}/>
-             <Route exact path="/Review" exact component={Review}/>
-             <Route exact path="/Preferences" exact component={Prefr}/>
-             <Route component={Login}/>
-           </Switch>
-        </div> 
+          <Switch>
+            <Route exact path="/Home" exact component={Home} />
+            <Route exact path="/Review" exact component={Review} />
+            <Route exact path="/Preferences" exact component={Prefr} />
+            <Route component={Login} />
+          </Switch>
+        </div>
       </BrowserRouter>
     );
   }
 }
- 
+
 export default App;
