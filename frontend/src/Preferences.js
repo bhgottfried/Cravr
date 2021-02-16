@@ -4,7 +4,6 @@ import './Home.css';
 import { getCookie } from "./Home"
 import {
     Link
-
 } from "react-router-dom"
 class QuizContainer extends React.Component {
     //essentially scrollable list of reviews
@@ -55,7 +54,7 @@ class QuizContainer extends React.Component {
                     </label>
                     <br />
                     <label id="Question 3">
-                        3. Preffered budget?
+                        3. Preferred budget?
                         <select value={this.state.q3.value} onChange={this.handleChange}>
                             <option value="$">$</option>
                             <option value="$$">$$</option>
@@ -68,12 +67,14 @@ class QuizContainer extends React.Component {
                         <input type="text" pattern="[0-9]*"value={this.state.q4.value} onChange={this.handleChange}></input>
                     </label>
                     <br />
-                    <input type="submit" value="Submit" className="login-button" />
+                    <br></br>
+                    <input type="submit" value="Submit" className="submit-button" />
                 </form>
             </div>
         );
     }
 }
+
 export default function preferences() {
     return (
         <div className="Home">
@@ -82,7 +83,6 @@ export default function preferences() {
                     <li><a href="/Home">Find</a></li>
                     <li><a href="/Review">Review</a></li>
                     <li><a href="/Preferences">Preferences</a></li>
-                    <li><a href="#">About</a></li>
                     <li><a href="/">Logout</a></li>
                 </ul>
             </nav>

@@ -11,6 +11,7 @@ class reviewContainer extends React.Component {
     constructor(props) {
         super(props);
     }
+    // TODO This shouldn't be binary like/dislike. We need to make a more nuanced survey
     render() {
         return (
             <ol>
@@ -49,7 +50,6 @@ export default function review() {
                     <li><a href="/Home">Find</a></li>
                     <li><a href="/Review">Review</a></li>
                     <li><a href="/Preferences">Preferences</a></li>
-                    <li><a href="#">About</a></li>
                     <li><a href="/">Logout</a></li>
                 </ul>
             </nav>

@@ -2,32 +2,33 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import Form from "react-bootstrap/Form";
 import Cookies from 'universal-cookie';
-import {
-  Link
-} from "react-router-dom"
+import { BrowserRouter, Route} from "react-router-dom"
 
 function Login() {
   const [placeholder, setPlaceholder] = useState('Error: Invalid request');
-  useEffect(() => {
-    fetch('/login').then(res => res.json()).then(data => {
-      setPlaceholder(data.result);
-    });
-  }, []);
+  // useEffect(() => {
+  //   fetch('/login').then(res => res.json()).then(data => {
+  //     setPlaceholder(data.result);
+  //   });
+  // }, []);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const cookies = new Cookies();
 
   function handleSubmit(event) {
     //fetch inside here to verify with flask if credentials are correct
-    //TODO: Add verigfication to amke sure they actually put in a legit email
+    //TODO: Add verification to make sure they actually put in a legit email
+      // (We can use a regex for this but I don't want to yet so I can use asdf for my test email)
     fetch("/login", {
       method: "POST",
       cache: "no-cache",
       headers: {
         "content_type": "application/json"
       },
-      body: JSON.stringify(email + " " + password)
-    }).then(response => response.json()).then(data => {
+      // TODO Send login credentials over SSL
+      body: JSON.stringify(email + "\n" + password)
+    }).then(response => response.json()).then(response => {
+      alert(response["result"]);
       //if credentials were correct go to home screen and pass values to next screen
       //else go back to login page 
     })
@@ -40,12 +41,13 @@ function Login() {
     event.preventDefault();
   }
 
+  function registerUser() {
+    // user put in data in login fields, clicks register and this sends data to flask to register the new user
+    // TODO This button should take the user to a "/Register" href where they fill out fields to create a new account
+  }
 
   return (
     <div className="App">
-      <p>
-        Response from Flask: {placeholder}
-      </p>
       <nav className="bar">
         <span> Cravr</span>
       </nav>
@@ -57,10 +59,10 @@ function Login() {
           Sign In
         </h2>
       </body>
-      <div className="Login">
+      <div className="login-form">
         <Form onSubmit={handleSubmit}>
           <Form.Group size="lg" controlId="email">
-            <Form.Label>Email</Form.Label>
+            <Form.Label>&emsp; Email: </Form.Label>
             <Form.Control
               autoFocus
               type="email"
@@ -69,27 +71,30 @@ function Login() {
             />
           </Form.Group>
           <Form.Group size="lg" controlId="password">
-            <Form.Label>Password</Form.Label>
+            <Form.Label>Password: </Form.Label>
             <Form.Control
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
-          <a href="/Home" onClick={handleSubmit}>
-            Login
-            </a>
+          <br></br>
+          <div name="login" className="login">
+            <button renderas="button" className="submit-button" href="/Home">
+              <span>Login</span>
+            </button>
+          </div>
         </Form>
       </div>
+      <br></br>
+      <i>New to Cravr? Sign up!</i>
       <div name="register" className="register">
-        <button renderas="button" className="login-button" onClick={registerUser()}>
+        <button renderas="button" className="submit-button" onClick={registerUser()}>
           <span>Register</span>
         </button>
       </div>
     </div>
   );
 }
-function registerUser() {
-  //user put in data in login fields, clicks register and this sends data to flask to register the new user
-}
+
 export default Login;

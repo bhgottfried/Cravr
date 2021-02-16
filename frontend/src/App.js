@@ -11,7 +11,6 @@ import Login from './Login';
 import Home from './Home';
 import Review from './Review';
 import Prefr from './Preferences';
-//import Contact from './components/Contact';
 
 class App extends React.Component {
   render() {

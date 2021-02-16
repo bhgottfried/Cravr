@@ -1,10 +1,9 @@
 import React from 'react';
 import './Home.css';
-//import { Navbar,  Nav} from 'rsuite';
 import {
     Link
-
 } from "react-router-dom"
+
 class Restaurant extends React.Component {
     user;
     price;
@@ -13,7 +12,7 @@ class Restaurant extends React.Component {
     distance = 1.3;//in mi
     name;
     category;
-    constructor(props) {
+    constructor(props) {    // TODO Instantiation should be handled through backend
         super(props);
         //get a restaurant from the server and set id to that name
         //set some vars that will need later
@@ -41,17 +40,15 @@ class RestaurantContainer extends React.Component {
     //dynamic list of restaurant elements
     constructor(props) {
         super(props);
-        this.RestaurantLiked = this.RestaurantLiked.bind(this);
-        this.RestaurantDisliked = this.RestaurantDisliked.bind(this);
+        this.RestaurantRated = this.RestaurantRated.bind(this);
     }
-    RestaurantDisliked() {
 
+    RestaurantRated() {
+        // TODO Frontend change button color. Backend update user profile
     }
-    RestaurantLiked() {
 
-    }
     render() {
-        return (
+        return (    // TODO make request to backend to fetch list of restuarants from Yelp API
             <ol>
                 <li>
                     <Restaurant></Restaurant>
@@ -62,13 +59,13 @@ class RestaurantContainer extends React.Component {
             </ol>
         );
     }
-
 }
 
 export function getCookie(key) {
     var b = document.cookie.match("(^|;)\\s*" + key + "\\s*=\\s*([^;]+)");
     return b ? b.pop() : "";
 }
+
 export default function Home() {
     return (
         <div>
@@ -77,17 +74,14 @@ export default function Home() {
                     <li><a href="/Home">Find</a></li>
                     <li><a href="/Review">Review</a></li>
                     <li><a href="/Preferences">Preferences</a></li>
-                    <li><a href="#">About</a></li>
                     <li><a href="/">Logout</a></li>
                 </ul>
             </nav>
 
-            <h1>{getCookie("Username")}</h1>
-            <h1>{getCookie("Password")}</h1>
+            {/* <h1>{getCookie("Username")}</h1>
+            <h1>{getCookie("Password")}</h1> */}
             <h1>Find</h1>
-            <RestaurantContainer>
-
-            </RestaurantContainer>
+            <RestaurantContainer></RestaurantContainer>
         </div>
     );
 }
