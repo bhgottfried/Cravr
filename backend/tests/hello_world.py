@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from backend.flaskr.app import say_hello_world
 
 def test_hello_world():
