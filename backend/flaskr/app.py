@@ -6,12 +6,15 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+
 @app.route('/login', methods=["POST"])
 def login():
     """Attempt to login the user with the provided credentials"""
-    # user, password = request.json.split('\n')
+    user, password = request.json.split('\n')
+    print(user, password)
     match = True # Check if matches database
     return {'result': "/Home" if match else "/"}
+
 
 @app.route('/restaurants', methods=["GET"])
 def restaurants():
