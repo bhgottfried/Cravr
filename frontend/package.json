@@ -6,26 +6,15 @@
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
-<<<<<<< HEAD
-    "@testing-library/user-event": "^12.7.0",
-    "js-cookie": "^2.2.1",
-=======
     "@testing-library/user-event": "^12.7.1",
->>>>>>> origin/master
     "react": "^17.0.1",
     "react-app": "^1.1.2",
     "react-bootstrap": "^1.4.3",
     "react-dom": "^17.0.1",
-<<<<<<< HEAD
-    "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.2",
-    "universal-cookie": "^4.0.4",
-    "web-vitals": "^0.2.4"
-=======
     "react-scripts": "4.0.2",
+    "universal-cookie": "^4.0.4",
     "web-vitals": "^1.1.0"
->>>>>>> origin/master
   },
   "scripts": {
     "start": "react-scripts start",
