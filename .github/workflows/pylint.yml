@@ -2,7 +2,7 @@ name: PyLint
 
 on:
   push:
-    branches: [ testingPylint ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
