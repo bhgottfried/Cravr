@@ -1,6 +1,6 @@
 import bcrypt
 from pymysql.err import IntegrityError
-from backend.flaskr.database_utils import execute_query
+from backend.flaskr.database_utils import get_db_connection, execute_query
 
 def authenticate_user(app, username, password):
     """
@@ -10,10 +10,12 @@ def authenticate_user(app, username, password):
     :param password: Password entered on the login screen
     :return: True if credentials are valid, False otherwise
     """
+    # Get a database connection
+    conn = get_db_connection(app, db="authdb")
     # Fetch salt and hash from database
     try:
-        db_salt = execute_query(app, "SELECT salt FROM auth WHERE username = '{}'".format(username))[0]
-        db_hash = execute_query(app, "SELECT hash FROM auth WHERE username = '{}'".format(username))[0]
+        db_salt = execute_query(conn, "SELECT salt FROM auth WHERE username = '{}'".format(username))[0]
+        db_hash = execute_query(conn, "SELECT hash FROM auth WHERE username = '{}'".format(username))[0]
     except TypeError:
         print("User could not be found!")
         return False
@@ -36,12 +38,15 @@ def register_user(app, username, password):
     :param password: Password entered on the registration screen
     :return: True if registration successful, False otherwise
     """
+    # Get a database connection
+    conn = get_db_connection(app, db="authdb")
     # Generate a random salt and hash the password
     salt = bcrypt.gensalt()
     hash_result = bcrypt.hashpw(password.encode("utf-8"), salt)
     # Create the new user if it doesn't already exist
     try:
-        execute_query(app, u"INSERT INTO auth (username, salt, hash) VALUE('{}', '{}', '{}')".format(username, salt.decode("utf-8"), hash_result.decode("utf-8")))
+        execute_query(conn, u"INSERT INTO auth (username, salt, hash) VALUE('{}', '{}', '{}')"
+                      .format(username, salt.decode("utf-8"), hash_result.decode("utf-8")))
     except IntegrityError:
         print("User already exists!")
         return False
