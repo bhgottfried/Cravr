@@ -5,9 +5,9 @@ name: Flask Application
 # Triggers the workflow on push or pull request events for master branch or manually from the Actions tab
 on: 
   push:
-    branches: master
+    branches: [master]
   pull_request:
-    branches: master
+    branches: [master]
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -31,3 +31,8 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+
+      # Run files in the backend/tests directory
+      - name: Test with pytest
+        run: |
+          python -m pytest
