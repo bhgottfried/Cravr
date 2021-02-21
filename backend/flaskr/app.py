@@ -16,6 +16,12 @@ def login():
     return {'result': "/Home" if match else "/"}
 
 
+@app.route('/register', methods=["POST"])
+def register():
+    """Attempt to create a new user entry in the login database"""
+    return {'result': "TODO"}
+
+
 @app.route('/restaurants', methods=["GET"])
 def restaurants():
     """Parse the user's restaurant request and get restaurants from Yelp"""

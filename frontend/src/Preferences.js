@@ -68,7 +68,7 @@ class QuizContainer extends React.Component {
                     </label>
                     <br />
                     <br></br>
-                    <input type="submit" value="Submit" className="submit-button" />
+                    <input type="submit" value="Submit" className="primary-button" />
                 </form>
             </div>
         );

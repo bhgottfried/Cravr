@@ -13,8 +13,16 @@
   font-family:'Courier New', Courier, monospace;
 }
 
-.submit-button{
+.primary-button{
   font-size:xx-large;
+  text-align: center;
+  font-family:'Courier New', Courier, monospace;
+  background-color:rgb(236, 98, 17);
+  color:rgb(248, 211, 0);
+}
+
+.secondary-button{
+  font-size:x-large;
   text-align: center;
   font-family:'Courier New', Courier, monospace;
   background-color:rgb(236, 98, 17);

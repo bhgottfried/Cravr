@@ -2,52 +2,55 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import Form from "react-bootstrap/Form";
 import Cookies from 'universal-cookie';
-import { BrowserRouter, Route} from "react-router-dom"
+import { useHistory } from "react-router-dom";
+import { attemptLogin } from "./Login"
 
 
-
-export default function Login() {
-	const [placeholder, setPlaceholder] = useState('Error: Invalid request');
-	// useEffect(() => {
-	//   fetch('/login').then(res => res.json()).then(data => {
-	//     setPlaceholder(data.result);
-	//   });
-	// }, []);
+export default function Register() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [confirm, setConfirm] = useState("");
 	const cookies = new Cookies();
 
-	function handleSubmit(event) {
-		//fetch inside here to verify with flask if credentials are correct
-		//TODO: Add verification to make sure they actually put in a legit email
-			// (We can use a regex for this but I don't want to yet so I can use asdf for my test email)
-		fetch("/login", {
+	const history = useHistory();
+	const routeChange = path => { 
+		history.push(path);
+	}
+
+	function handleSubmit() {
+		if (password != confirm) {
+			alert("Error: Passwords must match!");
+			return;	// TODO make this not clear the data after submitting
+		}
+
+		cookies.set('Username', email, { path: '/' });
+		cookies.set('Password', password, { path: '/' });
+		console.log(cookies.get('Username'));
+
+    var path = "/";
+		fetch("/register", {
 			method: "POST",
 			cache: "no-cache",
 			headers: {
 				"content_type": "application/json"
 			},
-			// TODO Send login credentials over SSL
 			body: JSON.stringify(email + "\n" + password)
-		}).then(response => response.json()).then(response => {
-			alert(response["result"]);
-			//if credentials were correct go to home screen and pass values to next screen
-			//else go back to login page 
-		})
-		cookies.set('Username', email, { path: '/' });
-		cookies.set('Password', password, { path: '/' });
-		console.log(cookies.get('Username'));
-		Login.props.navigation.navigate('Home', {
-			cookie: cookies,
+		}).then(response => response.json())
+		.then(response => {
+			if (response.result) {
+				attemptLogin(email, password).then(function(res){
+					path = res;
+					routeChange(res);    // This should work, but switches back to Login page
+				});
+			} else {
+				alert("An account for that email already exists.");	// Forgot password?
+				path = "/Register";
+			}
 		});
-		event.preventDefault();
-	}
 
-	function registerUser() {
-		// user put in data in login fields, clicks register and this sends data to flask to register the new user
-		// TODO This button should take the user to a "/Register" href where they fill out fields to create a new account
+    routeChange(path);    // Path is always still "/" here
 	}
-
+	
 	return (
 		<div className="App">
 			<nav className="bar">
@@ -55,16 +58,13 @@ export default function Login() {
 			</nav>
 			<body className="App-body">
 				<h1>
-					Register page TODO
+					Sign up for Cravr
 				</h1>
-				<h2>
-					Sign In
-				</h2>
 			</body>
 			<div className="login-form">
 				<Form onSubmit={handleSubmit}>
 					<Form.Group size="lg" controlId="email">
-						<Form.Label>&emsp; Email: </Form.Label>
+						<Form.Label>&emsp; &emsp; &emsp; &emsp; Email: </Form.Label>
 						<Form.Control
 							autoFocus
 							type="email"
@@ -73,26 +73,34 @@ export default function Login() {
 						/>
 					</Form.Group>
 					<Form.Group size="lg" controlId="password">
-						<Form.Label>Password: </Form.Label>
+						<Form.Label>&emsp; &emsp; &emsp; Password: </Form.Label>
 						<Form.Control
 							type="password"
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 						/>
 					</Form.Group>
+					<Form.Group size="lg" controlId="password">
+						<Form.Label>Confirm Password: </Form.Label>
+						<Form.Control
+							type="password"
+							value={confirm}
+							onChange={(e) => setConfirm(e.target.value)}
+						/>
+					</Form.Group>
 					<br></br>
-					<div name="login" className="login">
-						<button renderas="button" className="submit-button" href="/Home">
-							<span>Login</span>
+					<div name="login" className="register">
+						<button renderas="button" className="primary-button">
+							<span>Register</span>
 						</button>
 					</div>
 				</Form>
 			</div>
 			<br></br>
-			<i>New to Cravr? Sign up!</i>
-			<div name="register" className="register">
-				<button renderas="button" className="submit-button" onClick={registerUser()}>
-					<span>Register</span>
+			<i>Already have an account?</i>
+			<div name="register" className="login">
+				<button renderas="button" className="secondary-button" onClick={() => routeChange("/")}>
+					<span>Back to sign in</span>
 				</button>
 			</div>
 		</div>
