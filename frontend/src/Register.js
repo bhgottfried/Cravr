@@ -17,7 +17,8 @@ export default function Register() {
 		history.push(path);
 	}
 
-	function handleSubmit() {
+	function handleSubmit(event) {
+		event.preventDefault();
 		if (password != confirm) {
 			alert("Error: Passwords must match!");
 			return;	// TODO make this not clear the data after submitting
@@ -27,7 +28,6 @@ export default function Register() {
 		cookies.set('Password', password, { path: '/' });
 		console.log(cookies.get('Username'));
 
-    var path = "/";
 		fetch("/register", {
 			method: "POST",
 			cache: "no-cache",
@@ -39,16 +39,13 @@ export default function Register() {
 		.then(response => {
 			if (response.result) {
 				attemptLogin(email, password).then(function(res){
-					path = res;
-					routeChange(res);    // This should work, but switches back to Login page
+					routeChange(res);
 				});
 			} else {
-				alert("An account for that email already exists.");	// Forgot password?
-				path = "/Register";
+				alert("An account for that email already exists.");
+				routeChange("/Register");
 			}
 		});
-
-    routeChange(path);    // Path is always still "/" here
 	}
 	
 	return (

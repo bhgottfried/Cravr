@@ -34,19 +34,15 @@ function Login() {
     history.push(path);
   }
 
-  function handleSubmit() {
+  function handleSubmit(event) {
+		event.preventDefault();
     cookies.set('Username', email, { path: '/' });
     cookies.set('Password', password, { path: '/' });
     console.log(cookies.get('Username'));
     
-    var path = "/";
     attemptLogin(email, password).then(function(res){
-      path = res;
-      routeChange(res);    // This should work, but switches back to Login page
+      routeChange(res);
     });
-
-    routeChange(path);    // Path is always still "/" here
-    routeChange("/Home"); // This needs to change to the server response
   }
 
   return (
