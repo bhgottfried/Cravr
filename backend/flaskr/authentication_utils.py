@@ -12,6 +12,9 @@ def authenticate_user(app, username, password):
     """
     # Get a database connection
     conn = get_db_connection(app, db="authdb")
+    if conn is None:
+        print("Could not connect to database!")
+        return False
     # Fetch salt and hash from database
     try:
         db_salt = execute_query(conn, "SELECT salt FROM auth WHERE username = '{}'".format(username))[0]
@@ -40,6 +43,9 @@ def register_user(app, username, password):
     """
     # Get a database connection
     conn = get_db_connection(app, db="authdb")
+    if conn is None:
+        print("Could not connect to database!")
+        return False
     # Generate a random salt and hash the password
     salt = bcrypt.gensalt()
     hash_result = bcrypt.hashpw(password.encode("utf-8"), salt)

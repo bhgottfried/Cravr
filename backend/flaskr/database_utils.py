@@ -1,4 +1,5 @@
 from flaskext.mysql import MySQL
+from pymysql.err import OperationalError
 
 mysql = None
 
@@ -25,9 +26,13 @@ def get_db_connection(app, host="localhost", port=3306, user="root", pwd="ece495
         app.config["MYSQL_DATABASE_DB"] = db
         app.config["MYSQL_DATABASE_CHARSET"] = charset
         mysql.init_app(app)
-    # Connect to the database
-    conn = mysql.connect()
-    return conn
+    # Try to connect to the database
+    try:
+        conn = mysql.connect()
+        print("Conncection: {}".format(conn))
+        return conn
+    except (AttributeError, OperationalError) as error:
+        return None
 
 def execute_query(conn, query):
     """
