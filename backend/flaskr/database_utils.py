@@ -29,10 +29,18 @@ def get_db_connection(app, host="localhost", port=3306, user="root", pwd="ece495
     # Try to connect to the database
     try:
         conn = mysql.connect()
-        print("Conncection: {}".format(conn))
         return conn
-    except (AttributeError, OperationalError) as error:
+    except (AttributeError, OperationalError):
+        mysql = None
         return None
+
+def close_db_connection():
+    """
+    This function gets rid of the MySQL instance if it exists.
+    :return: None
+    """
+    global mysql
+    mysql = None
 
 def execute_query(conn, query):
     """
