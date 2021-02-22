@@ -6,7 +6,7 @@ import {
     Link
 
 } from "react-router-dom"
-class reviewContainer extends React.Component {
+class ReviewContainer extends React.Component {
     //essentially scrollable list of reviews
     constructor(props) {
         super(props);
@@ -16,7 +16,7 @@ class reviewContainer extends React.Component {
         return (
             <ol>
                 <li>
-                    <userRev></userRev>
+                    <UserRev></UserRev>
                     <form>
                         <label id="Question 1">
                             1. Pick your favorite food:
@@ -27,14 +27,16 @@ class reviewContainer extends React.Component {
                     <button>Rate!</button>
                 </li>
                 <li>
-                    <userRev></userRev>
+                    <UserRev></UserRev>
                     <button>Yummy!</button> <button>Rate!</button>
                 </li>
             </ol>
         );
     }
 }
-class userRev extends React.Component {
+//TODO: get list of unreviewed restaurants for a user form backend
+//TODO: determine user feedback needed
+class UserRev extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -54,7 +56,7 @@ export default function review() {
                 </ul>
             </nav>
             <h1>Review</h1>
-            <reviewContainer></reviewContainer>
+            <ReviewContainer></ReviewContainer>
         </div>
     );
 }

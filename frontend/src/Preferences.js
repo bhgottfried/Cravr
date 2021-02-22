@@ -20,7 +20,8 @@ class QuizContainer extends React.Component {
         this.setState({ [event.target.name]: event.target.value });
     }
     handleSubmit(event) {
-        //send data to server
+        //send data to 
+        //body will probably look like this JSON.stringify(this.state.q1.value +" "+this.state.q2.value +" "+ this.state.q3.value +" "+ this.state.q4.value);
         event.preventDefault();
     }
     render() {

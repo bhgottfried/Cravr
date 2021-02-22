@@ -1,62 +1,79 @@
 import React from 'react';
 import './Home.css';
-import {
-    Link
-} from "react-router-dom"
+import Restaurant from './Restaurant.js';
 
-class Restaurant extends React.Component {
-    user;
-    price;
-    rating;
-    address;
-    distance = 1.3;//in mi
-    name;
-    category;
-    constructor(props) {    // TODO Instantiation should be handled through backend
-        super(props);
-        //get a restaurant from the server and set id to that name
-        //set some vars that will need later
-        this.user = "john doe";
-        this.price = "$$$";
-        this.rating = 4.3;
-        this.address = "1234 mickey lane";
-        this.name = "Disney World";
-        this.category = "American"
-        //pic?
-    }
-    render() {
-        return (
-            <div>
-                <h1>{this.name}</h1>
-                <h3>{this.address} Distance:{this.distance}mi</h3>
-                <h5>Price:{this.price} Rating:{this.rating}/5 Category:{this.category}</h5>
-                <button>Yummy!</button> <button>Yuck</button>
-            </div>
-        );
-    }
-}
+
 class RestaurantContainer extends React.Component {
     //essentially scrollable list of restaurant 
     //dynamic list of restaurant elements
     constructor(props) {
         super(props);
-        this.RestaurantRated = this.RestaurantRated.bind(this);
+        this.PopulateStates = this.PopulateStates.bind(this);
+        //this.PopulateStates();
     }
 
-    RestaurantRated() {
-        // TODO Frontend change button color. Backend update user profile
+    state = {
+        Restaurants: [
+            { id: 1, Name: 'Disney World', Distance: 1, Price: "$$", Rating: 3 },
+            { id: 2, Name: "Disney World2", Distance: 12, Price: "$$", Rating: 4 },
+            { id: 3, Name: "Disney World3", Distance: 4, Price: "$$", Rating: 4 }
+        ]
+    }
+    accept = (index, e) => {
+        //runs when yummy button clicked
+        //TODO: add a restaurant to the list
+        //TODO: get one from backend
+    }
+    delete = (index, e) => {
+        //runs when yuck button clicked
+        const restaurants = Object.assign([], this.state.Restaurants);
+        restaurants.splice(index, 1);
+        this.setState({ Restaurants: restaurants })
+        //deletes entry in state
+        //TODO relate this to backend and get new restaurant
+    }
+    PopulateStates() {
+        //TODO add to Restaruants property in state above to dynamically populate the list
+        //runs in constructor and finds restaurants from the backend
+
+        fetch("/restaurants", {
+            method: "POST",
+            cache: "no-cache",
+            headers: {
+              "content_type": "application/json"
+            },
+            // TODO Send login credentials over SSL
+            body: JSON.stringify(getCookie("Username"))
+          }).then(response => response.json())
+          .then(response => {
+            //TODO read response data and set some states based on how many restaurants of data are sent
+          });
     }
 
     render() {
         return (    // TODO make request to backend to fetch list of restuarants from Yelp API
-            <ol>
-                <li>
-                    <Restaurant></Restaurant>
-                </li>
-                <li>
-                    <Restaurant></Restaurant>
-                </li>
-            </ol>
+            <div>
+                <ul id="ResList">
+                    {
+                        //dynamic list element that is insantiated from state.Restaruants
+                        //TODO: doesn't render for some reason
+                        this.state.Restaurants.map((Rest, index) => {
+                            return (
+                                <div className="Rest">
+                                    <Restaurant  id={Rest.id}
+                                        name={Rest.Name}
+                                        distance={Rest.Distance}
+                                        price={Rest.Price}
+                                        rating={Rest.Rating}
+                                        accept={this.accept.bind(this, index)}
+                                        delete={this.delete.bind(this, index)}></Restaurant>
+                                    <br></br>
+                                </div>
+                            )
+                        })
+                    }
+                </ul>
+            </div>
         );
     }
 }
@@ -77,10 +94,7 @@ export default function Home() {
                     <li><a href="/">Logout</a></li>
                 </ul>
             </nav>
-
-            {/* <h1>{getCookie("Username")}</h1>
-            <h1>{getCookie("Password")}</h1> */}
-            <h1>Find</h1>
+            <br></br>
             <RestaurantContainer></RestaurantContainer>
         </div>
     );
