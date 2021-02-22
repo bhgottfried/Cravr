@@ -1,3 +1,5 @@
+"""Utilities to create new users and authenticate existing users"""
+
 import bcrypt
 from pymysql.err import IntegrityError
 from backend.flaskr.database_utils import get_db_connection, execute_query
@@ -11,14 +13,16 @@ def authenticate_user(app, username, password):
     :return: True if credentials are valid, False otherwise
     """
     # Get a database connection
-    conn = get_db_connection(app, db="authdb")
+    conn = get_db_connection(app, database="authdb")
     if conn is None:
         print("Could not connect to database!")
         return False
     # Fetch salt and hash from database
     try:
-        db_salt = execute_query(conn, "SELECT salt FROM auth WHERE username = '{}'".format(username))[0]
-        db_hash = execute_query(conn, "SELECT hash FROM auth WHERE username = '{}'".format(username))[0]
+        db_salt = execute_query(conn, "SELECT salt FROM auth WHERE username = '{}'"
+                                .format(username))[0]
+        db_hash = execute_query(conn, "SELECT hash FROM auth WHERE username = '{}'"
+                                .format(username))[0]
     except TypeError:
         print("User could not be found!")
         return False
@@ -42,7 +46,7 @@ def register_user(app, username, password):
     :return: True if registration successful, False otherwise
     """
     # Get a database connection
-    conn = get_db_connection(app, db="authdb")
+    conn = get_db_connection(app, database="authdb")
     if conn is None:
         print("Could not connect to database!")
         return False

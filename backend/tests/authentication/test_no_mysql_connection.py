@@ -6,14 +6,14 @@ from flask_cors import CORS
 from backend.flaskr.database_utils import get_db_connection, close_db_connection
 
 
-def test_wrong_port():
+def test_wrong_socket():
     # Make sure no database connection exists
     close_db_connection()
     # Create a Flask app instance
     app = Flask(__name__)
     CORS(app)
-    # Try to establish a connection with the wrong port number
-    conn = get_db_connection(app, port=9999)
+    # Try to establish a connection with the wrong socket
+    conn = get_db_connection(app, socket=("localhost", 9999))
     assert conn is None
 
 def test_invalid_credentials():
@@ -33,7 +33,7 @@ def test_invalid_database():
     app = Flask(__name__)
     CORS(app)
     # Try to establish a connection with an invalid database name
-    conn = get_db_connection(app, db="baddatabase")
+    conn = get_db_connection(app, database="baddatabase")
     assert conn is None
 
 
