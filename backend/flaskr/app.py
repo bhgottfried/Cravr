@@ -1,5 +1,6 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
 from flask_cors import CORS
+from backend.flaskr.authentication_utils import authenticate_user
 
 app = Flask(__name__)
 CORS(app)
@@ -11,7 +12,7 @@ def say_hello_world():
 @app.route('/login', methods=["POST"])
 def login():
     user, password = request.json.split('\n')
-    match = True # Check if matches database
+    match = authenticate_user(app, user, password)
     return {'result': "/Home" if match else "/"}
 
 @app.route('/restaurants', methods=["GET"])
