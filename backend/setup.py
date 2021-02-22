@@ -1,3 +1,5 @@
+"""Setup file used for Dependabot"""
+
 from setuptools import setup
 
 setup(
