@@ -2,6 +2,7 @@
 
 from flask import Flask, request
 from flask_cors import CORS
+from backend.flaskr.authentication_utils import authenticate_user
 
 app = Flask(__name__)
 CORS(app)
@@ -11,8 +12,7 @@ CORS(app)
 def login():
     """Attempt to login the user with the provided credentials"""
     user, password = request.json.split('\n')
-    print(user, password)
-    match = True # Check if matches database
+    match = authenticate_user(app, user, password)
     return {'result': "/Home" if match else "/"}
 
 
