@@ -3,7 +3,6 @@
 from flaskext.mysql import MySQL
 from pymysql.err import OperationalError
 
-MYSQL = None
 
 def get_db_connection(app, socket=("localhost", 3306), user="root", pwd="ece49595bois!",
                       database="authdb"):
@@ -16,41 +15,35 @@ def get_db_connection(app, socket=("localhost", 3306), user="root", pwd="ece4959
     :param database: Database to use
     :return: Database connection
     """
-    global MYSQL
-    # Create MySQL instance if it doesn't already exist
-    if MYSQL is None:
-        MYSQL = MySQL()
-        app.config["MYSQL_DATABASE_HOST"] = socket[0]
-        app.config["MYSQL_DATABASE_PORT"] = socket[1]
-        app.config["MYSQL_DATABASE_USER"] = user
-        app.config["MYSQL_DATABASE_PASSWORD"] = pwd
-        app.config["MYSQL_DATABASE_DB"] = database
-        app.config["MYSQL_DATABASE_CHARSET"] = "utf8"
-        MYSQL.init_app(app)
+    mysql = MySQL()
+    app.config["MYSQL_DATABASE_HOST"] = socket[0]
+    app.config["MYSQL_DATABASE_PORT"] = socket[1]
+    app.config["MYSQL_DATABASE_USER"] = user
+    app.config["MYSQL_DATABASE_PASSWORD"] = pwd
+    app.config["MYSQL_DATABASE_DB"] = database
+    app.config["MYSQL_DATABASE_CHARSET"] = "utf8"
+    mysql.init_app(app)
     # Try to connect to the database
     try:
-        conn = MYSQL.connect()
+        conn = mysql.connect()
         return conn
     except (AttributeError, OperationalError):
-        MYSQL = None
         return None
 
-def close_db_connection():
-    """
-    This function gets rid of the MySQL instance if it exists.
-    :return: None
-    """
-    global MYSQL
-    MYSQL = None
-
-def execute_query(conn, query):
+def execute_auth_query(app, query):
     """
     This function executes a query on the MySQL server.
-    :param conn: Database connection
+    :param app: Flask app instance
     :param query: The query to be executed
     :return: The first result of the query
     """
+    conn = get_db_connection(app, database="authdb")
+    if conn is None:
+        print("Could not connect to database!")
+        return None
     cursor = conn.cursor()
     cursor.execute(query)
+    result = cursor.fetchone()
     conn.commit()
-    return cursor.fetchone()
+    conn.close()
+    return result
