@@ -3,10 +3,14 @@
 from flask import Flask, request
 from flask_cors import CORS
 from backend.flaskr.authentication_utils import authenticate_user
+from backend.flaskr.database_utils import get_db_connection
 
+# Instantiate app
 app = Flask(__name__)
 CORS(app)
 
+# Initialize DB configurations
+get_db_connection(app)
 
 @app.route('/login', methods=["POST"])
 def login():

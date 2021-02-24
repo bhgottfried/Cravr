@@ -2,6 +2,7 @@ from flaskext.mysql import MySQL
 from pymysql.err import OperationalError
 
 mysql = None
+init = False
 
 def get_db_connection(app, host="localhost", port=3306, user="root", pwd="ece49595bois!", db="authdb", charset="utf8"):
     """
@@ -25,7 +26,13 @@ def get_db_connection(app, host="localhost", port=3306, user="root", pwd="ece495
         app.config["MYSQL_DATABASE_PASSWORD"] = pwd
         app.config["MYSQL_DATABASE_DB"] = db
         app.config["MYSQL_DATABASE_CHARSET"] = charset
+
+    global init
+    if not init:
         mysql.init_app(app)
+        init = True
+        return None
+    
     # Try to connect to the database
     try:
         conn = mysql.connect()
