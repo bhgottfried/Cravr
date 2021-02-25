@@ -10,7 +10,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Initialize DB configurations
-get_db_connection(app)
+get_db_connection(app, init=True)
 
 @app.route('/login', methods=["POST"])
 def login():

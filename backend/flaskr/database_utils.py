@@ -3,14 +3,12 @@
 from flaskext.mysql import MySQL
 from pymysql.err import OperationalError
 
-MYSQL = None
-INIT = True
 
 def get_db_connection(app,
                       socket=("localhost", 3306),
-                      user="root",
-                      pwd="ece49595bois!",
-                      database="authdb"
+                      credentials=("root", "ece49595bois!"),
+                      database="authdb",
+                      init=False
                       ):
     """
     This function will get a connection for the MySQL server.
@@ -22,25 +20,22 @@ def get_db_connection(app,
     :return: Database connection
     """
     # Create MySQL instance if it doesn't already exist
-    global MYSQL
-    if MYSQL is None:
-        MYSQL = MySQL()
-        app.config["MYSQL_DATABASE_HOST"] = socket[0]
-        app.config["MYSQL_DATABASE_PORT"] = socket[1]
-        app.config["MYSQL_DATABASE_USER"] = user
-        app.config["MYSQL_DATABASE_PASSWORD"] = pwd
-        app.config["MYSQL_DATABASE_DB"] = database
-        app.config["MYSQL_DATABASE_CHARSET"] = "utf8"
+    mysql = MySQL()
+    app.config["MYSQL_DATABASE_HOST"] = socket[0]
+    app.config["MYSQL_DATABASE_PORT"] = socket[1]
+    app.config["MYSQL_DATABASE_USER"] = credentials[0]
+    app.config["MYSQL_DATABASE_PASSWORD"] = credentials[1]
+    app.config["MYSQL_DATABASE_DB"] = database
+    app.config["MYSQL_DATABASE_CHARSET"] = "utf8"
 
-    global INIT
-    if INIT:
-        MYSQL.init_app(app)
-        INIT = False
+    if init:
+        mysql.init_app(app)
+        init = False
         return None
-    
+
     # Try to connect to the database
     try:
-        return MYSQL.connect()
+        return mysql.connect()
     except (AttributeError, OperationalError):
         return None
 
