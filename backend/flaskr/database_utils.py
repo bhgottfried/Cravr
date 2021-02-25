@@ -1,55 +1,58 @@
+"""Utilities to create database connections and execute queries"""
+
 from flaskext.mysql import MySQL
 from pymysql.err import OperationalError
 
-mysql = None
 
-def get_db_connection(app, host="localhost", port=3306, user="root", pwd="ece49595bois!", db="authdb", charset="utf8"):
+def get_db_connection(app,
+                      socket=("localhost", 3306),
+                      credentials=("root", "ece49595bois!"),
+                      database="authdb",
+                      init=False
+                      ):
     """
     This function will get a connection for the MySQL server.
     :param app: Flask app instance
-    :param host: Address of the MySQL server
-    :param port: Port of the MySQL server
+    :param socket: Hostname and port of the MySQL server
     :param user: User with which to access the server
     :param pwd: User's password
-    :param db: Database to use
-    :param charset: Character set of the database
+    :param database: Database to use
     :return: Database connection
     """
-    global mysql
     # Create MySQL instance if it doesn't already exist
-    if mysql is None:
-        mysql = MySQL()
-        app.config["MYSQL_DATABASE_HOST"] = host
-        app.config["MYSQL_DATABASE_PORT"] = port
-        app.config["MYSQL_DATABASE_USER"] = user
-        app.config["MYSQL_DATABASE_PASSWORD"] = pwd
-        app.config["MYSQL_DATABASE_DB"] = db
-        app.config["MYSQL_DATABASE_CHARSET"] = charset
+    mysql = MySQL()
+    app.config["MYSQL_DATABASE_HOST"] = socket[0]
+    app.config["MYSQL_DATABASE_PORT"] = socket[1]
+    app.config["MYSQL_DATABASE_USER"] = credentials[0]
+    app.config["MYSQL_DATABASE_PASSWORD"] = credentials[1]
+    app.config["MYSQL_DATABASE_DB"] = database
+    app.config["MYSQL_DATABASE_CHARSET"] = "utf8"
+
+    if init:
         mysql.init_app(app)
-    # Try to connect to the database
-    try:
-        conn = mysql.connect()
-        return conn
-    except (AttributeError, OperationalError):
-        mysql = None
+        init = False
         return None
 
-def close_db_connection():
-    """
-    This function gets rid of the MySQL instance if it exists.
-    :return: None
-    """
-    global mysql
-    mysql = None
+    # Try to connect to the database
+    try:
+        return mysql.connect()
+    except (AttributeError, OperationalError):
+        return None
 
-def execute_query(conn, query):
+def execute_auth_query(app, query):
     """
     This function executes a query on the MySQL server.
-    :param conn: Database connection
+    :param app: Flask app instance
     :param query: The query to be executed
     :return: The first result of the query
     """
+    conn = get_db_connection(app, database="authdb")
+    if conn is None:
+        print("Could not connect to database!")
+        return None
     cursor = conn.cursor()
     cursor.execute(query)
+    result = cursor.fetchone()
     conn.commit()
-    return cursor.fetchone()
+    conn.close()
+    return result
