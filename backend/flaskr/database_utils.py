@@ -3,56 +3,58 @@
 from flaskext.mysql import MySQL
 from pymysql.err import OperationalError
 
+class DBConnection:
+    mysql = None
+    connections = []
 
-def get_db_connection(app,
-                      socket=("localhost", 3306),
-                      credentials=("root", "ece49595bois!"),
-                      database="authdb",
-                      init=False
-                      ):
-    """
-    This function will get a connection for the MySQL server.
-    :param app: Flask app instance
-    :param socket: Hostname and port of the MySQL server
-    :param user: User with which to access the server
-    :param pwd: User's password
-    :param database: Database to use
-    :return: Database connection
-    """
-    # Create MySQL instance if it doesn't already exist
-    mysql = MySQL()
-    app.config["MYSQL_DATABASE_HOST"] = socket[0]
-    app.config["MYSQL_DATABASE_PORT"] = socket[1]
-    app.config["MYSQL_DATABASE_USER"] = credentials[0]
-    app.config["MYSQL_DATABASE_PASSWORD"] = credentials[1]
-    app.config["MYSQL_DATABASE_DB"] = database
-    app.config["MYSQL_DATABASE_CHARSET"] = "utf8"
+    def __init__(self):
+        pass
 
-    if init:
-        mysql.init_app(app)
-        init = False
-        return None
+    @classmethod
+    def setup(cls, app, **kwargs):
+        # Initialize class variable mysql
+        cls.mysql = MySQL()
+        # Do a standard configuration
+        app.config.from_pyfile("../db_config.py")
+        # Modify configuration based on arguments
+        for arg, value in kwargs.items():
+            if arg == "socket":
+                app.config["MYSQL_DATABASE_HOST"] = value[0]
+                app.config["MYSQL_DATABASE_PORT"] = value[1]
+            elif arg == "credentials":
+                app.config["MYSQL_DATABASE_USER"] = value[0]
+                app.config["MYSQL_DATABASE_PASSWORD"] = value[1]
+            elif arg == "database":
+                app.config["MYSQL_DATABASE_DB"] = value
+            elif arg == "charset":
+                app.config["MYSQL_DATABASE_CHARSET"] = value
+        # Initialize app and make one connection
+        cls.mysql.init_app(app)
+        cls.return_connection(cls.get_connection())
 
-    # Try to connect to the database
-    try:
-        return mysql.connect()
-    except (AttributeError, OperationalError):
-        return None
+    @classmethod
+    def get_connection(cls):
+        if not cls.connections:
+            try:
+                return cls.mysql.connect()
+            except (AttributeError, OperationalError):
+                print("Couldn't get connection!")
+                return None
+        else:
+            return cls.connections.pop()
 
-def execute_auth_query(app, query):
-    """
-    This function executes a query on the MySQL server.
-    :param app: Flask app instance
-    :param query: The query to be executed
-    :return: The first result of the query
-    """
-    conn = get_db_connection(app, database="authdb")
-    if conn is None:
-        print("Could not connect to database!")
-        return None
-    cursor = conn.cursor()
-    cursor.execute(query)
-    result = cursor.fetchone()
-    conn.commit()
-    conn.close()
-    return result
+    @classmethod
+    def return_connection(cls, conn):
+        cls.connections.append(conn)
+
+    def execute_query(self, query):
+        # Get connection and cursor
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        # Execute query and commit (for write operations)
+        cursor.execute(query)
+        result = cursor.fetchone()
+        conn.commit()
+        # Give the connection back to connection pool
+        self.return_connection(conn)
+        return result
