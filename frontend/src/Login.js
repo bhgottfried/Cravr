@@ -2,54 +2,53 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import Form from "react-bootstrap/Form";
 import Cookies from 'universal-cookie';
-import { BrowserRouter, Route} from "react-router-dom"
+import { useHistory } from "react-router-dom";
+
+export function attemptLogin(email, password) {
+  var path = "/";
+  return fetch("/login", {
+    method: "POST",
+    cache: "no-cache",
+    headers: {
+      "content_type": "application/json"
+    },
+    // TODO Send login credentials over SSL
+    body: JSON.stringify(email + "\n" + password)
+  }).then(response => response.json())
+  .then(response => {
+    path = response.result;
+    return response.result;
+  }).catch((error) => {
+    console.error(error);
+    return path;
+  });
+}
 
 function Login() {
-  const [placeholder, setPlaceholder] = useState('Error: Invalid request');
-  // useEffect(() => {
-  //   fetch('/login').then(res => res.json()).then(data => {
-  //     setPlaceholder(data.result);
-  //   });
-  // }, []);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const cookies = new Cookies();
 
+  const history = useHistory();
+  const routeChange = path => { 
+    history.push(path);
+  }
+
   function handleSubmit(event) {
-    //fetch inside here to verify with flask if credentials are correct
-    //TODO: Add verification to make sure they actually put in a legit email
-      // (We can use a regex for this but I don't want to yet so I can use asdf for my test email)
-    fetch("/login", {
-      method: "POST",
-      cache: "no-cache",
-      headers: {
-        "content_type": "application/json"
-      },
-      // TODO Send login credentials over SSL
-      body: JSON.stringify(email + "\n" + password)
-    }).then(response => response.json()).then(response => {
-      alert(response["result"]);
-      //if credentials were correct go to home screen and pass values to next screen
-      //else go back to login page 
-    })
+		event.preventDefault();
     cookies.set('Username', email, { path: '/' });
     cookies.set('Password', password, { path: '/' });
     console.log(cookies.get('Username'));
-    Login.props.navigation.navigate('Home', {
-      cookie: cookies,
+    
+    attemptLogin(email, password).then(function(res){
+      routeChange(res);
     });
-    event.preventDefault();
-  }
-
-  function registerUser() {
-    // user put in data in login fields, clicks register and this sends data to flask to register the new user
-    // TODO This button should take the user to a "/Register" href where they fill out fields to create a new account
   }
 
   return (
     <div className="App">
       <nav className="bar">
-        <span> Cravr</span>
+        <span>Cravr</span>
       </nav>
       <body className="App-body">
         <h1>
@@ -80,7 +79,7 @@ function Login() {
           </Form.Group>
           <br></br>
           <div name="login" className="login">
-            <button renderas="button" className="submit-button" href="/Home">
+            <button renderas="button" className="primary-button">
               <span>Login</span>
             </button>
           </div>
@@ -89,7 +88,7 @@ function Login() {
       <br></br>
       <i>New to Cravr? Sign up!</i>
       <div name="register" className="register">
-        <button renderas="button" className="submit-button" onClick={registerUser()}>
+        <button renderas="button" className="secondary-button" onClick={() => routeChange("/Register")}>
           <span>Register</span>
         </button>
       </div>
