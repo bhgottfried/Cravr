@@ -4,14 +4,28 @@ from flaskext.mysql import MySQL
 from pymysql.err import OperationalError
 
 class DBConnection:
+    """
+    Maintains an instance of MySQL and a connection pool with methods for getting/returning
+    connections and executing queries. Connections are automatically returned to the connection
+    pool after each query has been completed.
+    """
     mysql = None
     connections = []
 
     def __init__(self):
-        pass
+        """
+        Make an instance to execute queries.
+        :return: None
+        """
 
     @classmethod
     def setup(cls, app, **kwargs):
+        """
+        Initializes MySQL at the start of Flask app. Should be run once per app instance.
+        :param app: Flask app instance
+        :param kwargs: Allows for nonstandard MySQL parameters
+        :return: None
+        """
         # Initialize class variable mysql
         cls.mysql = MySQL()
         # Do a standard configuration
@@ -34,27 +48,37 @@ class DBConnection:
 
     @classmethod
     def get_connection(cls):
-        if not cls.connections:
-            try:
-                return cls.mysql.connect()
-            except (AttributeError, OperationalError):
-                print("Couldn't get connection!")
-                return None
-        else:
+        """
+        Gets a connection from the pool. Creates a new connection if none are available.
+        :return: Database connection object
+        """
+        if cls.connections:
             return cls.connections.pop()
+        try:
+            return cls.mysql.connect()
+        except (AttributeError, OperationalError):
+            print("Couldn't get connection!")
+            return None
 
     @classmethod
     def return_connection(cls, conn):
+        """
+        Returns a database connection to the connection pool
+        :param conn: Database connection object
+        :return: None
+        """
         cls.connections.append(conn)
 
     def execute_query(self, query):
-        # Get connection and cursor
+        """
+        Gets a connection, executes a query, and returns the connection.
+        :param query: SQL query to be executed
+        :return: First result of the query
+        """
         conn = self.get_connection()
         cursor = conn.cursor()
-        # Execute query and commit (for write operations)
         cursor.execute(query)
         result = cursor.fetchone()
         conn.commit()
-        # Give the connection back to connection pool
         self.return_connection(conn)
         return result
