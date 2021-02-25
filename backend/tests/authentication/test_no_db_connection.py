@@ -17,7 +17,7 @@ def test_invalid_credentials():
     app = Flask(__name__)
     CORS(app)
     # Try to establish a connection with invalid login credentials
-    conn = get_db_connection(app, user="baduser", pwd="badpass")
+    conn = get_db_connection(app, credentials=("baduser", "badpass"))
     assert conn is None
 
 def test_invalid_database():
