@@ -3,9 +3,15 @@
 from flaskext.mysql import MySQL
 from pymysql.err import OperationalError
 
+MYSQL = None
+INIT = True
 
-def get_db_connection(app, socket=("localhost", 3306), user="root", pwd="ece49595bois!",
-                      database="authdb"):
+def get_db_connection(app,
+                      socket=("localhost", 3306),
+                      user="root",
+                      pwd="ece49595bois!",
+                      database="authdb"
+                      ):
     """
     This function will get a connection for the MySQL server.
     :param app: Flask app instance
@@ -15,18 +21,26 @@ def get_db_connection(app, socket=("localhost", 3306), user="root", pwd="ece4959
     :param database: Database to use
     :return: Database connection
     """
-    mysql = MySQL()
-    app.config["MYSQL_DATABASE_HOST"] = socket[0]
-    app.config["MYSQL_DATABASE_PORT"] = socket[1]
-    app.config["MYSQL_DATABASE_USER"] = user
-    app.config["MYSQL_DATABASE_PASSWORD"] = pwd
-    app.config["MYSQL_DATABASE_DB"] = database
-    app.config["MYSQL_DATABASE_CHARSET"] = "utf8"
-    mysql.init_app(app)
+    # Create MySQL instance if it doesn't already exist
+    global MYSQL
+    if MYSQL is None:
+        MYSQL = MySQL()
+        app.config["MYSQL_DATABASE_HOST"] = socket[0]
+        app.config["MYSQL_DATABASE_PORT"] = socket[1]
+        app.config["MYSQL_DATABASE_USER"] = user
+        app.config["MYSQL_DATABASE_PASSWORD"] = pwd
+        app.config["MYSQL_DATABASE_DB"] = database
+        app.config["MYSQL_DATABASE_CHARSET"] = "utf8"
+
+    global INIT
+    if INIT:
+        MYSQL.init_app(app)
+        INIT = False
+        return None
+    
     # Try to connect to the database
     try:
-        conn = mysql.connect()
-        return conn
+        return MYSQL.connect()
     except (AttributeError, OperationalError):
         return None
 
