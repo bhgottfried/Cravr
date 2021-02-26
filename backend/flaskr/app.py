@@ -2,7 +2,7 @@
 
 from flask import Flask, request
 from flask_cors import CORS
-from backend.flaskr.authentication_utils import authenticate_user
+from backend.flaskr.authentication_utils import authenticate_user, register_user
 from backend.flaskr.database_utils import DBConnection
 
 # Instantiate app
@@ -22,8 +22,10 @@ def login():
 
 @app.route('/register', methods=["POST"])
 def register():
-    """Attempt to create a new user entry in the login database"""
-    return {'result': "TODO"}
+    """Attempt to create a new user entry in the authentication database"""
+    user, password = request.json.split('\n')
+    registration_success = register_user(user, password)
+    return {'result': "/Login" if registration_success else "/Register"}
 
 
 @app.route('/restaurants', methods=["GET"])
