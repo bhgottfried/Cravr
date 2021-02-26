@@ -2,6 +2,7 @@
 
 from flaskext.mysql import MySQL
 from pymysql.err import OperationalError
+from backend.db_config import Config
 
 class DBConnection:
     """
@@ -26,10 +27,11 @@ class DBConnection:
         :param kwargs: Allows for nonstandard MySQL parameters
         :return: None
         """
-        # Initialize class variable mysql
+        # Initialize mysql object and connection pool
         cls.mysql = MySQL()
+        cls.connections = []
         # Do a standard configuration
-        app.config.from_pyfile("../db_config.py")
+        app.config.from_object(Config())
         # Modify configuration based on arguments
         for arg, value in kwargs.items():
             if arg == "socket":
@@ -63,7 +65,7 @@ class DBConnection:
     @classmethod
     def return_connection(cls, conn):
         """
-        Returns a database connection to the connection pool
+        Returns a database connection to the connection pool.
         :param conn: Database connection object
         :return: None
         """

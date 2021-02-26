@@ -21,7 +21,6 @@ def authenticate_user(username, password):
     except TypeError:
         print("User could not be found!")
         return False
-
     # Hash password and check if it matches the stored hash
     hash_result = bcrypt.hashpw(password.encode("utf-8"), db_salt)
     print("User's hash:   {}\nDatabase hash: {}".format(hash_result, db_hash))
