@@ -17,13 +17,13 @@ def login():
     """Attempt to login the user with the provided credentials"""
     user, password = request.json.split('\n')
     match = authenticate_user(app, user, password)
-    return {'result': "/Home" if match else "/"}
+    return {'result': "/" if match else "/Login"}
 
 
 @app.route('/register', methods=["POST"])
 def register():
     """Attempt to create a new user entry in the login database"""
-    return {'result': "TODO"}
+    return {'result': True}
 
 
 @app.route('/restaurants', methods=["GET"])

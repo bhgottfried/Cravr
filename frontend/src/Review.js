@@ -44,17 +44,18 @@ class UserRev extends React.Component {
         return (<h1>hello</h1>);
     }
 }
-export default function review() {
+export default function Review() {
     return (
         <div className="Home">
             <nav>
                 <ul id="nav">
-                    <li><a href="/Home">Find</a></li>
+                    <li><a href="/">Find</a></li>
                     <li><a href="/Review">Review</a></li>
                     <li><a href="/Preferences">Preferences</a></li>
-                    <li><a href="/">Logout</a></li>
+                    <li><a href="/Login">Logout</a></li>
                 </ul>
             </nav>
+            <br></br>
             <h1>Review</h1>
             <ReviewContainer></ReviewContainer>
         </div>

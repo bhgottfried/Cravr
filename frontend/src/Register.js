@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Form from "react-bootstrap/Form";
 import Cookies from 'universal-cookie';
 import { useHistory } from "react-router-dom";
@@ -19,9 +19,9 @@ export default function Register() {
 
 	function handleSubmit(event) {
 		event.preventDefault();
-		if (password != confirm) {
+		if (password !== confirm) {
 			alert("Error: Passwords must match!");
-			return;	// TODO make this not clear the data after submitting
+			return;
 		}
 
 		cookies.set('Username', email, { path: '/' });
@@ -37,7 +37,7 @@ export default function Register() {
 			body: JSON.stringify(email + "\n" + password)
 		}).then(response => response.json())
 		.then(response => {
-			if (response.result) {
+			if (response.result === "/Login") {
 				attemptLogin(email, password).then(function(res){
 					routeChange(res);
 				});
@@ -96,7 +96,7 @@ export default function Register() {
 			<br></br>
 			<i>Already have an account?</i>
 			<div name="register" className="login">
-				<button renderas="button" className="secondary-button" onClick={() => routeChange("/")}>
+				<button renderas="button" className="secondary-button" onClick={() => routeChange("/Login")}>
 					<span>Back to sign in</span>
 				</button>
 			</div>
