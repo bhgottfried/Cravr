@@ -1,7 +1,5 @@
 """Flask configuration"""
 
-
-
 class Config:  # pylint: disable=too-few-public-methods
     """Parameters for configuring Flask app"""
     # Database

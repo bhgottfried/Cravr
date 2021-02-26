@@ -9,7 +9,7 @@ from backend.flaskr.database_utils import DBConnection
 app = Flask(__name__)
 CORS(app)
 
-# Initialize DB configuration
+# Configure DB connection
 DBConnection.setup(app)
 
 @app.route('/login', methods=["POST"])
