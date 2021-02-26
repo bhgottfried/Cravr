@@ -45,10 +45,14 @@ def register_user(username, password):
     hash_result = bcrypt.hashpw(password.encode("utf-8"), salt)
     # Create the new user if it doesn't already exist
     try:
-        db_conn.execute_query(u"INSERT INTO auth (username, salt, hash) VALUE('{}', '{}', '{}')"
-                              .format(username, salt.decode("utf-8"), hash_result.decode("utf-8")))
+        result = db_conn.execute_query(u"INSERT INTO auth (username, salt, hash) VALUE('{}', '{}', "
+                                       u"'{}')".format(username, salt.decode("utf-8"),
+                                                       hash_result.decode("utf-8")))
+        if result == -1:
+            print("Could not connect to database!")
+            return False
+        print("User created successfully!")
+        return True
     except IntegrityError:
         print("User already exists!")
         return False
-    print("User created successfully!")
-    return True

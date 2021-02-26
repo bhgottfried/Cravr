@@ -59,7 +59,7 @@ class DBConnection:
         try:
             return cls.mysql.connect()
         except (AttributeError, OperationalError):
-            print("Couldn't get connection!")
+            print("Couldn't get database connection!")
             return None
 
     @classmethod
@@ -78,6 +78,8 @@ class DBConnection:
         :return: First result of the query
         """
         conn = self.get_connection()
+        if conn is None:
+            return -1
         cursor = conn.cursor()
         cursor.execute(query)
         result = cursor.fetchone()
