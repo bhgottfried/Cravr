@@ -26,7 +26,7 @@ def register():
     return {'result': True}
 
 
-@app.route('/restaurants', methods=["GET"])
+@app.route('/restaurants', methods=["POST"])
 def restaurants():
     """Parse the user's restaurant request and get restaurants from Yelp"""
     return {'result': "TODO"}

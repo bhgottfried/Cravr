@@ -1,12 +1,6 @@
 import React from 'react';
 
 
-export function getCookie(key) {
-    var b = document.cookie.match("(^|;)\\s*" + key + "\\s*=\\s*([^;]+)");
-    return b ? b.pop() : "";
-}
-
-
 const Restaurant = (props) => {
     return (
         <div>
@@ -20,60 +14,56 @@ const Restaurant = (props) => {
 
 
 class RestaurantContainer extends React.Component {
-    //essentially scrollable list of restaurant 
-    //dynamic list of restaurant elements
     constructor(props) {
         super(props);
-        this.PopulateStates = this.PopulateStates.bind(this);
+        this.addRestaurant = this.addRestaurant.bind(this);
+        this.bindButtons = this.bindButtons.bind(this);
     }
 
     state = {
         Restaurants: [
-            { id: 1, Name: 'Disney World', Distance: 1, Price: "$$", Rating: 3 },
-            { id: 2, Name: "Disney World2", Distance: 12, Price: "$$", Rating: 4 },
-            { id: 3, Name: "Disney World3", Distance: 4, Price: "$$", Rating: 4 }
+            // Start with empty list and add restaurants after
+            // the quiz is filled out and the backend returns suggestions
+            
+            // { id: 1, Name: 'Disney World', Distance: 1, Price: "$$", Rating: 3 },
+            // { id: 2, Name: "Disney World2", Distance: 12, Price: "$$", Rating: 4 },
+            // { id: 3, Name: "Disney World3", Distance: 4, Price: "$$", Rating: 4 }
         ]
     }
 
+    addRestaurant = (restaurant) => {
+        this.state.Restaurants.push(restaurant);
+    }
+
+    bindButtons = () => {
+        this.state.Restaurants.map((rest, index) => {
+            rest.accept = this.accept.bind(this, index);
+            rest.delete = this.delete.bind(this, index);
+        })
+    }
+
     accept = (index, e) => {
+        e.preventDefaults();
+        alert("accept is still called!")    // TEMP
         //runs when yummy button clicked
-        //TODO: add a restaurant to the list
-        //TODO: get one from backend
+        //TODO: What should this button do?
     }
 
     delete = (index, e) => {
-        //runs when yuck button clicked
+        e.preventDefaults();
+        alert("delete is still called!")    // TEMP
+        //runs when yuck button clicked and deletes entry in state
         const restaurants = Object.assign([], this.state.Restaurants);
         restaurants.splice(index, 1);
         this.setState({ Restaurants: restaurants })
-        //deletes entry in state
-        //TODO relate this to backend and get new restaurant
-    }
-
-    PopulateStates() {
-        //TODO add to Restaruants property in state above to dynamically populate the list
-        //runs in constructor and finds restaurants from the backend
-
-        fetch("/restaurants", {
-            method: "GET",
-            cache: "no-cache",
-            headers: {
-              "content_type": "application/json"
-            },
-            // TODO Send login credentials over SSL
-            body: JSON.stringify(getCookie("Username"))
-          }).then(response => response.json())
-          .then(response => {
-            //TODO read response data and set some states based on how many restaurants of data are sent
-          });
     }
 
     render() {
-        return (    // TODO make request to backend to fetch list of restuarants from Yelp API
+        return (
             <div>
                 <ul id="ResList">
                     {
-                        //dynamic list element that is insantiated from state.Restaruants
+                        //dynamic list element that is instantiated from state.Restaruants
                         //TODO: doesn't render for some reason
                         this.state.Restaurants.map((Rest, index) => {
                             return (
@@ -84,7 +74,8 @@ class RestaurantContainer extends React.Component {
                                         price={Rest.Price}
                                         rating={Rest.Rating}
                                         accept={this.accept.bind(this, index)}
-                                        delete={this.delete.bind(this, index)}></Restaurant>
+                                        delete={this.delete.bind(this, index)}>
+                                    </Restaurant>
                                     <br></br>
                                 </div>
                             )
