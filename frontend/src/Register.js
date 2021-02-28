@@ -19,7 +19,7 @@ export default function Register() {
 
 	function handleSubmit(event) {
 		event.preventDefault();
-		if (password != confirm) {
+		if (password !== confirm) {
 			alert("Error: Passwords must match!");
 			return;	// TODO make this not clear the data after submitting
 		}
@@ -37,7 +37,7 @@ export default function Register() {
 			body: JSON.stringify(email + "\n" + password)
 		}).then(response => response.json())
 		.then(response => {
-			if (response.result) {
+			if (response.result === "/Login") {
 				attemptLogin(email, password).then(function(res){
 					routeChange(res);
 				});
