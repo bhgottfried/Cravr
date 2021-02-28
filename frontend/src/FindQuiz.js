@@ -12,14 +12,12 @@ class FindQuizContainer extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { q1: '',
-                       q2: '',
-                       q3: ''
-                    };
-
-        this.rests = new RestaurantContainer();
-        this.rests.addRestaurant = this.rests.addRestaurant.bind(this);
-        this.rests.bindButtons = this.rests.bindButtons.bind(this);
+        this.state = {
+            q1: '',
+            q2: '',
+            q3: '',
+            showRes: 0
+        };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,23 +29,24 @@ class FindQuizContainer extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch("/restaurants", {
+        fetch("/prefrences", {
             method: "POST",
             cache: "no-cache",
             headers: {
-              "content_type": "application/json"
+                "content_type": "application/json"
             },
             body: JSON.stringify(
-                getCookie("Username") + "\n" + 
-                this.state.q1 + "\n" + 
-                this.state.q2 + "\n" + 
+                getCookie("Username") + "\n" +
+                this.state.q1 + "\n" +
+                this.state.q2 + "\n" +
                 this.state.q3
             )
-          }).then(response => response.json())
-          .then(response => {
-            //TODO Add server response instead of this example
-          }).then(this.rests.addRestaurant({ id: 1, Name: 'Disney World', Distance: 1, Price: "$$", Rating: 3 }))
-          .then(this.handleChange(event)); // This re-renders the object after handleSubmit
+        }).then(response => response.json())
+            .then(response => {
+                //TODO Add server response instead of this example
+            });//Restaurant data handling should be handled in Restaurant.js This should only send the quiz answers to the backend for storage
+
+        this.setState({ showRes: 1 });
     }
 
     render() {
@@ -78,17 +77,16 @@ class FindQuizContainer extends React.Component {
                             <option value="$$$">$$$</option>
                         </select>
                     </label>
-                    <br/>
+                    <br />
                     <label id="Question 4">
                         3. Maxmimum Distance (mi.)
                         <input type="number" defaultValue="1" min="1" value={this.state.q2.value} required onChange={this.handleChange}></input>
                     </label>
-                    <br/>
+                    <br />
                     <br></br>
                     <input type="submit" value="Submit" className="primary-button" />
                 </form>
-                {this.rests.render()}
-                {/* TODO Yummy and yuck still call the methods but don't update the rendered object */}
+                { this.state.showRes ? <RestaurantContainer></RestaurantContainer> : null}
             </div>
         );
     }

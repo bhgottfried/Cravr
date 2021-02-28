@@ -31,6 +31,10 @@ def restaurants():
     """Parse the user's restaurant request and get restaurants from Yelp"""
     return {'result': "TODO"}
 
+@app.route('/prefrences', methods=["POST"])
+def restaurants():
+    """Change the users prefrences in the database"""
+    return {'result': "TODO"}
 
 @app.route('/rated', methods=["POST"])
 def rated():

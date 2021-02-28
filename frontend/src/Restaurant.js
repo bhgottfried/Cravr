@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {getCookie} from "./FindQuiz.js";
 
 const Restaurant = (props) => {
     return (
@@ -16,46 +16,53 @@ const Restaurant = (props) => {
 class RestaurantContainer extends React.Component {
     constructor(props) {
         super(props);
-        this.addRestaurant = this.addRestaurant.bind(this);
-        this.bindButtons = this.bindButtons.bind(this);
+        this.replaceRest = this.replaceRest.bind(this);
     }
 
     state = {
         Restaurants: [
             // Start with empty list and add restaurants after
             // the quiz is filled out and the backend returns suggestions
-            
-            // { id: 1, Name: 'Disney World', Distance: 1, Price: "$$", Rating: 3 },
-            // { id: 2, Name: "Disney World2", Distance: 12, Price: "$$", Rating: 4 },
-            // { id: 3, Name: "Disney World3", Distance: 4, Price: "$$", Rating: 4 }
+
+            { id: 1, Name: 'Disney World', Distance: 1, Price: "$$", Rating: 3 }
         ]
     }
-
-    addRestaurant = (restaurant) => {
-        this.state.Restaurants.push(restaurant);
+    replaceRest = (name,rating) => {
+        //fetch restuarant from backend
+        //1 accepted, 0 hated 
+        fetch("/restaurants", {
+            method: "POST",
+            cache: "no-cache",
+            headers: {
+                "content_type": "application/json"
+            },
+            body: JSON.stringify(
+                getCookie("Username") +" "+ name +" "+ rating
+            )
+        }).then(response => {
+            //use response to add restaurant state
+            const restaurants = Object.assign([], this.state.Restaurants);
+            restaurants.push(response);
+            //restaurants.push({ id: 1, Name: 'Hello World', Distance: 1, Price: "$$", Rating: 3 });
+            this.setState({ Restaurants: restaurants }) // must setState to update the actual render
+        });
+        
     }
-
-    bindButtons = () => {
-        this.state.Restaurants.map((rest, index) => {
-            rest.accept = this.accept.bind(this, index);
-            rest.delete = this.delete.bind(this, index);
-        })
-    }
-
     accept = (index, e) => {
-        e.preventDefaults();
-        alert("accept is still called!")    // TEMP
-        //runs when yummy button clicked
-        //TODO: What should this button do?
+        const restaurants = Object.assign([], this.state.Restaurants);
+        const accepted = restaurants.splice(index, 1); // send this restaurant data to backend for feedback
+        this.setState({ Restaurants: restaurants })
+        //TODO: fetch a new restaurant from the backend to replace this element, also send data
+        this.replaceRest(accepted.values(),1);
+        
     }
 
     delete = (index, e) => {
-        e.preventDefaults();
-        alert("delete is still called!")    // TEMP
-        //runs when yuck button clicked and deletes entry in state
         const restaurants = Object.assign([], this.state.Restaurants);
-        restaurants.splice(index, 1);
+        const deleted = restaurants.splice(index, 1); // send this restaurant data to backend for feedback
         this.setState({ Restaurants: restaurants })
+        //TODO: fetch a new restaurant from the backend to replace this element, also send data
+        this.replaceRest(deleted.values(),0);
     }
 
     render() {
@@ -64,11 +71,10 @@ class RestaurantContainer extends React.Component {
                 <ul id="ResList">
                     {
                         //dynamic list element that is instantiated from state.Restaruants
-                        //TODO: doesn't render for some reason
                         this.state.Restaurants.map((Rest, index) => {
                             return (
                                 <div className="Rest">
-                                    <Restaurant  id={Rest.id}
+                                    <Restaurant id={Rest.id}
                                         name={Rest.Name}
                                         distance={Rest.Distance}
                                         price={Rest.Price}
