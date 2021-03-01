@@ -12,6 +12,7 @@ CORS(app)
 # Initialize DB configurations
 get_db_connection(app, init=True)
 
+
 @app.route('/login', methods=["POST"])
 def login():
     """Attempt to login the user with the provided credentials"""
@@ -29,7 +30,13 @@ def register():
 @app.route('/restaurants', methods=["POST"])
 def restaurants():
     """Parse the user's restaurant request and get restaurants from Yelp"""
-    return {'result': "TODO"}
+    return {'result': {     # Example restaurant to return
+        'id': 1,
+        'Name': 'Disney World',
+        'Distance': 1,
+        'Price': "$$",
+        'Rating': 3
+    }}
 
 
 @app.route('/preferences', methods=["POST"])
@@ -38,7 +45,7 @@ def preferences():
     return {'result': "TODO"}
 
 
-@app.route('/rated', methods=["POST"])
-def rated():
+@app.route('/rating', methods=["POST"])
+def rating():
     """Apply the user's rating to their profile and the restaurant's"""
     return {'result': "TODO"}

@@ -19,11 +19,11 @@ class App extends React.Component {
       <BrowserRouter>
         <div>
           <Switch>
-            <Route exact path="/Login" exact component={Login} />
-            <Route exact path="/" exact component={Home} />
-            <Route exact path="/Review" exact component={Review} />
-            <Route exact path="/Preferences" exact component={Prefr} />
-            <Route exact path="/Register" exact component={Register} />
+            <Route exact path="/Login" component={Login} />
+            <Route exact path="/" component={Home} />
+            <Route exact path="/Review" component={Review} />
+            <Route exact path="/Preferences" component={Prefr} />
+            <Route exact path="/Register" component={Register} />
           </Switch>
         </div>
       </BrowserRouter>

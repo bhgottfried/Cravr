@@ -16,17 +16,17 @@ const Restaurant = (props) => {
 class RestaurantContainer extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            Restaurants: [
+                // Start with empty list and add restaurants after the quiz is filled out and the backend returns suggestions
+                { id: 1, Name: 'Disney World', Distance: 1, Price: "$$", Rating: 3 }
+            ]
+        }
+
         this.replaceRest = this.replaceRest.bind(this);
     }
 
-    state = {
-        Restaurants: [
-            // Start with empty list and add restaurants after
-            // the quiz is filled out and the backend returns suggestions
-
-            { id: 1, Name: 'Disney World', Distance: 1, Price: "$$", Rating: 3 }
-        ]
-    }
     replaceRest = (name,rating) => {
         //fetch restuarant from backend
         //1 accepted, 0 hated 
@@ -41,25 +41,24 @@ class RestaurantContainer extends React.Component {
             )
         }).then(response => {
             //use response to add restaurant state
-            const restaurants = Object.assign([], this.state.Restaurants);
+            let restaurants = Object.assign([], this.state.Restaurants);
             restaurants.push(response);
             //restaurants.push({ id: 1, Name: 'Hello World', Distance: 1, Price: "$$", Rating: 3 });
             this.setState({ Restaurants: restaurants }) // must setState to update the actual render
         });
-        
     }
+
     accept = (index, e) => {
-        const restaurants = Object.assign([], this.state.Restaurants);
-        const accepted = restaurants.splice(index, 1); // send this restaurant data to backend for feedback
+        let restaurants = Object.assign([], this.state.Restaurants);
+        let accepted = restaurants.splice(index, 1); // send this restaurant data to backend for feedback
         this.setState({ Restaurants: restaurants })
         //TODO: fetch a new restaurant from the backend to replace this element, also send data
         this.replaceRest(accepted.values(),1);
-        
     }
 
     delete = (index, e) => {
-        const restaurants = Object.assign([], this.state.Restaurants);
-        const deleted = restaurants.splice(index, 1); // send this restaurant data to backend for feedback
+        let restaurants = Object.assign([], this.state.Restaurants);
+        let deleted = restaurants.splice(index, 1); // send this restaurant data to backend for feedback
         this.setState({ Restaurants: restaurants })
         //TODO: fetch a new restaurant from the backend to replace this element, also send data
         this.replaceRest(deleted.values(),0);

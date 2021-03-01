@@ -2,10 +2,6 @@ import React from 'react';
 import './Home.css';
 //import { Navbar,  Nav} from 'rsuite';
 import { getCookie } from "./FindQuiz"
-import {
-    Link
-
-} from "react-router-dom"
 class ReviewContainer extends React.Component {
     //essentially scrollable list of reviews
     constructor(props) {
@@ -24,7 +20,7 @@ class ReviewContainer extends React.Component {
     }
     getUserReview = () => {
         //get restaurant data from backend to formulate the review
-        fetch("/rated", {
+        fetch("/rating", {
             method: "POST",
             cache: "no-cache",
             headers: {
