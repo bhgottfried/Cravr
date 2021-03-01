@@ -29,7 +29,7 @@ class FindQuizContainer extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch("/prefrences", {
+        fetch("/preferences", {
             method: "POST",
             cache: "no-cache",
             headers: {
