@@ -38,13 +38,6 @@ def restaurants():
         'Rating': 3
     }}
 
-
-@app.route('/preferences', methods=["POST"])
-def preferences():
-    """Change the users prefrences in the database"""
-    return {'result': "TODO"}
-
-
 @app.route('/rating', methods=["POST"])
 def rating():
     """Apply the user's rating to their profile and the restaurant's"""

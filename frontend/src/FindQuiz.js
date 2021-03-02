@@ -1,10 +1,19 @@
 import React from 'react';
-import RestaurantContainer from './Restaurant.js';
 
 
 export function getCookie(key) {
     var b = document.cookie.match("(^|;)\\s*" + key + "\\s*=\\s*([^;]+)");
     return b ? b.pop() : "";
+}
+const Restaurant = (props) => {
+    return (
+        <div>
+            <h1>{props.name}</h1>
+            <h3> Distance:{props.distance} mi</h3>
+            <h5>Price:{props.price} Rating:{props.rating}/5</h5>
+            <button onClick={props.accept}>Yummy!</button> <button onClick={props.delete}>Yuck</button>
+        </div>
+    )
 }
 
 
@@ -16,11 +25,63 @@ class FindQuizContainer extends React.Component {
             q1: '',
             q2: '',
             q3: '',
-            showRes: false
+            showRes: false,
+            Restaurants: [
+                    // Start with empty list and add restaurants after the quiz is filled out and the backend returns suggestions
+                    { id: 1, Name: 'Disney World', Distance: 1, Price: "$$", Rating: 3 }
+                ]
         };
-
+        this.addRestaurant = this.addRestaurant.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    addRestaurant = (restaurant) => {
+        //adds restaurant to state
+        let restaurants = Object.assign([], this.state.Restaurants);
+        this.state.Restaurants.push(restaurants);
+        this.setState({ Restaurants: restaurants }) 
+    }
+    replaceRest = (name,rating) => {
+        //fetch restuarant from backend
+        //1 accepted, 0 hated 
+        fetch("/restaurants", {
+            method: "POST",
+            cache: "no-cache",
+            headers: {
+                "content_type": "application/json"
+            },
+            body: JSON.stringify(
+                getCookie("Username") + "\n" +
+                this.state.q1 + "\n" +
+                this.state.q2 + "\n" +
+                this.state.q3 + "\n" +
+                name + "\n" +
+                rating
+            )
+        }).then(response => {
+            //TODO: not sure if this fully works
+            //TODO: format response so that we can intrepret it into a restaurant element
+
+
+            //use response to add restaurant state
+            let restaurants = Object.assign([], this.state.Restaurants);
+            restaurants.push(response);
+            this.setState({ Restaurants: restaurants }) // must setState to update the actual render
+        });
+    }
+    accept = (index, e) => {
+        let restaurants = Object.assign([], this.state.Restaurants);
+        let accepted = restaurants.splice(index, 1); // send this restaurant data to backend for feedback
+        this.setState({ Restaurants: restaurants })
+        //TODO: fetch a new restaurant from the backend to replace this element, also send data
+        this.replaceRest(accepted.values(),1);
+    }
+    delete = (index, e) => {
+        let restaurants = Object.assign([], this.state.Restaurants);
+        let deleted = restaurants.splice(index, 1); // send this restaurant data to backend for feedback
+        this.setState({ Restaurants: restaurants })
+        //TODO: fetch a new restaurant from the backend to replace this element, also send data
+        this.replaceRest(deleted.values(),0);
     }
 
     handleChange(event) {
@@ -44,7 +105,7 @@ class FindQuizContainer extends React.Component {
         }).then(response => response.json())
             .then(response => {
                 //TODO Add server response instead of this example
-            });//Restaurant data handling should be handled in Restaurant.js This should only send the quiz answers to the backend for storage
+            }).then(this.addRestaurant({ id: 1, Name: 'Disney World', Distance: 1, Price: "$$", Rating: 3 }))
 
         this.setState({ showRes: true });
     }
@@ -99,7 +160,23 @@ class FindQuizContainer extends React.Component {
                     <br></br>
                     <input type="submit" value="Submit" className="primary-button" />
                 </form>
-                { this.state.showRes ? <RestaurantContainer></RestaurantContainer> : null}
+                { this.state.showRes ? 
+                        //dynamic list element that is instantiated from state.Restaruants
+                        this.state.Restaurants.map((Rest, index) => {
+                            return (
+                                <div className="Rest">
+                                    <Restaurant id={Rest.id}
+                                        name={Rest.Name}
+                                        distance={Rest.Distance}
+                                        price={Rest.Price}
+                                        rating={Rest.Rating}
+                                        accept={this.accept.bind(this, index)}
+                                        delete={this.delete.bind(this, index)}>
+                                    </Restaurant>
+                                    <br></br>
+                                </div>
+                            )
+                        }): null}
             </div>
         );
     }
