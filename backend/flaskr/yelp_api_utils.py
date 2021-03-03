@@ -1,0 +1,62 @@
+"""Utilities for requesting data from the Yelp API"""
+
+import json
+import requests
+from backend.config import YelpConfig
+
+BASE_URL = "https://api.yelp.com/v3"
+BUSINESS_SEARCH_URL = BASE_URL + "/businesses/search"
+PHONE_SEARCH_URL = BASE_URL + "/businesses/search/phone"
+TRANSACTION_SEARCH_URL = BASE_URL + "/transactions/{transaction_type}/search"
+BUSINESS_DETAILS_URL = BASE_URL + "/businesses/{id}"
+BUSINESS_MATCH_URL = BASE_URL + "/businesses/matches"
+BUSINESS_REVIEWS_URL = BASE_URL + "/businesses/{id}/reviews"
+AUTOCOMPLETE_URL = BASE_URL + "/autocomplete"
+SEARCH_LIMIT = 5
+
+class YelpAPI:
+    """
+    Makes calls to the Yelp API for searches and business information. Searches will require
+    location parameters (city or latitude and longitude), and getting business data will require
+    a business ID.
+    """
+
+    def __init__(self):
+        """
+        Makes an instance to execute API calls.
+        :return: None
+        """
+        self.api_key = YelpConfig.YELP_API_KEY
+        self.headers = {"Authorization": "Bearer {}".format(self.api_key)}
+
+    def request(self, url, params):
+        """
+        Send a GET request to the Yelp API and return the response.
+        :param url: Request URL
+        :param params: Request parameters
+        :return: JSON response
+        """
+        response = requests.get(url, headers=self.headers, params=params)
+        return response
+
+    def search(self, term, location):
+        """
+        Query the Yelp Search API.
+        :param term: Search term
+        :param location: Search location (latitude and longitude or city)
+        :return: JSON search results
+        """
+        params = {
+            "term": term.replace(" ", "+"),
+            "limit": SEARCH_LIMIT
+        }
+        if isinstance(location, tuple):
+            params["latitude"] = str(location[0])
+            params["longitude"] = str(location[1])
+        elif isinstance(location, str):
+            params["location"] = location.replace(" ", "+")
+        else:
+            print("Location must be entered as either a 2-tuple (lat, long) or a string")
+            return None
+        response = self.request(url=BUSINESS_SEARCH_URL, params=params)
+        return json.loads(response.content)

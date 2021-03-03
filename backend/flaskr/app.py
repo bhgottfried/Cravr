@@ -4,6 +4,7 @@ from flask import Flask, request
 from flask_cors import CORS
 from backend.flaskr.authentication_utils import authenticate_user, register_user
 from backend.flaskr.database_utils import DBConnection
+from backend.flaskr.yelp_api_utils import YelpAPI
 
 # Instantiate app
 app = Flask(__name__)
@@ -38,3 +39,13 @@ def restaurants():
 def rated():
     """Apply the user's rating to their profile and the restaurant's"""
     return {'result': "TODO"}
+
+
+if __name__ == "__main__":
+    # Search Yelp API
+    yelp = YelpAPI()
+    # result = yelp.search(term="sushi", location="lafayette, in")
+    result = yelp.search(term="sushi", location=(40.4167,-86.8753))
+    print(result)
+    for item in result["businesses"]:
+        print(item["name"])
