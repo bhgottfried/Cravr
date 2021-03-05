@@ -5,13 +5,15 @@ export function getCookie(key) {
     var b = document.cookie.match("(^|;)\\s*" + key + "\\s*=\\s*([^;]+)");
     return b ? b.pop() : "";
 }
+
+
 const Restaurant = (props) => {
     return (
         <div>
             <h1>{props.name}</h1>
             <h3> Distance:{props.distance} mi</h3>
             <h5>Price:{props.price} Rating:{props.rating}/5</h5>
-            <button onClick={props.accept}>Yummy!</button> <button onClick={props.delete}>Yuck</button>
+            <button onClick={props.accept}>Yummy!</button> <button onClick={props.reject}>Yuck</button>
         </div>
     )
 }
@@ -22,29 +24,39 @@ class FindQuizContainer extends React.Component {
         super(props);
 
         this.state = {
-            q1: '',
-            q2: '',
-            q3: '',
+            q1: 'Bar & Grill',
+            q2: '$',
+            q3: '1',
             showRes: false,
-            Restaurants: [
-                    // Start with empty list and add restaurants after the quiz is filled out and the backend returns suggestions
-                    { id: 1, Name: 'Disney World', Distance: 1, Price: "$$", Rating: 3 }
-                ]
+            Restaurants: []     // Probably shouldn't be a list since there's at most one, but refactor is hard...
         };
-        this.addRestaurant = this.addRestaurant.bind(this);
+        this.setRestaurant = this.setRestaurant.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-    addRestaurant = (restaurant) => {
-        //adds restaurant to state
-        let restaurants = Object.assign([], this.state.Restaurants);
-        this.state.Restaurants.push(restaurants);
-        this.setState({ Restaurants: restaurants }) 
+
+    setRestaurant = (restaurant) => {
+        this.setState({ Restaurants: [restaurant] });
     }
-    replaceRest = (name,rating) => {
-        //fetch restuarant from backend
-        //1 accepted, 0 hated 
-        fetch("/restaurants", {
+
+    accept = (e) => {
+        e.preventDefault()
+        let restaurant = this.state.Restaurants.pop();
+        this.setState({ Restaurants: [] });
+        this.setState({ showRes: false });
+        this.rateRestaurant(true, restaurant.id);
+        // TODO Thank the user or something and tell them to rate the restaurant after they go
+    }
+
+    reject = (e) => {
+        e.preventDefault()
+        let restaurant = this.state.Restaurants.pop();
+        this.handleSubmit(e);   // Get new restaurant
+        this.rateRestaurant(false, restaurant.id);
+    }
+    
+    rateRestaurant = (rating, restaurantID) => {
+        return fetch("/rate_suggestion", {
             method: "POST",
             cache: "no-cache",
             headers: {
@@ -52,36 +64,11 @@ class FindQuizContainer extends React.Component {
             },
             body: JSON.stringify(
                 getCookie("Username") + "\n" +
-                this.state.q1 + "\n" +
-                this.state.q2 + "\n" +
-                this.state.q3 + "\n" +
-                name + "\n" +
-                rating
+                rating + "\n" +
+                restaurantID
             )
-        }).then(response => {
-            //TODO: not sure if this fully works
-            //TODO: format response so that we can intrepret it into a restaurant element
-
-
-            //use response to add restaurant state
-            let restaurants = Object.assign([], this.state.Restaurants);
-            restaurants.push(response);
-            this.setState({ Restaurants: restaurants }) // must setState to update the actual render
-        });
-    }
-    accept = (index, e) => {
-        let restaurants = Object.assign([], this.state.Restaurants);
-        let accepted = restaurants.splice(index, 1); // send this restaurant data to backend for feedback
-        this.setState({ Restaurants: restaurants })
-        //TODO: fetch a new restaurant from the backend to replace this element, also send data
-        this.replaceRest(accepted.values(),1);
-    }
-    delete = (index, e) => {
-        let restaurants = Object.assign([], this.state.Restaurants);
-        let deleted = restaurants.splice(index, 1); // send this restaurant data to backend for feedback
-        this.setState({ Restaurants: restaurants })
-        //TODO: fetch a new restaurant from the backend to replace this element, also send data
-        this.replaceRest(deleted.values(),0);
+        }).then(response => response.json())
+        .then(response => response.result);
     }
 
     handleChange(event) {
@@ -90,7 +77,7 @@ class FindQuizContainer extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch("/preferences", {
+        fetch("/restaurants", {
             method: "POST",
             cache: "no-cache",
             headers: {
@@ -103,9 +90,7 @@ class FindQuizContainer extends React.Component {
                 this.state.q3
             )
         }).then(response => response.json())
-            .then(response => {
-                //TODO Add server response instead of this example
-            }).then(this.addRestaurant({ id: 1, Name: 'Disney World', Distance: 1, Price: "$$", Rating: 3 }))
+        .then(response => this.setRestaurant(response.result));
 
         this.setState({ showRes: true });
     }
@@ -115,10 +100,10 @@ class FindQuizContainer extends React.Component {
             <div id="Quiz">
                 <h1>Find restaurants near you</h1>
                 <form onSubmit={this.handleSubmit}>
-                    <label id="Question 1">
+                    <label id="q1">
                         1. What are you in the mood for?
                         {/* TODO Allow multiple boxes to be checked */}
-                        <select value={this.state.q1.value} required onChange={this.handleChange}>
+                        <select value={this.state.q1.value} required onChange={this.handleChange} name="q1">
                             <option value="Bar & Grill">Bar & Grill</option>
                             <option value="Sandwiches">Sandwiches</option>
                             <option value="Pizza">Pizza</option>
@@ -142,9 +127,9 @@ class FindQuizContainer extends React.Component {
                         </select>
                     </label>
                     <br />
-                    <label id="Question 3">
+                    <label id="q2">
                         2. How much are you willing to spend?&emsp;&emsp;
-                        <select value={this.state.q2.value} required onChange={this.handleChange}>
+                        <select value={this.state.q2.value} required onChange={this.handleChange} name="q2">
                             <option value="$">$</option>
                             <option value="$$">$$</option>
                             <option value="$$$">$$$</option>
@@ -152,17 +137,21 @@ class FindQuizContainer extends React.Component {
                         </select>
                     </label>
                     <br />
-                    <label id="Question 4">
+                    <label id="q3">
                         3. Maxmimum Distance (mi.)&emsp;
-                        <input type="number" defaultValue="1" min="1" value={this.state.q2.value} required onChange={this.handleChange}></input>
+                        <input type="number" defaultValue="1" min="1" value={this.state.q2.value} name="q3"
+                                required onChange={this.handleChange}>
+                        </input>
                     </label>
                     <br />
                     <br></br>
                     <input type="submit" value="Submit" className="primary-button" />
+                    <br />
+                    <br></br>
                 </form>
                 { this.state.showRes ? 
                         //dynamic list element that is instantiated from state.Restaruants
-                        this.state.Restaurants.map((Rest, index) => {
+                        this.state.Restaurants.map((Rest) => {
                             return (
                                 <div className="Rest">
                                     <Restaurant id={Rest.id}
@@ -170,8 +159,8 @@ class FindQuizContainer extends React.Component {
                                         distance={Rest.Distance}
                                         price={Rest.Price}
                                         rating={Rest.Rating}
-                                        accept={this.accept.bind(this, index)}
-                                        delete={this.delete.bind(this, index)}>
+                                        accept={this.accept.bind(this)}
+                                        reject={this.reject.bind(this)}>
                                     </Restaurant>
                                     <br></br>
                                 </div>
