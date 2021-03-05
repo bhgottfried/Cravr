@@ -39,7 +39,7 @@ def restaurants():
     dist  = args[3]
 
     print(user, food, price, dist)
-    # TODO get restaurants from Yelp accessor class
+    # Get restaurants from Yelp accessor class
 
     return {'result': {     # Example restaurant to return
         'id': 1,
@@ -59,6 +59,6 @@ def rate_suggestion():
     rest_id = args[2]
 
     print(user, rating, rest_id)
-    # TODO send data to the user's model for training
+    # Send data to the user's model for training
 
     return {'result': "TODO"}
