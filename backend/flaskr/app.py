@@ -2,29 +2,31 @@
 
 from flask import Flask, request
 from flask_cors import CORS
-from backend.flaskr.authentication_utils import authenticate_user
-from backend.flaskr.database_utils import get_db_connection
+from backend.flaskr.authentication_utils import authenticate_user, register_user
+from backend.flaskr.database_utils import DBConnection
 
 # Instantiate app
 app = Flask(__name__)
 CORS(app)
 
-# Initialize DB configurations
-get_db_connection(app, init=True)
+# Configure DB connection
+DBConnection.setup(app)
 
 
 @app.route('/login', methods=["POST"])
 def login():
     """Attempt to login the user with the provided credentials"""
     user, password = request.json.split('\n')
-    match = authenticate_user(app, user, password)
-    return {'result': "/" if match else "/Login"}
+    match = authenticate_user(user, password)
+    return {'result': "/Home" if match else "/"}
 
 
 @app.route('/register', methods=["POST"])
 def register():
-    """Attempt to create a new user entry in the login database"""
-    return {'result': True}
+    """Attempt to create a new user entry in the authentication database"""
+    user, password = request.json.split('\n')
+    registration_success = register_user(user, password)
+    return {'result': "/Login" if registration_success else "/Register"}
 
 
 @app.route('/restaurants', methods=["POST"])

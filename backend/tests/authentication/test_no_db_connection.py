@@ -1,7 +1,7 @@
 import pytest
 from flask import Flask
 from flask_cors import CORS
-from backend.flaskr.database_utils import get_db_connection
+from backend.flaskr.database_utils import DBConnection
 
 
 def test_wrong_socket():
@@ -9,7 +9,8 @@ def test_wrong_socket():
     app = Flask(__name__)
     CORS(app)
     # Try to establish a connection with the wrong socket
-    conn = get_db_connection(app, socket=("localhost", 9999))
+    DBConnection.setup(app, socket=("localhost", 9999))
+    conn = DBConnection().connections[0]
     assert conn is None
 
 def test_invalid_credentials():
@@ -17,7 +18,8 @@ def test_invalid_credentials():
     app = Flask(__name__)
     CORS(app)
     # Try to establish a connection with invalid login credentials
-    conn = get_db_connection(app, credentials=("baduser", "badpass"))
+    DBConnection.setup(app, credentials=("baduser", "badpass"))
+    conn = DBConnection().connections[0]
     assert conn is None
 
 def test_invalid_database():
@@ -25,7 +27,8 @@ def test_invalid_database():
     app = Flask(__name__)
     CORS(app)
     # Try to establish a connection with an invalid database name
-    conn = get_db_connection(app, database="baddatabase")
+    DBConnection.setup(app, database="baddatabase")
+    conn = DBConnection().connections[0]
     assert conn is None
 
 

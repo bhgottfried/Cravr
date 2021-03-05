@@ -2,57 +2,87 @@
 
 from flaskext.mysql import MySQL
 from pymysql.err import OperationalError
+from backend.db_config import Config
 
-
-def get_db_connection(app,
-                      socket=("localhost", 3306),
-                      credentials=("root", "ece49595bois!"),
-                      database="authdb",
-                      init=False
-                      ):
+class DBConnection:
     """
-    This function will get a connection for the MySQL server.
-    :param app: Flask app instance
-    :param socket: Hostname and port of the MySQL server
-    :param user: User with which to access the server
-    :param pwd: User's password
-    :param database: Database to use
-    :return: Database connection
+    Maintains an instance of MySQL and a connection pool with methods for getting/returning
+    connections and executing queries. Connections are automatically returned to the connection
+    pool after each query has been completed.
     """
-    # Create MySQL instance if it doesn't already exist
-    mysql = MySQL()
-    app.config["MYSQL_DATABASE_HOST"] = socket[0]
-    app.config["MYSQL_DATABASE_PORT"] = socket[1]
-    app.config["MYSQL_DATABASE_USER"] = credentials[0]
-    app.config["MYSQL_DATABASE_PASSWORD"] = credentials[1]
-    app.config["MYSQL_DATABASE_DB"] = database
-    app.config["MYSQL_DATABASE_CHARSET"] = "utf8"
+    mysql = None
+    connections = []
 
-    if init:
-        mysql.init_app(app)
-        init = False
-        return None
+    def __init__(self):
+        """
+        Make an instance to execute queries.
+        :return: None
+        """
 
-    # Try to connect to the database
-    try:
-        return mysql.connect()
-    except (AttributeError, OperationalError):
-        return None
+    @classmethod
+    def setup(cls, app, **kwargs):
+        """
+        Initializes MySQL at the start of Flask app. Should be run once per app instance.
+        :param app: Flask app instance
+        :param kwargs: Allows for nonstandard MySQL parameters
+        :return: None
+        """
+        # Initialize mysql object and connection pool
+        cls.mysql = MySQL()
+        cls.connections = []
+        # Do a standard configuration
+        app.config.from_object(Config())
+        # Modify configuration based on arguments
+        for arg, value in kwargs.items():
+            if arg == "socket":
+                app.config["MYSQL_DATABASE_HOST"] = value[0]
+                app.config["MYSQL_DATABASE_PORT"] = value[1]
+            elif arg == "credentials":
+                app.config["MYSQL_DATABASE_USER"] = value[0]
+                app.config["MYSQL_DATABASE_PASSWORD"] = value[1]
+            elif arg == "database":
+                app.config["MYSQL_DATABASE_DB"] = value
+            elif arg == "charset":
+                app.config["MYSQL_DATABASE_CHARSET"] = value
+        # Initialize app and make one connection
+        cls.mysql.init_app(app)
+        cls.return_connection(cls.get_connection())
 
-def execute_auth_query(app, query):
-    """
-    This function executes a query on the MySQL server.
-    :param app: Flask app instance
-    :param query: The query to be executed
-    :return: The first result of the query
-    """
-    conn = get_db_connection(app, database="authdb")
-    if conn is None:
-        print("Could not connect to database!")
-        return None
-    cursor = conn.cursor()
-    cursor.execute(query)
-    result = cursor.fetchone()
-    conn.commit()
-    conn.close()
-    return result
+    @classmethod
+    def get_connection(cls):
+        """
+        Gets a connection from the pool. Creates a new connection if none are available.
+        :return: Database connection object
+        """
+        if cls.connections:
+            return cls.connections.pop()
+        try:
+            return cls.mysql.connect()
+        except (AttributeError, OperationalError):
+            print("Couldn't get database connection!")
+            return None
+
+    @classmethod
+    def return_connection(cls, conn):
+        """
+        Returns a database connection to the connection pool.
+        :param conn: Database connection object
+        :return: None
+        """
+        cls.connections.append(conn)
+
+    def execute_query(self, query):
+        """
+        Gets a connection, executes a query, and returns the connection.
+        :param query: SQL query to be executed
+        :return: First result of the query
+        """
+        conn = self.get_connection()
+        if conn is None:
+            return -1
+        cursor = conn.cursor()
+        cursor.execute(query)
+        result = cursor.fetchone()
+        conn.commit()
+        self.return_connection(conn)
+        return result

@@ -45,7 +45,7 @@ class FindQuizContainer extends React.Component {
         this.setState({ Restaurants: [] });
         this.setState({ showRes: false });
         this.rateRestaurant(true, restaurant.id);
-        // TODO Thank the user or something and tell them to rate the restaurant after they go
+        alert("Have a nice meal! Don't forget to rate your experience afterward for even better recommendations!");
     }
 
     reject = (e) => {
