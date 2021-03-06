@@ -45,7 +45,7 @@ class FindQuizContainer extends React.Component {
         this.setState({ Restaurants: [] });
         this.setState({ showRes: false });
         this.rateRestaurant(true, restaurant.id);
-        alert("Have a nice meal! Don't forget to rate your experience afterward for even better recommendations!");
+        alert("Have a nice meal! After you eat, don't forget to rate your experience for even better recommendations!");
     }
 
     reject = (e) => {
@@ -71,12 +71,7 @@ class FindQuizContainer extends React.Component {
         .then(response => response.result);
     }
 
-    handleChange(event) {
-        this.setState({ [event.target.name]: event.target.value });
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
+    getRestaurant = (position) => {
         fetch("/restaurants", {
             method: "POST",
             cache: "no-cache",
@@ -87,12 +82,25 @@ class FindQuizContainer extends React.Component {
                 getCookie("Username") + "\n" +
                 this.state.q1 + "\n" +
                 this.state.q2 + "\n" +
-                this.state.q3
+                this.state.q3 + "\n" + 
+                position.coords.latitude + "\n" + 
+                position.coords.longitude
             )
         }).then(response => response.json())
         .then(response => this.setRestaurant(response.result));
 
         this.setState({ showRes: true });
+    }
+
+    handleChange(event) {
+        this.setState({ [event.target.name]: event.target.value });
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        navigator.geolocation.getCurrentPosition(this.getRestaurant, () => {
+            alert("You must enable your location to receive personalized restaurant suggestions.");
+        });
     }
 
     render() {
@@ -111,6 +119,8 @@ class FindQuizContainer extends React.Component {
                             <option value="Breakfast">Breakfast</option>
                             <option value="Steakhouse">Steakhouse</option>
                             <option value="Fine Dining">Fine Dining</option>
+                            <option value="Sushi">Sushi</option>
+                            <option value="Seafood">Seafood</option>
                             <option value="Barbeque">Barbeque</option>
                             <option value="American">American</option>
                             <option value="Mexican">Mexican</option>

@@ -37,8 +37,9 @@ def restaurants():
     food  = args[1]
     price = args[2]
     dist  = args[3]
+    loc   = (args[4], args[5])
 
-    print(user, food, price, dist)
+    print(user, food, price, dist, loc)
     # Get restaurants from Yelp accessor class
 
     return {'result': {     # Example restaurant to return
