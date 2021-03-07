@@ -2,7 +2,7 @@
 
 from time import time
 
-class RestaurantCache(object):
+class RestaurantCache:
     """
     Class to maintain a mapping of users to a collection of which restaurants
     they have been assigned within a set timeout limit.
@@ -48,6 +48,9 @@ class RestaurantCache(object):
             # Get user's cache that maps restaurant ID to when it was inserted
             cache = self.table[user]
             now = time()
+            stale_ids = []
             for restaurant_id, insertion_time in cache.items():
                 if now - insertion_time > self.timeout:
-                    cache.pop(restaurant_id)
+                    stale_ids.append(restaurant_id)
+            for restaurant_id in stale_ids:
+                cache.pop(restaurant_id)
