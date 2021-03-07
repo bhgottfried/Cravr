@@ -11,6 +11,7 @@ export default function Register() {
 	const [password, setPassword] = useState("");
 	const [confirm, setConfirm] = useState("");
 	const cookies = new Cookies();
+	const cryptoJS = require("crypto-js");
 
 	const history = useHistory();
 	const routeChange = path => { 
@@ -25,7 +26,9 @@ export default function Register() {
 		}
 
 		cookies.set('Username', email, { path: '/' });
-		cookies.set('Password', password, { path: '/' });
+		const encpassword = cryptoJS.AES.encrypt(password,'CravrIsAwesome').toString(); 
+		cookies.set('Password', encpassword, { path: '/' });
+		
 		console.log(cookies.get('Username'));
 
 		fetch("/register", {

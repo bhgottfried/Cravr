@@ -6,42 +6,49 @@ class ReviewContainer extends React.Component {
     //essentially scrollable list of reviews
     constructor(props) {
         super(props);
-        this.getUserReview = this.getUserReview.bind(this);
+        this.getNewUserReview = this.getNewUserReview.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     state = {
         Reviews: [
-            // Start with empty list and add restaurants after
-            // the quiz is filled out and the backend returns suggestions
+            // Start with empty list and add reviews from backend
+            // TODO: get actual reviews when page is created
+            //TODO: if no reviews display default sorry go eat somewhere so we can get you better recommendations
 
-            { id: 1, Name: 'Disney World', Distance: 1, UserRating: 0, Repeat: 0 },
-            { id: 2, Name: 'Taco World', Distance: 23, UserRating: 0, Repeat: 0 }
+            { id: 1, Name: 'Disney World', Distance: 1, UserRating: 1, Repeat: 0 },
+            { id: 2, Name: 'Taco World', Distance: 23, UserRating: 1, Repeat: 0 }
         ]
     }
-    getUserReview = () => {
+    getNewUserReview = (rating, repeat) => {
         //get restaurant data from backend to formulate the review
-        fetch("/rating", {
+        fetch("/rating", { //TODO: figure out backend handle
             method: "POST",
             cache: "no-cache",
             headers: {
                 "content_type": "application/json"
             },
             body: JSON.stringify(
-                getCookie("Username") + "hello"
+                getCookie("Username") + " " + this.state.Reviews
             )
         }).then(response => {
-            //use response to add restaurant state
             const reviews = Object.assign([], this.state.Reviews);
             reviews.push(response);
-            //restaurants.push({ id: 1, Name: 'Hello World', Distance: 1, Price: "$$", Rating: 3 });
-            this.setState({ Reviews: reviews }) // must setState to update the actual render
+            this.setState({ Reviews: reviews })
         });
     }
-    submit = (index, e) => {
-        //TODO send review to backend
-    }
     handleChange(event) {
+        event.preventDefault();
         this.setState({ [event.target.name]: event.target.value });
+    }
+    handleSubmit(event, index) {
+        //WIP
+        //TODO: get data from delted entry and send it using getNewUserRevew()
+        const reviews = Object.assign([], this.state.Reviews);
+        reviews.splice(index, 1)
+        this.setState({ Reviews: reviews })
+        alert("review Submitted. Thanks! ");
+
     }
     render() {
         return (
@@ -55,42 +62,47 @@ class ReviewContainer extends React.Component {
                                     <UserRev id={Revs.id}
                                         name={Revs.Name}
                                         distance={Revs.Distance}
-                                        UserRating={Revs.UserRating}
-                                        Repeat={Revs.Repeat}
+                                        rating={Revs.UserRating}
+                                        repeat={Revs.Repeat}
                                         change={this.handleChange.bind(this)}
-                                        submit={this.submit.bind(this, index)}>
+                                        submit={this.handleSubmit.bind(this, index)}>
                                     </UserRev>
                                     <br></br>
                                 </div>
                             )
                         })
                     }
+
                 </ul>
             </div>
         );
     }
 }
-//TODO: get list of unreviewed restaurants for a user form backend
 const UserRev = (props) => {
     return (
         <div>
             <h1>{props.name}</h1>
             <h3> Distance:{props.distance} mi</h3>
-            <form onSubmit={props.submit}>
+            <form onSubmit={
+                (e) => { //Need this to stop page from reloading wiht every submission
+                    e.preventDefault();
+                    e.stopPropagation();
+                    props.submit();
+                }}>
                 <label id="Question 1">
                     How would you rate your experience on a scale of 1-5?
-                        <input type="number" defaultValue="1" min="1" max="5" onChange={props.change}></input>
+                        <input type="number" defaultValue="1" min="1" max="5" required onChange={props.change} value={props.UserRating}></input>
                 </label>
                 <br></br>
                 <label id="Question 2">
                     Would you go here again?
-                    <select onChange={props.change}>
-                            <option value="0">Yes</option>
-                            <option value="1">No</option>
+                    <select required onChange={props.change} value={props.Repeat}>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
                     </select>
                 </label>
                 <br></br>
-                <input type="submit" value="Submit"/>
+                <input type="submit" value="Submit Review" className="tertiary-button" />
             </form>
         </div>
     )

@@ -23,12 +23,12 @@ export function attemptLogin(email, password) {
     return path;
   });
 }
-
+const cookies = new Cookies();
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const cookies = new Cookies();
-
+  
+  const cryptoJS = require("crypto-js");
   const history = useHistory();
   const routeChange = path => { 
     history.push(path);
@@ -37,16 +37,21 @@ function Login() {
   function handleSubmit(event) {
 		event.preventDefault();
     cookies.set('Username', email, { path: '/' });
-    cookies.set('Password', password, { path: '/' });
+    const encpassword = cryptoJS.AES.encrypt(password,'CravrIsAwesome').toString(); 
+		cookies.set('Password', encpassword, { path: '/' });
     console.log(cookies.get('Username'));
     
     attemptLogin(email, password).then(function(res){
       routeChange(res);
     });
   }
-
+  function removeCookies(){
+    cookies.remove('Username');
+    cookies.remove('Password');
+  }
   return (
     <div className="App">
+      {removeCookies()}
       <nav className="bar">
         <span>Cravr</span>
       </nav>
