@@ -29,7 +29,7 @@ class YelpAPI:
         self.api_key = YelpConfig.YELP_API_KEY
         self.headers = {"Authorization": "Bearer {}".format(self.api_key)}
 
-    def request(self, url, params):
+    def request(self, url, params=None):
         """
         Send a GET request to the Yelp API and return the response.
         :param url: Request URL
@@ -39,7 +39,7 @@ class YelpAPI:
         response = requests.get(url, headers=self.headers, params=params)
         return response
 
-    def search(self, term, location):
+    def business_search(self, term, location):
         """
         Query the Yelp Search API.
         :param term: Search term
@@ -59,4 +59,14 @@ class YelpAPI:
             print("Location must be entered as either a 2-tuple (lat, long) or a string")
             return None
         response = self.request(url=BUSINESS_SEARCH_URL, params=params)
+        return json.loads(response.content)
+
+    def business_details(self, business_id):
+        """
+        Query the Yelp API for business details.
+        :param business_id: Business ID or alias
+        :return: JSON query results
+        """
+        url = BUSINESS_DETAILS_URL.replace("{id}", business_id)
+        response = self.request(url=url)
         return json.loads(response.content)

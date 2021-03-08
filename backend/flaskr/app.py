@@ -39,13 +39,3 @@ def restaurants():
 def rated():
     """Apply the user's rating to their profile and the restaurant's"""
     return {'result': "TODO"}
-
-
-if __name__ == "__main__":
-    # Search Yelp API
-    yelp = YelpAPI()
-    # result = yelp.search(term="sushi", location="lafayette, in")
-    result = yelp.search(term="sushi", location=(40.4167,-86.8753))
-    print(result)
-    for item in result["businesses"]:
-        print(item["name"])
