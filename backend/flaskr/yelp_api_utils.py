@@ -70,3 +70,13 @@ class YelpAPI:
         url = BUSINESS_DETAILS_URL.replace("{id}", business_id)
         response = self.request(url=url)
         return json.loads(response.content)
+
+    def business_reviews(self, business_id):
+        """
+        Query the Yelp API for business reviews.
+        :param business_id: Business ID or alias
+        :return: JSON query results
+        """
+        url = BUSINESS_REVIEWS_URL.replace("{id}", business_id)
+        response = self.request(url=url)
+        return json.loads(response.content)

@@ -4,7 +4,6 @@ from flask import Flask, request
 from flask_cors import CORS
 from backend.flaskr.authentication_utils import authenticate_user, register_user
 from backend.flaskr.database_utils import DBConnection
-from backend.flaskr.yelp_api_utils import YelpAPI
 
 # Instantiate app
 app = Flask(__name__)

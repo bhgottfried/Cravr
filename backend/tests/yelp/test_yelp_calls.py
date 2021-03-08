@@ -26,10 +26,22 @@ def test_business_details():
     result = yelp.business_details(business_id="sushi-don-lafayette")
     assert "id" in result
 
-def test_bad_business_id():
-    # Try to get business details with a non-existent business ID
+def test_business_details_bad_id():
+    # Try to get business details using a non-existent business ID
     yelp = YelpAPI()
     result = yelp.business_details(business_id="bad-business-id")
+    assert "error" in result
+
+def test_business_reviews():
+    # Get business reviews using a valid business ID
+    yelp = YelpAPI()
+    result = yelp.business_reviews(business_id="sushi-don-lafayette")
+    assert "possible_languages" in result
+
+def test_business_reviews_bad_id():
+    # Try to get business reviews using a non-existent business ID
+    yelp = YelpAPI()
+    result = yelp.business_reviews(business_id="bad-business-id")
     assert "error" in result
 
 
