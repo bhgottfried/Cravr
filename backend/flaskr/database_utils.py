@@ -2,7 +2,7 @@
 
 from flaskext.mysql import MySQL
 from pymysql.err import OperationalError
-from backend.db_config import Config
+from backend.config import DatabaseConfig
 
 class DBConnection:
     """
@@ -10,12 +10,13 @@ class DBConnection:
     connections and executing queries. Connections are automatically returned to the connection
     pool after each query has been completed.
     """
+
     mysql = None
     connections = []
 
     def __init__(self):
         """
-        Make an instance to execute queries.
+        Makes an instance to execute queries.
         :return: None
         """
 
@@ -31,7 +32,7 @@ class DBConnection:
         cls.mysql = MySQL()
         cls.connections = []
         # Do a standard configuration
-        app.config.from_object(Config())
+        app.config.from_object(DatabaseConfig)
         # Modify configuration based on arguments
         for arg, value in kwargs.items():
             if arg == "socket":
