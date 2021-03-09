@@ -4,6 +4,7 @@ from flask import Flask, request
 from flask_cors import CORS
 from backend.flaskr.authentication_utils import authenticate_user, register_user
 from backend.flaskr.database_utils import DBConnection
+from backend.flaskr.yelp_api_utils import YelpAPI
 
 # Instantiate app
 app = Flask(__name__)
@@ -32,23 +33,35 @@ def register():
 @app.route('/restaurants', methods=["POST"])
 def restaurants():
     """Parse the user's restaurant request and get restaurants from Yelp"""
-    args  = request.json.split('\n')
-    user  = args[0]
-    food  = args[1]
+    args = request.json.split('\n')
+    user = args[0]
+    food = args[1]
     price = args[2]
-    dist  = args[3]
-    loc   = (args[4], args[5])
+    dist = args[3]
+    loc = (args[4], args[5])
 
     print(user, food, price, dist, loc)
-    # Get restaurants from Yelp accessor class
-
-    return {'result': {     # Example restaurant to return
-        'id': 1,
-        'Name': 'Disney World',
-        'Distance': 1,
-        'Price': "$$",
-        'Rating': 3
-    }}
+    yelp = YelpAPI()
+    result = yelp.business_search(term=food, location=loc, radius=dist, price=price)
+    if result["businesses"]:
+        result = result["businesses"][0]
+        return {"result": {
+            "id": result["id"],
+            "Name": result["name"],
+            "Location": result["location"],
+            "Distance": round(result["distance"] / 1609.34, ndigits=1),
+            "Price": result["price"],
+            "Rating": result["rating"]
+        }}
+    else:
+        print("Could not find any restaurants with the given parameters!")
+        return {"result": {
+            "id": "N/A",
+            "Name": "No matches found!",
+            "Distance": "I would walk 500",
+            "Price": "$$$$",
+            "Rating": 5
+        }}
 
 
 @app.route('/rate_suggestion', methods=["POST"])
