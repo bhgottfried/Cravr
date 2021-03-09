@@ -18,7 +18,7 @@ def login():
     """Attempt to login the user with the provided credentials"""
     user, password = request.json.split('\n')
     match = authenticate_user(user, password)
-    return {'result': "/Home" if match else "/"}
+    return {'result': "/" if match else "/Login"}
 
 
 @app.route('/register', methods=["POST"])
