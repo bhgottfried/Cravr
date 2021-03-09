@@ -21,10 +21,8 @@ def test_clean_cache():
     cache = RestaurantCache(timeout)
     # Ensure the restaurant is removed only after timeout
     cache.add_restaurant(user, ID)
-    cache.clean(user)
     assert cache.is_cached(user, ID)
     sleep(timeout + 0.1)
-    cache.clean(user)
     assert not cache.is_cached(user, ID)  
 
 
