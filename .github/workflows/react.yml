@@ -15,6 +15,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install npm dependencies
-      run: npm ci
+      run: |
+        cd frontend
+        npm ci
     - name: Build app
-      run: npm run build --if-present
+      run: |
+        cd frontend
+        npm run build --if-present
