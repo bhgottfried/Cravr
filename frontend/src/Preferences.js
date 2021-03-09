@@ -1,10 +1,6 @@
 import React from 'react';
 import './Home.css';
-//import { Navbar,  Nav} from 'rsuite';
-import { getCookie } from "./Home"
-import {
-    Link
-} from "react-router-dom"
+// import { getCookie } from "./Home"
 class QuizContainer extends React.Component {
     //essentially scrollable list of reviews
     constructor(props) {
@@ -76,19 +72,19 @@ class QuizContainer extends React.Component {
     }
 }
 
-export default function preferences() {
+export default function Preferences() {
     return (
         <div className="Home">
             <nav>
                 <ul id="nav">
-                    <li><a href="/Home">Find</a></li>
+                    <li><a href="/">Find</a></li>
                     <li><a href="/Review">Review</a></li>
                     <li><a href="/Preferences">Preferences</a></li>
-                    <li><a href="/">Logout</a></li>
+                    <li><a href="/Login">Logout</a></li>
                 </ul>
             </nav>
+            <br></br>
             <h1>User Preferences</h1>
-            <h1>{getCookie("Username")}</h1>
             <QuizContainer></QuizContainer>
         </div>
     );
