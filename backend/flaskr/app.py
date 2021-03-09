@@ -53,15 +53,14 @@ def restaurants():
             "Price": result["price"],
             "Rating": result["rating"]
         }}
-    else:
-        print("Could not find any restaurants with the given parameters!")
-        return {"result": {
-            "id": "N/A",
-            "Name": "No matches found!",
-            "Distance": "I would walk 500",
-            "Price": "$$$$",
-            "Rating": 5
-        }}
+    print("Could not find any restaurants with the given parameters!")
+    return {"result": {
+        "id": "N/A",
+        "Name": "No matches found!",
+        "Distance": "I would walk 500",
+        "Price": "$$$$",
+        "Rating": 5
+    }}
 
 
 @app.route('/rate_suggestion', methods=["POST"])
