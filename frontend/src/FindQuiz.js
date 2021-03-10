@@ -124,7 +124,7 @@ class FindQuizContainer extends React.Component {
                             <option value="Barbeque">Barbeque</option>
                             <option value="American">American</option>
                             <option value="Mexican">Mexican</option>
-                            <option value="South American">Mexican</option>
+                            <option value="South American">South American</option>
                             <option value="Italian">Italian</option>
                             <option value="Eastern European">Eastern European</option>
                             <option value="Mediterranean">Mediterranean</option>
