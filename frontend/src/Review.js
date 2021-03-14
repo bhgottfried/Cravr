@@ -47,14 +47,18 @@ class ReviewContainer extends React.Component {
         alert("Thank You for submitting a review! Please keep reviewing and requesting suggestions so we can get you better recommendations")
     }
     handleChange(index, event) {
-        //doing it manually because Javascript is a pain
+        var reviews = Object.assign([], this.state.Reviews);
+        
         if (event.target.value <= 0) {
-            this.state.Reviews[index].Repeat = event.target.value;
+            //repeat
+            reviews[index].Repeat = event.target.value
+            this.setState({ Reviews: reviews })
         } else {
-            this.state.Reviews[index].UserRating = event.target.value;
+            //userrating
+            reviews[index].UserRating = event.target.value
+            this.setState({ Reviews: reviews })
         }
-        const reviews = Object.assign([], this.state.Reviews);
-        this.setState({ Reviews: reviews })
+        
     }
     render() {
         return (

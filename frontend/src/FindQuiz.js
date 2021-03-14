@@ -151,7 +151,7 @@ class FindQuizContainer extends React.Component {
                         <br />
                         <label id="q3">
                             3. Maxmimum Distance (mi.)&emsp;
-                        <input type="number" className="textbox" className="textbox" defaultValue="1" min="1" max="24" value={this.state.q2.value} name="q3"
+                        <input type="number" className="textbox" defaultValue="1" min="1" max="24" value={this.state.q2.value} name="q3"
                                 required onChange={this.handleChange}>
                             </input>
                         </label>
