@@ -10,7 +10,9 @@ class Recommender:
 
     def __init__(self, cache_timeout=86400):
         """
-        Initializes restaurant cache and Yelp API to get suggestions and maintain which have been recently rated
+        Initializes restaurant cache and Yelp API to get suggestions and
+        maintain which restaurants have been recently rated.
+
         :param cache_timeout: Number of seconds to maintain stale restaurnt entries in cache
         :return: None
         """
@@ -29,7 +31,7 @@ class Recommender:
         distance = search_params["distance"]
         price = search_params["price"]
 
-        result = self.yelp.business_search(term=food, location=location, radius=distance, price=price)
+        result = self.yelp.business_search(food, location, distance, price)
 
         if "businesses" in result:
             for restaurant in result["businesses"]:
