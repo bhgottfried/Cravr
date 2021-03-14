@@ -11,6 +11,7 @@
     background-color: rgb(236, 98, 17);
     border-bottom: 3px solid rgb(0, 0, 0); 
     border-top: 3px solid rgb(0, 0, 0)}
+    
 #nav li {
       float: left; }
 #nav li a {
@@ -28,4 +29,18 @@
   margin: 0 25em 1em 25em;
   text-align: center;
   font-family:'Courier New', Courier, monospace; 
+}
+.submit-button{
+  font-size:x-large;
+  text-align: center;
+  font-family:'Courier New', Courier, monospace;
+  background-color:rgb(248, 211, 0);
+  color:rgb(0, 0, 0);
+}
+.textbox{
+  font-size:large;
+  text-align: center;
+  font-family:'Courier New', Courier, monospace;
+  background-color:rgb(248, 211, 0);
+  color:rgb(0, 0, 0);
 }

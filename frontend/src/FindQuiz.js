@@ -1,5 +1,6 @@
 import React from 'react';
-
+import './Home.css';
+import './App.css';
 
 export function getCookie(key) {
     var b = document.cookie.match("(^|;)\\s*" + key + "\\s*=\\s*([^;]+)");
@@ -54,7 +55,7 @@ class FindQuizContainer extends React.Component {
         this.handleSubmit(e);   // Get new restaurant
         this.rateRestaurant(false, restaurant.id);
     }
-    
+
     rateRestaurant = (rating, restaurantID) => {
         return fetch("/rate_suggestion", {
             method: "POST",
@@ -68,7 +69,7 @@ class FindQuizContainer extends React.Component {
                 restaurantID
             )
         }).then(response => response.json())
-        .then(response => response.result);
+            .then(response => response.result);
     }
 
     getRestaurant = (position) => {
@@ -82,12 +83,12 @@ class FindQuizContainer extends React.Component {
                 getCookie("Username") + "\n" +
                 this.state.q1 + "\n" +
                 this.state.q2 + "\n" +
-                this.state.q3 + "\n" + 
-                position.coords.latitude + "\n" + 
+                this.state.q3 + "\n" +
+                position.coords.latitude + "\n" +
                 position.coords.longitude
             )
         }).then(response => response.json())
-        .then(response => this.setRestaurant(response.result));
+            .then(response => this.setRestaurant(response.result));
 
         this.setState({ showRes: true });
     }
@@ -105,61 +106,66 @@ class FindQuizContainer extends React.Component {
 
     render() {
         return (
-            <div id="Quiz">
-                <h1>Find restaurants near you</h1>
-                <form onSubmit={this.handleSubmit}>
-                    <label id="q1">
-                        1. What are you in the mood for?
+            <div>
+                <div id="Quiz" className="Rest">
+                    <h2>Search Filters</h2>
+                    <form onSubmit={this.handleSubmit}>
+                        <label id="q1">
+                            1. What are you in the mood for?
                         {/* TODO Allow multiple boxes to be checked */}
-                        <select value={this.state.q1.value} required onChange={this.handleChange} name="q1">
-                            <option value="Bar & Grill">Bar & Grill</option>
-                            <option value="Sandwiches">Sandwiches</option>
-                            <option value="Pizza">Pizza</option>
-                            <option value="Fast Food">Fast Food</option>
-                            <option value="Breakfast">Breakfast</option>
-                            <option value="Steakhouse">Steakhouse</option>
-                            <option value="Fine Dining">Fine Dining</option>
-                            <option value="Sushi">Sushi</option>
-                            <option value="Seafood">Seafood</option>
-                            <option value="Barbeque">Barbeque</option>
-                            <option value="American">American</option>
-                            <option value="Mexican">Mexican</option>
-                            <option value="South American">South American</option>
-                            <option value="Italian">Italian</option>
-                            <option value="Eastern European">Eastern European</option>
-                            <option value="Mediterranean">Mediterranean</option>
-                            <option value="Middle Eastern">Middle Eastern</option>
-                            <option value="Indian">Indian</option>
-                            <option value="Chinese">Chinese</option>
-                            <option value="Japanese">Japanese</option>
-                            <option value="Korean">Korean</option>
-                            <option value="Southeast Asian">Southeast Asian</option>
-                        </select>
-                    </label>
-                    <br />
-                    <label id="q2">
-                        2. How much are you willing to spend?&emsp;&emsp;
-                        <select value={this.state.q2.value} required onChange={this.handleChange} name="q2">
-                            <option value="$">$</option>
-                            <option value="$$">$$</option>
-                            <option value="$$$">$$$</option>
-                            <option value="$$$$">$$$$</option>
-                        </select>
-                    </label>
-                    <br />
-                    <label id="q3">
-                        3. Maxmimum Distance (mi.)&emsp;
-                        <input type="number" defaultValue="1" min="1" max="24" value={this.state.q2.value} name="q3"
+                            <select value={this.state.q1.value} className="textbox" required onChange={this.handleChange} name="q1">
+                                <option value="Bar & Grill">Bar & Grill</option>
+                                <option value="Sandwiches">Sandwiches</option>
+                                <option value="Pizza">Pizza</option>
+                                <option value="Fast Food">Fast Food</option>
+                                <option value="Breakfast">Breakfast</option>
+                                <option value="Steakhouse">Steakhouse</option>
+                                <option value="Fine Dining">Fine Dining</option>
+                                <option value="Sushi">Sushi</option>
+                                <option value="Seafood">Seafood</option>
+                                <option value="Barbeque">Barbeque</option>
+                                <option value="American">American</option>
+                                <option value="Mexican">Mexican</option>
+                                <option value="South American">South American</option>
+                                <option value="Italian">Italian</option>
+                                <option value="Eastern European">Eastern European</option>
+                                <option value="Mediterranean">Mediterranean</option>
+                                <option value="Middle Eastern">Middle Eastern</option>
+                                <option value="Indian">Indian</option>
+                                <option value="Chinese">Chinese</option>
+                                <option value="Japanese">Japanese</option>
+                                <option value="Korean">Korean</option>
+                                <option value="Southeast Asian">Southeast Asian</option>
+                            </select>
+                        </label>
+                        <br />
+                        <label id="q2">
+                            2. How much are you willing to spend?&emsp;&emsp;
+                        <select value={this.state.q2.value} className="textbox" required onChange={this.handleChange} name="q2">
+                                <option value="$">$</option>
+                                <option value="$$">$$</option>
+                                <option value="$$$">$$$</option>
+                                <option value="$$$$">$$$$</option>
+                            </select>
+                        </label>
+                        <br />
+                        <label id="q3">
+                            3. Maxmimum Distance (mi.)&emsp;
+                        <input type="number" className="textbox" className="textbox" defaultValue="1" min="1" max="24" value={this.state.q2.value} name="q3"
                                 required onChange={this.handleChange}>
-                        </input>
-                    </label>
-                    <br />
-                    <br></br>
-                    <input type="submit" value="Submit" className="primary-button" />
-                    <br />
-                    <br></br>
-                </form>
-                { this.state.showRes ? 
+                            </input>
+                        </label>
+                        <br />
+                        <br></br>
+                        <input type="submit" value="Submit" className="submit-button" />
+                        <br />
+                        <br></br>
+                    </form>
+                </div>
+
+                <div id="results" className="Rest">
+                    <h2>Results:</h2>
+                    {this.state.showRes ?
                         //dynamic list element that is instantiated from state.Restaruants
                         this.state.Restaurants.map((Rest) => {
                             return (
@@ -175,7 +181,8 @@ class FindQuizContainer extends React.Component {
                                     <br></br>
                                 </div>
                             )
-                        }): null}
+                        }) : null}
+                </div>
             </div>
         );
     }
