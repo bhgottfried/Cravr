@@ -12,7 +12,6 @@ class Recommender:
         """
         Initializes restaurant cache and Yelp API to get suggestions and
         maintain which restaurants have been recently rated.
-
         :param cache_timeout: Number of seconds to maintain stale restaurnt entries in cache
         :return: None
         """
