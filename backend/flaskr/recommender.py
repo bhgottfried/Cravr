@@ -17,7 +17,7 @@ class Recommender:
         """
         self.yelp = YelpAPI()
         self.cache = RestaurantCache(cache_timeout)
- 
+
     def get_restaurant(self, user, search_params):
         """
         Suggest a restaurant to the user based on their search criteria

@@ -60,7 +60,7 @@ def rate_suggestion():
     rest_id = args[2]
 
     print(user, rating, rest_id)
-    
+
     # Send data to the user's model for training and cache the reviewed restaurant
     recommender.cache_restaurant(user, rest_id)
 
