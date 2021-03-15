@@ -4,8 +4,7 @@ from flask import Flask, request
 from flask_cors import CORS
 from backend.flaskr.authentication_utils import authenticate_user, register_user
 from backend.flaskr.database_utils import DBConnection
-from backend.flaskr.yelp_api_utils import YelpAPI
-from backend.flaskr.restaurant_cache import RestaurantCache
+from backend.flaskr.recommender import Recommender
 
 # Instantiate app
 app = Flask(__name__)
@@ -14,11 +13,8 @@ CORS(app)
 # Configure DB connection
 DBConnection.setup(app)
 
-# Instantiate the YelpAPI
-yelp = YelpAPI()
-
-# Instantiate cache to prevent redundant suggestions
-cache = RestaurantCache()
+# Instantiate the recommender to generate suggestions
+recommender = Recommender()
 
 
 @app.route('/login', methods=["POST"])
@@ -42,36 +38,17 @@ def restaurants():
     """Parse the user's restaurant request and get restaurants from Yelp"""
     args = request.json.split('\n')
     user = args[0]
-    food = args[1]
-    price = args[2]
-    dist = args[3]
-    loc = (args[4], args[5])
+    search_params = {
+        "food": args[1],
+        "price": args[2],
+        "distance": args[3],
+        "location": (args[4], args[5])
+    }
 
-    print(user, food, price, dist, loc)
-
-    result = yelp.business_search(term=food, location=loc, radius=dist, price=price)
-    if result["businesses"]:
-        for restaurant in result["businesses"]:
-            if not cache.is_cached(user, restaurant["id"]):
-                cache.add_restaurant(user, restaurant["id"])
-                return {"result": {
-                    "id": restaurant["id"],
-                    "Name": restaurant["name"],
-                    "Location": restaurant["location"],
-                    "Distance": round(restaurant["distance"] / 1609.34, ndigits=1),
-                    "Price": restaurant["price"],
-                    "Rating": restaurant["rating"]
-                }}
-
-    # We exhausted all the available restaurants or there were none at all
-    print("Could not find any restaurants with the given parameters!")
-    return {"result": {
-        "id": "N/A",
-        "Name": "No matches found!",
-        "Distance": "I would walk 500",
-        "Price": "$$$$",
-        "Rating": 5
-    }}
+    print(user, search_params)
+    return {
+        "result": recommender.get_restaurant(user, search_params)
+    }
 
 
 @app.route('/rate_suggestion', methods=["POST"])
@@ -83,6 +60,8 @@ def rate_suggestion():
     rest_id = args[2]
 
     print(user, rating, rest_id)
-    # Send data to the user's model for training
+
+    # Send data to the user's model for training and cache the reviewed restaurant
+    recommender.cache_restaurant(user, rest_id)
 
     return {'result': "TODO"}
