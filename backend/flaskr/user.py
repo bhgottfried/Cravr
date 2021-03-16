@@ -22,7 +22,7 @@ class User:
         else:
             self.reviews = []
             self.model = None
-    
+
     def add_review(self, rest_id):
         """
         Add restaurant ID that needs to be reviewed
@@ -31,7 +31,7 @@ class User:
         """
         if rest_id not in self.reviews:
             self.reviews.append(rest_id)
-    
+
     def disliked(self, rest_id):
         """
         Adjust model weights to discourage similar restaurants from being suggested
@@ -54,7 +54,7 @@ class UserList:
         """
         self.users = {}
         self.is_prod = is_prod
-                
+
     def add(self, name):
         """
         Add User object to the list for the given name if it is not already in it
@@ -65,7 +65,7 @@ class UserList:
             self.users[name] = User(name)
         else:
             raise ValueError("{} already exists in the user list!".format(name))
-    
+
     def __getitem__(self, name):
         """
         Get the User object from the list
@@ -73,7 +73,7 @@ class UserList:
         :return: User object with associated data
         """
         return self.users[name]
-    
+
     def __del__(self):
         """
         Write the modified user data to the database when the app is shutting down.
@@ -84,7 +84,7 @@ class UserList:
                 if user.is_dirty:
                     user.is_dirty = False
                     write_user_data(user.name, user)
-    
+
     def __contains__(self, name):
         """
         Check if name is already in the table of users
