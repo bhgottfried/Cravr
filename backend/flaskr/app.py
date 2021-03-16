@@ -4,6 +4,7 @@ from flask import Flask, request
 from flask_cors import CORS
 from backend.flaskr.authentication_utils import authenticate_user, register_user
 from backend.flaskr.database_utils import DBConnection
+from backend.flaskr.yelp_api_utils import YelpAPI
 from backend.flaskr.recommender import Recommender
 from backend.flaskr.user import UserList
 
@@ -11,14 +12,21 @@ from backend.flaskr.user import UserList
 app = Flask(__name__)
 CORS(app)
 
-# Configure DB connection
-DBConnection.setup(app)
 
-# Instantiate the recommender to generate suggestions
-recommender = Recommender()
+DBConnection.setup(app)         # Configure DB connection
+users = UserList()              # Create mapping from usernames to User objects
+yelp = YelpAPI()                # Initialize one YelpAPI for the app
+recommender = Recommender(yelp) # Instantiate the recommender to generate suggestions
 
-# Create mapping from usernames to User objects
-users = UserList()
+
+def _user(name):
+    """
+    Helper function to get the User object for a given name or
+    add it to the UserList if it is not already in memory
+    """
+    if name not in users:
+        users.add(name)
+    return users[name]
 
 
 @app.route('/login', methods=["POST"])
@@ -54,12 +62,7 @@ def restaurants():
 
     print(name, search_params)
 
-    # Get user data
-    if name not in users:
-        users.add(name)
-    user = users[name]
-
-    return {"result": recommender.get_restaurant(user, search_params)}
+    return {"result": recommender.get_restaurant(_user(name), search_params)}
 
 
 @app.route('/rate_suggestion', methods=["POST"])
@@ -69,13 +72,8 @@ def rate_suggestion():
     name     = args[0]
     is_liked = args[1]
     rest_id  = args[2]
-
-    print(name, is_liked, rest_id)
-
-    # Get user data
-    if name not in users:
-        users.add(name)
-    user = users[name]
+    
+    user = _user(name)
 
     # Process rating
     if is_liked:    # Add the accepted restaunt to the user's review list
@@ -87,3 +85,27 @@ def rate_suggestion():
     recommender.cache_restaurant(user, rest_id)
 
     return {'result': "TODO"}
+
+
+@app.route('/get_reviews', methods=["POST"])
+def get_reviews():
+    """Get the restaurants that this user needs to review"""
+    args     = request.json.split('\n')
+    name     = args[0]
+
+    # Return list of restaurants the user must review
+    return {'result': _user(name).get_reviews(yelp)}
+
+
+@app.route('/submit_review', methods=["POST"])
+def submit_review():
+    """Update the User object after a user reviews a restaurant they've visited"""
+    args    = request.json.split('\n')
+    name    = args[0]
+    rest_id = args[1]
+    review  = args[2]
+
+    # Rate the restaurant
+    _user(name).submit_review(rest_id, review)
+    
+    return {'result': "Success"}

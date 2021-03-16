@@ -8,14 +8,14 @@ class Recommender:
     Class to generate restaurant recommendations for a user from the Yelp API
     """
 
-    def __init__(self, cache_timeout=86400):
+    def __init__(self, yelp, cache_timeout=86400):
         """
         Initializes restaurant cache and Yelp API to get suggestions and
         maintain which restaurants have been recently rated.
         :param cache_timeout: Number of seconds to maintain stale restaurnt entries in cache
         :return: None
         """
-        self.yelp = YelpAPI()
+        self.yelp = yelp
         self.cache = RestaurantCache(cache_timeout)
 
     def get_restaurant(self, user, search_params):

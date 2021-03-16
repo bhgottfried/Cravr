@@ -9,12 +9,12 @@ class User:
 
     def __init__(self, name):
         """
-        Initializes restaurant cache and Yelp API to get suggestions and
-        maintain which restaurants have been recently accepted and need to be rated.
+        Object to contain list of restaurants that need to be reviewed and user model
         :param cache_timeout: Number of seconds to maintain stale restaurnt entries in cache
         :return: None
         """
         self.name = name
+        self.is_dirty = False
         user_dict = read_user_data(name)
         if user_dict:
             self.reviews = user_dict["reviews"]
@@ -30,7 +30,49 @@ class User:
         :return: None
         """
         if rest_id not in self.reviews:
+            self.is_dirty = True
             self.reviews.append(rest_id)
+    
+    def get_reviews(self, yelp):
+        """
+        Return list of restaurant objects that need to be reviewed
+        :param yelp: YelpAPI object to map restaurant IDs to full restaurant objects
+        :return: List of restaurant objects
+        """
+        return [ {
+                key: yelp.business_details(rest_id)[key] for key in [
+                    "id",
+                    "name",
+                    "price",
+                    "location"
+                    ]
+            } for rest_id in self.reviews
+        ]
+    
+    def submit_review(self, rest_id, review):
+        """
+        After the user reviews a restaurant Cravr recommended,
+        remove it from the list and update the model
+        :param rest_id: Restaurand ID for what was reviewed
+        :param review: Review object based on quiz from the front end
+        :return: List of restaurant objects
+        """
+        if rest_id not in self.reviews:
+            raise ValueError("Attempted to review restaurant not in the user's review list")
+        
+        self.is_dirty = True
+        self.reviews.remove(rest_id)
+        self.train_model(rest_id, review)
+    
+    def train_model(self, rest_id, review):
+        """
+        Adjust model weights to based on the review for this restaurant
+        :param rest_id: Restaurant ID that was rated
+        :return: None
+        """
+        self.is_dirty = True
+        # This method is not yet implemented because we don't have a model
+        # This should be refactored into a separate model class as well
 
     def disliked(self, rest_id):
         """
@@ -38,7 +80,8 @@ class User:
         :param rest_id: Restaurant ID that was disliked
         :return: None
         """
-        return rest_id  # Temporary... We don't have a model yet
+        self.is_dirty = True
+        self.train_model(rest_id, {"standard bad review object"})
 
 
 class UserList:

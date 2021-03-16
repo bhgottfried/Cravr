@@ -1,11 +1,12 @@
 import pytest
+from backend.flaskr.yelp_api_utils import YelpAPI
 from backend.flaskr.recommender import Recommender
 from backend.flaskr.user import User
 
 
 def test_get_good_restaurant():
     # Initialize recommender and test params
-    recommender = Recommender()
+    recommender = Recommender(YelpAPI())
     user = User("Ben")
     params = {
         "food": "sushi",
@@ -20,7 +21,7 @@ def test_get_good_restaurant():
 
 def test_get_bad_restaurant():
     # Initialize recommender and test params
-    recommender = Recommender()
+    recommender = Recommender(YelpAPI())
     user = User("Ben")
     params = {
         "food": "bowl of nails without any milk",
@@ -35,7 +36,7 @@ def test_get_bad_restaurant():
 
 def test_cache():
     # Initialize recommender test params
-    recommender = Recommender()
+    recommender = Recommender(YelpAPI())
     user = User("Ben")
     ID = "1234"
 
