@@ -14,10 +14,6 @@ def read_user_data(username):
     # Get database instance
     db_conn = DBConnection()
 
-    # TEMP to appease PyLint
-    if username or db_conn:
-        pass
-
     if db_conn == "some condition that will fail":
         return {
             "reviews": [],
@@ -37,9 +33,5 @@ def write_user_data(username, data):
     """
     # Get database instance
     db_conn = DBConnection()
-
-    # TEMP to appease PyLint
-    if username or data or db_conn:
-        pass
 
     return None
