@@ -5,6 +5,7 @@ from flask_cors import CORS
 from backend.flaskr.authentication_utils import authenticate_user, register_user
 from backend.flaskr.database_utils import DBConnection
 from backend.flaskr.recommender import Recommender
+from backend.flaskr.user import UserList
 
 # Instantiate app
 app = Flask(__name__)
@@ -16,12 +17,18 @@ DBConnection.setup(app)
 # Instantiate the recommender to generate suggestions
 recommender = Recommender()
 
+# Create mapping from usernames to User objects
+users = UserList()
+
 
 @app.route('/login', methods=["POST"])
 def login():
     """Attempt to login the user with the provided credentials"""
-    user, password = request.json.split('\n')
-    match = authenticate_user(user, password)
+    name, password = request.json.split('\n')
+    match = authenticate_user(name, password)
+    if match and not users.contains(name):
+        users.add(name)
+
     return {'result': "/" if match else "/Login"}
 
 
@@ -37,7 +44,7 @@ def register():
 def restaurants():
     """Parse the user's restaurant request and get restaurants from Yelp"""
     args = request.json.split('\n')
-    user = args[0]
+    name = args[0]
     search_params = {
         "food": args[1],
         "price": args[2],
@@ -45,23 +52,21 @@ def restaurants():
         "location": (args[4], args[5])
     }
 
-    print(user, search_params)
-    return {
-        "result": recommender.get_restaurant(user, search_params)
-    }
+    print(name, search_params)
+    return {"result": recommender.get_restaurant(users[name], search_params)}
 
 
 @app.route('/rate_suggestion', methods=["POST"])
 def rate_suggestion():
     """Apply the user's rating to their profile and the restaurant's"""
     args    = request.json.split('\n')
-    user    = args[0]
+    name    = args[0]
     rating  = args[1]
     rest_id = args[2]
 
-    print(user, rating, rest_id)
+    print(name, rating, rest_id)
 
     # Send data to the user's model for training and cache the reviewed restaurant
-    recommender.cache_restaurant(user, rest_id)
+    recommender.cache_restaurant(users[name], rest_id)
 
     return {'result': "TODO"}
