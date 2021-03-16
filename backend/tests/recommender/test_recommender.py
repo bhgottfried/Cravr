@@ -1,11 +1,12 @@
 import pytest
 from backend.flaskr.recommender import Recommender
+from backend.flaskr.user import User
 
 
 def test_get_good_restaurant():
     # Initialize recommender and test params
     recommender = Recommender()
-    user = "Ben"
+    user = User("Ben")
     params = {
         "food": "sushi",
         "price": "$$",
@@ -20,7 +21,7 @@ def test_get_good_restaurant():
 def test_get_bad_restaurant():
     # Initialize recommender and test params
     recommender = Recommender()
-    user = "Ben"
+    user = User("Ben")
     params = {
         "food": "bowl of nails without any milk",
         "price": "$$",
@@ -35,13 +36,13 @@ def test_get_bad_restaurant():
 def test_cache():
     # Initialize recommender test params
     recommender = Recommender()
-    user = "Ben"
+    user = User("Ben")
     ID = "1234"
 
     # Ensure the recommender can cache the entry
-    assert not recommender.cache.is_cached(user, ID)
+    assert not recommender.cache.is_cached(user.name, ID)
     recommender.cache_restaurant(user, ID)
-    assert recommender.cache.is_cached(user, ID)
+    assert recommender.cache.is_cached(user.name, ID)
 
 
 if __name__ == "__main__":

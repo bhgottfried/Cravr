@@ -34,7 +34,7 @@ class Recommender:
 
         if "businesses" in result:
             for restaurant in result["businesses"]:
-                if not self.cache.is_cached(user, restaurant["id"]):
+                if not self.cache.is_cached(user.name, restaurant["id"]):
                     return {
                         "id": restaurant["id"],
                         "Name": restaurant["name"],
@@ -62,4 +62,4 @@ class Recommender:
         :param restaurant_id: Yelp restaurant ID that was just rated
         :return: None
         """
-        self.cache.add_restaurant(user, restaurant_id)
+        self.cache.add_restaurant(user.name, restaurant_id)

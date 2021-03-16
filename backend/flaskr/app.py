@@ -53,20 +53,37 @@ def restaurants():
     }
 
     print(name, search_params)
-    return {"result": recommender.get_restaurant(users[name], search_params)}
+
+    # Get user data
+    if name not in users:
+        users.add(name)
+    user = users[name]
+
+    return {"result": recommender.get_restaurant(user, search_params)}
 
 
 @app.route('/rate_suggestion', methods=["POST"])
 def rate_suggestion():
     """Apply the user's rating to their profile and the restaurant's"""
-    args    = request.json.split('\n')
-    name    = args[0]
-    rating  = args[1]
-    rest_id = args[2]
+    args     = request.json.split('\n')
+    name     = args[0]
+    is_liked = args[1]
+    rest_id  = args[2]
 
-    print(name, rating, rest_id)
+    print(name, is_liked, rest_id)
 
-    # Send data to the user's model for training and cache the reviewed restaurant
-    recommender.cache_restaurant(users[name], rest_id)
+    # Get user data
+    if name not in users:
+        users.add(name)
+    user = users[name]
+
+    # Process rating
+    if is_liked:    # Add the accepted restaunt to the user's review list
+        user.add_review(rest_id)
+    else:           # Otherwise send the disliked restaurant to the user's model for training
+        user.disliked(rest_id)
+
+    # Cache the reviewed restaurant
+    recommender.cache_restaurant(user, rest_id)
 
     return {'result': "TODO"}

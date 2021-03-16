@@ -10,7 +10,7 @@ class User:
     def __init__(self, name):
         """
         Initializes restaurant cache and Yelp API to get suggestions and
-        maintain which restaurants have been recently rated.
+        maintain which restaurants have been recently accepted and need to be rated.
         :param cache_timeout: Number of seconds to maintain stale restaurnt entries in cache
         :return: None
         """
@@ -22,6 +22,23 @@ class User:
         else:
             self.reviews = []
             self.model = None
+    
+    def add_review(self, rest_id):
+        """
+        Add restaurant ID that needs to be reviewed
+        :param rest_id: Restaurant ID that needs to be reviewed
+        :return: None
+        """
+        if rest_id not in self.reviews:
+            self.reviews.append(rest_id)
+    
+    def disliked(self, rest_id):
+        """
+        Adjust model weights to discourage similar restaurants from being suggested
+        :param rest_id: Restaurant ID that was disliked
+        :return: None
+        """
+        return rest_id  # Temporary... We don't have a model yet
 
 
 class UserList:
