@@ -29,12 +29,25 @@ class UserList:
     Class to maintain collection of users with data actively in memory
     """
 
-    def __init__(self):
+    def __init__(self, is_prod=True):
         """
         Create an empty table of Users in memory. We add user data to memory as necessary
+        :param is_prod: Bool for testing without calling DB functions
         :return: None
         """
         self.users = {}
+        self.is_prod = is_prod
+                
+    def add(self, name):
+        """
+        Add User object to the list for the given name if it is not already in it
+        :param name: Username entered on the registration screen
+        :return: None
+        """
+        if name not in self.users:
+            self.users[name] = User(name)
+        else:
+            raise ValueError("{} already exists in the user list!".format(name))
     
     def __getitem__(self, name):
         """
@@ -49,23 +62,13 @@ class UserList:
         Write the modified user data to the database when the app is shutting down.
         :return: None
         """
-        for user in self.users:
-            if user.is_dirty:
-                user.is_dirty = False
-                write_user_data(user.name, user)
-                
-    def add(self, name):
-        """
-        Add User object to the list for the given name if it is not already in it
-        :param name: Username entered on the registration screen
-        :return: None
-        """
-        if name not in self.users:
-            self.users[name] = User(name)
-        else:
-            raise ValueError("{} already exists in the user list!".format(name))
+        if self.is_prod:
+            for user in self.users:
+                if user.is_dirty:
+                    user.is_dirty = False
+                    write_user_data(user.name, user)
     
-    def contains(self, name):
+    def __contains__(self, name):
         """
         Check if name is already in the table of users
         :param name: Username entered on the registration screen

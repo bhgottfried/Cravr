@@ -26,7 +26,7 @@ def login():
     """Attempt to login the user with the provided credentials"""
     name, password = request.json.split('\n')
     match = authenticate_user(name, password)
-    if match and not users.contains(name):
+    if match and name not in users:
         users.add(name)
 
     return {'result': "/" if match else "/Login"}
