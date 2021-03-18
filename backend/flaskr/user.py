@@ -32,7 +32,7 @@ class User:
         if rest_id not in self.reviews:
             self.is_dirty = True
             self.reviews.append(rest_id)
-    
+
     def get_reviews(self, yelp):
         """
         Return list of restaurant objects that need to be reviewed
@@ -48,7 +48,7 @@ class User:
                     ]
             } for rest_id in self.reviews
         ]
-    
+
     def submit_review(self, rest_id, review):
         """
         After the user reviews a restaurant Cravr recommended,
@@ -59,11 +59,11 @@ class User:
         """
         if rest_id not in self.reviews:
             raise ValueError("Attempted to review restaurant not in the user's review list")
-        
+
         self.is_dirty = True
         self.reviews.remove(rest_id)
         self.train_model(rest_id, review)
-    
+
     def train_model(self, rest_id, review):
         """
         Adjust model weights to based on the review for this restaurant
@@ -71,6 +71,7 @@ class User:
         :return: None
         """
         self.is_dirty = True
+        print("TEMP: " + str(rest_id) + str(review))
         # This method is not yet implemented because we don't have a model
         # This should be refactored into a separate model class as well
 

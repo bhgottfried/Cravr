@@ -72,7 +72,7 @@ def rate_suggestion():
     name     = args[0]
     is_liked = args[1]
     rest_id  = args[2]
-    
+
     user = _user(name)
 
     # Process rating
@@ -107,5 +107,5 @@ def submit_review():
 
     # Rate the restaurant
     _user(name).submit_review(rest_id, review)
-    
+
     return {'result': "Success"}

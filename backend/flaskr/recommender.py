@@ -1,6 +1,5 @@
 """Class to generate restaurant recommendations for a user"""
 
-from backend.flaskr.yelp_api_utils import YelpAPI
 from backend.flaskr.restaurant_cache import RestaurantCache
 
 class Recommender:
