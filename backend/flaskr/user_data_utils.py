@@ -37,5 +37,3 @@ def write_user_data(username, data):
     db_conn = DBConnection()
 
     print("TEMP " + str(username) + str(data) + str(db_conn))
-
-    return None
