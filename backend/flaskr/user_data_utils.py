@@ -23,9 +23,9 @@ def read_user_data(username):
 
     result = db_conn.execute_query("SELECT data FROM user_profiles WHERE username = '{}'"
                                    .format(username))
-    if result:
-        return result[0]
-    return result
+    if result == -1 or result is None:
+        return None
+    return result[0]
 
 # Help pls Eli :(
 def write_user_data(username, data):
