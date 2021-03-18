@@ -20,6 +20,8 @@ def read_user_data(username):
             "model": None
         }
 
+    print("TEMP " + str(username))
+
     return None
 
 
@@ -33,5 +35,7 @@ def write_user_data(username, data):
     """
     # Get database instance
     db_conn = DBConnection()
+
+    print("TEMP " + str(username) + str(data) + str(db_conn))
 
     return None
