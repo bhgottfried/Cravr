@@ -1,5 +1,6 @@
 """Utilities to create new users and authenticate existing users"""
 
+import json
 from backend.flaskr.database_utils import DBConnection
 
 
@@ -20,8 +21,11 @@ def read_user_data(username):
             "model": None
         }
 
-    return None
-
+    result = db_conn.execute_query("SELECT data FROM user_profiles WHERE username = '{}'"
+                                   .format(username))
+    if result:
+        return result[0]
+    return result
 
 # Help pls Eli :(
 def write_user_data(username, data):
@@ -34,4 +38,20 @@ def write_user_data(username, data):
     # Get database instance
     db_conn = DBConnection()
 
-    return None
+    # Check if user exists in user profiles
+    num_results = db_conn.execute_query("SELECT COUNT(*) FROM user_profiles WHERE username = '{}'"
+                                        .format(username))[0]
+    if num_results == 1:
+        print("Updating data for existing user!")
+        print("UPDATE user_profiles SET data = '{}' WHERE username = '{}'"
+              .format(json.dumps(data), username))
+        db_conn.execute_query("UPDATE user_profiles SET data = '{}' WHERE username = '{}'"
+                              .format(json.dumps(data), username))
+    elif num_results == 0:
+        print("Adding data for new user!")
+        print("INSERT INTO user_profiles (username, data) VALUES ({}, '{}')"
+              .format(username, json.dumps(data)))
+        db_conn.execute_query("INSERT INTO user_profiles (username, data) VALUES ('{}', '{}')"
+                              .format(username, json.dumps(data)))
+    else:
+        print("{} user profiles found for user {}. Expected 0 or 1.".format(num_results, username))
