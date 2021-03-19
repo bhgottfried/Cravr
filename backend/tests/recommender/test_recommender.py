@@ -12,7 +12,8 @@ def test_get_good_restaurant():
         "food": "sushi",
         "price": "$$",
         "distance": "5",
-        "location": "(40.4167, -86.8753)"
+        "location": "(40.4167, -86.8753)",
+        "open_now": False
     }
 
     # Ensure a restaurant is returned
@@ -27,7 +28,8 @@ def test_get_bad_restaurant():
         "food": "bowl of nails without any milk",
         "price": "$$",
         "distance": "1",
-        "location": "(0, 0)"
+        "location": "(0, 0)",
+        "open_now": False
     }
 
     # Ensure no recommendation is returned

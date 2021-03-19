@@ -39,19 +39,20 @@ class YelpAPI:
         response = requests.get(url, headers=self.headers, params=params)
         return response
 
-    def business_search(self, term, location, radius=None, price=None):
+    def business_search(self, term, location, radius=None, price=None, open_now=True):
         """
         Query the Yelp Search API.
         :param term: Search term
         :param location: Search location (latitude and longitude or city)
         :param radius: Search radius (miles, converted to meters here)
         :param price: Price rating (between 1 and 4 dollar signs)
+        :param open_now: True to require restaurant be open currently. False otherwise
         :return: JSON search results
         """
         params = {
             "term": term.replace(" ", "+"),
             "limit": SEARCH_LIMIT,
-            "open_now": True
+            "open_now": open_now
         }
         # Handle location parameter
         if isinstance(location, tuple):
