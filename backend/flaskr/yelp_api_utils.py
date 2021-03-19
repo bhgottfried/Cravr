@@ -39,19 +39,18 @@ class YelpAPI:
         response = requests.get(url, headers=self.headers, params=params)
         return response
 
-    def business_search(self, term, location, radius=None, price=None):
+    def business_search(self, term, location, open_now=True, **kwargs):
         """
         Query the Yelp Search API.
         :param term: Search term
         :param location: Search location (latitude and longitude or city)
-        :param radius: Search radius (miles, converted to meters here)
-        :param price: Price rating (between 1 and 4 dollar signs)
+        :param open_now: True to require restaurant be open currently. False otherwise
         :return: JSON search results
         """
         params = {
             "term": term.replace(" ", "+"),
             "limit": SEARCH_LIMIT,
-            "open_now": True
+            "open_now": open_now
         }
         # Handle location parameter
         if isinstance(location, tuple):
@@ -63,19 +62,21 @@ class YelpAPI:
             print("Location must be entered as either a 2-tuple (lat, long) or a string")
             return None
         # Handle optional parameters
-        if radius:
-            try:
-                radius_in_meters = int(float(radius) * 1609.34)
-                params["radius"] = radius_in_meters if radius_in_meters <= 40000 else 40000
-            except ValueError:
-                print("Radius must be convertible to float")
-                return None
-        if price:
-            if price.count("$") == len(price):
-                params["price"] = price.count("$")
-            else:
-                print("Price must be between $ and $$$$")
-                return None
+        if kwargs:
+            for arg, value in kwargs.items():
+                if arg == "radius":
+                    try:
+                        radius_in_meters = int(float(value) * 1609.34)
+                        params["radius"] = radius_in_meters if radius_in_meters <= 40000 else 40000
+                    except ValueError:
+                        print("Radius must be convertible to float")
+                        return None
+                if arg == "price":
+                    if value.count("$") == len(value):
+                        params["price"] = value.count("$")
+                    else:
+                        print("Price must be between $ and $$$$")
+                        return None
         response = self.request(url=BUSINESS_SEARCH_URL, params=params)
         return json.loads(response.content)
 

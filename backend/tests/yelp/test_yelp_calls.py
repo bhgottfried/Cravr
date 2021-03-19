@@ -5,19 +5,19 @@ from backend.flaskr.yelp_api_utils import YelpAPI
 def test_search_with_location():
     # Make a valid search using a location string
     yelp = YelpAPI()
-    result = yelp.business_search(term="sushi", location="lafayette, in")
+    result = yelp.business_search(term="sushi", location="lafayette, in", open_now=False)
     assert "businesses" in result
 
 def test_search_with_coordinates():
     # Make a valid search using location coordinates
     yelp = YelpAPI()
-    result = yelp.business_search(term="sushi", location=(40.4167, -86.8753))
+    result = yelp.business_search(term="sushi", location=(40.4167, -86.8753), open_now=False)
     assert "businesses" in result
 
 def test_bad_search():
     # Try to make a search using an invalid location value
     yelp = YelpAPI()
-    result = yelp.business_search(term="sushi", location=10)
+    result = yelp.business_search(term="sushi", location=10, open_now=False)
     assert result is None
 
 def test_business_details():

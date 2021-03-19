@@ -28,8 +28,12 @@ class Recommender:
         location = search_params["location"]
         distance = search_params["distance"]
         price = search_params["price"]
+        open_now = True
+        if "open_now" in search_params.keys():
+            open_now = search_params["open_now"]
 
-        result = self.yelp.business_search(food, location, distance, price)
+        result = self.yelp.business_search(term=food, location=location, distance=distance,
+                                           price=price, open_now=open_now)
 
         if "businesses" in result:
             for restaurant in result["businesses"]:
