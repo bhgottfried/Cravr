@@ -30,16 +30,10 @@ def write_user_data(username, data):
                                         .format(username))[0]
     if num_results == 1:
         # Update data for existing user
-        print("Updating data for existing user!")
-        print("UPDATE user_profiles SET data = '{}' WHERE username = '{}'"
-              .format(json.dumps(data), username))
         result = db_conn.execute_query("UPDATE user_profiles SET data = '{}' WHERE username = '{}'"
                                        .format(json.dumps(data), username))
     elif num_results == 0:
         # Add data for new user
-        print("Adding data for new user!")
-        print("INSERT INTO user_profiles (username, data) VALUES ({}, '{}')"
-              .format(username, json.dumps(data)))
         result = db_conn.execute_query("INSERT INTO user_profiles (username, data) VALUES "
                                        "('{}', '{}')".format(username, json.dumps(data)))
     else:
