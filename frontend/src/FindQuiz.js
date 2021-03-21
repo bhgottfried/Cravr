@@ -13,8 +13,13 @@ const Restaurant = (props) => {
         <div>
             <h1>{props.name}</h1>
             <h3> Distance:{props.distance} mi</h3>
-            <h5>Price:{props.price} Rating:{props.rating}/5</h5>
-            <button onClick={props.accept}>Yummy!</button> <button onClick={props.reject}>Yuck</button>
+            <h4>Price:{props.price} Rating:{props.rating}/5</h4>
+            <h4>Address:{props.addr.address1}</h4>
+            <img className="Image" src={props.image} alt=""/>
+            <br/>
+            <button className="submit-button" onClick={props.accept}>Yummy!</button> 
+            <button className="submit-button" onClick={props.later}>Maybe Later</button>
+            <button className="submit-button" onClick={props.reject}>Yuck</button>
         </div>
     )
 }
@@ -48,7 +53,10 @@ class FindQuizContainer extends React.Component {
         this.rateRestaurant(true, restaurant.id);
         alert("Have a nice meal! After you eat, don't forget to rate your experience for even better recommendations!");
     }
-
+    later = (e) =>{
+        e.preventDefault()
+        //TODO: reject but snooze until later
+    }
     reject = (e) => {
         e.preventDefault()
         let restaurant = this.state.Restaurants.pop();
@@ -161,6 +169,7 @@ class FindQuizContainer extends React.Component {
                         <br />
                         <br></br>
                     </form>
+                    
                 </div>
 
                 <div id="results" className="Rest">
@@ -175,8 +184,11 @@ class FindQuizContainer extends React.Component {
                                         distance={Rest.Distance}
                                         price={Rest.Price}
                                         rating={Rest.Rating}
+                                        image={Rest.Image}
+                                        addr={Rest.Location}
                                         accept={this.accept.bind(this)}
-                                        reject={this.reject.bind(this)}>
+                                        reject={this.reject.bind(this)}
+                                        later={this.later.bind(this)}>
                                     </Restaurant>
                                     <br></br>
                                 </div>

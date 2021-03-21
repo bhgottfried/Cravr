@@ -24,11 +24,14 @@
         text-align: center;
         font-family:'Courier New', Courier, monospace; }
 .Rest {
-  border: 3px solid rgb(0, 0, 0);
   background-color: rgb(236, 98, 17);
-  margin: 0 25em 1em 25em;
+  margin: 0 20em 1em 20em;
   text-align: center;
   font-family:'Courier New', Courier, monospace; 
+}
+.Image {
+  margin: auto;
+  width: 65%;
 }
 .submit-button{
   font-size:x-large;
