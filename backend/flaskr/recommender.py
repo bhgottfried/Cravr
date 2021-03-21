@@ -1,6 +1,5 @@
 """Class to generate restaurant recommendations for a user"""
 
-from backend.flaskr.yelp_api_utils import YelpAPI
 from backend.flaskr.restaurant_cache import RestaurantCache
 
 class Recommender:
@@ -8,14 +7,14 @@ class Recommender:
     Class to generate restaurant recommendations for a user from the Yelp API
     """
 
-    def __init__(self, cache_timeout=86400):
+    def __init__(self, yelp, cache_timeout=86400):
         """
         Initializes restaurant cache and Yelp API to get suggestions and
         maintain which restaurants have been recently rated.
         :param cache_timeout: Number of seconds to maintain stale restaurnt entries in cache
         :return: None
         """
-        self.yelp = YelpAPI()
+        self.yelp = yelp
         self.cache = RestaurantCache(cache_timeout)
 
     def get_restaurant(self, user, search_params):
@@ -29,12 +28,16 @@ class Recommender:
         location = search_params["location"]
         distance = search_params["distance"]
         price = search_params["price"]
+        open_now = True
+        if "open_now" in search_params.keys():
+            open_now = search_params["open_now"]
 
-        result = self.yelp.business_search(food, location, distance, price)
+        result = self.yelp.business_search(term=food, location=location, distance=distance,
+                                           price=price, open_now=open_now)
 
         if "businesses" in result:
             for restaurant in result["businesses"]:
-                if not self.cache.is_cached(user, restaurant["id"]):
+                if not self.cache.is_cached(user.name, restaurant["id"]):
                     return {
                         "id": restaurant["id"],
                         "Name": restaurant["name"],
@@ -62,4 +65,4 @@ class Recommender:
         :param restaurant_id: Yelp restaurant ID that was just rated
         :return: None
         """
-        self.cache.add_restaurant(user, restaurant_id)
+        self.cache.add_restaurant(user.name, restaurant_id)
