@@ -50,18 +50,20 @@ class FindQuizContainer extends React.Component {
         let restaurant = this.state.Restaurants.pop();
         this.setState({ Restaurants: [] });
         this.setState({ showRes: false });
-        this.rateRestaurant(true, restaurant.id);
+        this.rateRestaurant(1, restaurant.id);
         alert("Have a nice meal! After you eat, don't forget to rate your experience for even better recommendations!");
     }
     later = (e) =>{
         e.preventDefault()
-        //TODO: reject but snooze until later
+        let restaurant = this.state.Restaurants.pop();
+        this.handleSubmit(e);   // Get new restaurant
+        this.rateRestaurant(0, restaurant.id);
     }
     reject = (e) => {
         e.preventDefault()
         let restaurant = this.state.Restaurants.pop();
         this.handleSubmit(e);   // Get new restaurant
-        this.rateRestaurant(false, restaurant.id);
+        this.rateRestaurant(-1, restaurant.id);
     }
 
     rateRestaurant = (rating, restaurantID) => {
@@ -158,7 +160,7 @@ class FindQuizContainer extends React.Component {
                         </label>
                         <br />
                         <label id="q3">
-                            3. Maxmimum Distance (mi.)&emsp;
+                            3. Preferred Distance (mi.)&emsp;
                         <input type="number" className="textbox" defaultValue="1" min="1" max="24" value={this.state.q2.value} name="q3"
                                 required onChange={this.handleChange}>
                             </input>

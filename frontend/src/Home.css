@@ -30,8 +30,8 @@
   font-family:'Courier New', Courier, monospace; 
 }
 .Image {
-  margin: auto;
-  width: 65%;
+  margin: 0 20em 1em 10em;
+  width: 50%;
 }
 .submit-button{
   font-size:x-large;

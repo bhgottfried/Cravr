@@ -56,7 +56,7 @@ class Recommender:
             "Location": ('0', '0'),
             "Distance": "I would walk 500",
             "Price": "$$$$",
-            "Rating": 5,
+            "Rating": 5
         }
 
     def cache_restaurant(self, user, restaurant_id):

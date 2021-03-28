@@ -39,15 +39,18 @@ class User:
         :param yelp: YelpAPI object to map restaurant IDs to full restaurant objects
         :return: List of restaurant objects
         """
-        return [ {
+        if self.reviews != []:
+            return [ {
                 key: yelp.business_details(rest_id)[key] for key in [
                     "id",
                     "name",
-                    "price",
                     "location"
                     ]
-            } for rest_id in self.reviews
-        ]
+                } for rest_id in self.reviews
+            ]
+        else:
+            #could not be found in the database
+            return [{"None":"1"}]
 
     def submit_review(self, rest_id, review):
         """

@@ -76,8 +76,11 @@ def rate_suggestion():
     user = _user(name)
 
     # Process rating
-    if is_liked:    # Add the accepted restaunt to the user's review list
+    if is_liked == 1:    # Add the accepted restaunt to the user's review list
         user.add_review(rest_id)
+    elif is_liked ==0:  #user wants to go there but at a later time
+        #Add a save for later option
+        user.disliked(rest_id)#placeholder
     else:           # Otherwise send the disliked restaurant to the user's model for training
         user.disliked(rest_id)
 
