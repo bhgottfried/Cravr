@@ -48,9 +48,7 @@ class User:
                     ]
                 } for rest_id in self.reviews
             ]
-        else:
-            #could not be found in the database
-            return [{"None":"1"}]
+        return [{"None":"1"}]
 
     def submit_review(self, rest_id, review):
         """
