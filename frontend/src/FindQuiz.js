@@ -122,7 +122,6 @@ class FindQuizContainer extends React.Component {
                     <form onSubmit={this.handleSubmit}>
                         <label id="q1">
                             1. What are you in the mood for?
-                        {/* TODO Allow multiple boxes to be checked */}
                             <select value={this.state.q1.value} className="textbox" required onChange={this.handleChange} name="q1">
                                 <option value="Bar & Grill">Bar & Grill</option>
                                 <option value="Sandwiches">Sandwiches</option>

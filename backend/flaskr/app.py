@@ -70,19 +70,18 @@ def rate_suggestion():
     """Apply the user's rating to their profile and the restaurant's"""
     args     = request.json.split('\n')
     name     = args[0]
-    is_liked = args[1]
+    rating   = args[1]
     rest_id  = args[2]
 
     user = _user(name)
 
     # Process rating
-    if is_liked == 1:    # Add the accepted restaunt to the user's review list
+    if rating == "yummy":    # Add the accepted restaunt to the user's review list
         user.add_review(rest_id)
-    elif is_liked ==0:  #user wants to go there but at a later time
-        #Add a save for later option
-        user.disliked(rest_id)#placeholder
-    else:           # Otherwise send the disliked restaurant to the user's model for training
+    elif rating == "yuck":  # Otherwise send the disliked restaurant to the user's model for training
         user.disliked(rest_id)
+    elif rating == "maybe later": # User wants to go there but at a later time
+        pass # Do nothing but still cache the restaurant
 
     # Cache the reviewed restaurant
     recommender.cache_restaurant(user, rest_id)

@@ -1,16 +1,14 @@
 import React from 'react';
 import './Home.css';
 import { getCookie } from "./FindQuiz"
+
 class ReviewContainer extends React.Component {
-    //essentially scrollable list of reviews
     constructor(props) {
         super(props);
         this.sendData = this.sendData.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.setReview = this.setReview.bind(this);
 
-        //TODO: get user reviews from backend
-        //TODO: make this run at page creation
         fetch("/get_reviews", {
             method: "POST",
             cache: "no-cache",
@@ -33,110 +31,92 @@ class ReviewContainer extends React.Component {
         ],
         None: 1
     }
+
     setReview = (rest) => {
-        //alert(rest[0].None)
         if (rest[0].None === "1") {
             this.setState({ None: 1 });
-        } else{
+        } else {
             this.setState({ None: 0 });
             this.setState({ Reviews: rest })
         }
     }
-    sendData = (data) => {
-        //get restaurant data from backend to formulate the review
+
+    sendData = (rest_id, review) => {
         fetch("/submit_review", {
             method: "POST",
             cache: "no-cache",
             headers: {
                 "content_type": "application/json"
             },
-            body: JSON.stringify(
-                getCookie("Username") + data.id + " " + data.Rating + " " + data.Repeat + " " + data.Food + " " + data.Staff + " " + data.Atmos
-            ) //food is a 1-5 rating +5 // staff is a 1-5 rating +10 // atmos is a 1-5 rating +15
+            body: JSON.stringify(getCookie("Username") + "\n" + rest_id + "\n" + JSON.stringify(review))
         });
     }
-    submit = (index, e) => {
-        e.preventDefault();
-        const reviews = Object.assign([], this.state.Reviews);
-        const data = reviews.splice(index, 1);
-        this.sendData(data);
+
+    submit = (index, event) => {
+        event.preventDefault();
+        let reviews = Object.assign([], this.state.Reviews);
+        let removed = reviews.splice(index, 1);
+        this.sendData(removed[0].restaurant.id, removed[0].review);
         this.setState({ Reviews: reviews }) // must setState to update the actual render
-        alert("Thank You for submitting a review! Please keep reviewing and requesting suggestions so we can get you better recommendations")
+        alert("Thank you for your review! Please keep reviewing and requesting suggestions for better recommendations")
     }
+
     handleChange(index, event) {
-        var reviews = Object.assign([], this.state.Reviews);
-        //done this way bc event.target.name doesn't exist
-        if (event.target.value <= 0) {
-            //repeat
-            reviews[index].Repeat = event.target.value
-        } else if (event.target.value >= 1 && event.target.value <= 5) {
-            //userrating
-            reviews[index].UserRating = event.target.value
-        } else if (event.target.value <= 10) {
-            reviews[index].Food = event.target.value
-        } else if (event.target.value <= 15) {
-            reviews[index].Staff = event.target.value
-        } else if (event.target.value <= 20) {
-            reviews[index].Atmos = event.target.value
-        }
+        let reviews = Object.assign([], this.state.Reviews);
+        reviews[index].review[event.target.name] = event.target.value;
         this.setState({ Reviews: reviews })
     }
+
     render() {
         return (
             <div>
                 {
-                    this.state.None ? <div className="Rest"><h2>Sorry, no more Restaurants to review at this time.</h2></div> : this.state.Reviews.map((Revs, index) => {return (
+                    this.state.None ? <div className="Rest"><h2>No restaurants to review at this time</h2></div> : this.state.Reviews.map((Revs, index) => { return (
                             <div className="Rest">
-                                <h1>{Revs.name}</h1>
-                                <h3> Location:{Revs.location.address1}</h3>
+                                <h1>{Revs.restaurant.name}</h1>
+                                <h3>Location: {Revs.restaurant.location.address1}</h3>
+                                <h3>Please rate the following from 1-5 (5 is best)</h3>
                                 <form onSubmit={this.submit.bind(this, index)}>
-                                    <label id="Question 3">
-                                        1. How would you rate the food on a scale of 1-5?
-                                        <select onChange={this.handleChange.bind(this, index)} className="textbox" value={Revs.Food}>
-                                            <option value="6">1</option>
-                                            <option value="7">2</option>
-                                            <option value="8">3</option>
-                                            <option value="9">4</option>
-                                            <option value="10">5</option>
-                                        </select>
-                                    </label>
-                                    <br></br>
-                                    <label id="Question 4">
-                                        2. How would you rate the staff on a scale of 1-5?
-                                        <select onChange={this.handleChange.bind(this, index)} className="textbox" value={Revs.Staff}>
-                                            <option value="11">1</option>
-                                            <option value="12">2</option>
-                                            <option value="13">3</option>
-                                            <option value="14">4</option>
-                                            <option value="15">5</option>
-                                        </select>
-                                    </label>
-                                    <br></br>
-                                    <label id="Question 5">
-                                        3. How would you rate the atmosphere on a scale of 1-5?
-                                        <select onChange={this.handleChange.bind(this, index)} className="textbox" value={Revs.Atmos}>
-                                            <option value="16">1</option>
-                                            <option value="17">2</option>
-                                            <option value="18">3</option>
-                                            <option value="19">4</option>
-                                            <option value="20">5</option>
-                                        </select>
-                                    </label>
-                                    <br></br>
                                     <label id="Question 1">
-                                        4. How would you rate your experience on a scale of 1-5?
-                                        <input type="number" className="textbox" defaultValue="1" min="1" max="5" onChange={this.handleChange.bind(this, index)} value={Revs.UserRating}></input>
+                                        Food: 
+                                        <input
+                                            type="number" className="textbox" defaultValue="5" min="1" max="5" name="food"
+                                            onChange={this.handleChange.bind(this, index)} value={Revs.review.food}>
+                                        </input>
                                     </label>
                                     <br></br>
                                     <label id="Question 2">
-                                        5. Would you go here again?
-                                        <select onChange={this.handleChange.bind(this, index)} className="textbox" value={Revs.Repeat}>
-                                            <option value="0">Yes</option>
-                                            <option value="-1">No</option>
+                                        Service: 
+                                        <input
+                                            type="number" className="textbox" defaultValue="5" min="1" max="5" name="service"
+                                            onChange={this.handleChange.bind(this, index)} value={Revs.review.service}>
+                                        </input>
+                                    </label>
+                                    <br></br>
+                                    <label id="Question 3">
+                                        Atmosphere: 
+                                        <input
+                                            type="number" className="textbox" defaultValue="5" min="1" max="5" name="atmosphere"
+                                            onChange={this.handleChange.bind(this, index)} value={Revs.review.atmosphere}>
+                                        </input>
+                                    </label>
+                                    <br></br>
+                                    <label id="Question 4">
+                                        Experience: 
+                                        <input
+                                            type="number" className="textbox" defaultValue="5" min="1" max="5" name="overall"
+                                            onChange={this.handleChange.bind(this, index)} value={Revs.review.overall}>
+                                        </input>
+                                    </label>
+                                    <br></br>
+                                    <label id="Question 5">
+                                        Would you go here again? 
+                                        <select  className="textbox" name="repeat" onChange={this.handleChange.bind(this, index)} value={Revs.review.repeat}>
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
                                         </select>
                                     </label>
                                     <br></br>
-
                                     <input className="submit-button" type="submit" value="Submit" />
                                 </form>
                                 <br></br>
