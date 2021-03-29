@@ -78,7 +78,7 @@ def rate_suggestion():
     # Process rating
     if rating == "yummy":    # Add the accepted restaunt to the user's review list
         user.add_review(rest_id)
-    elif rating == "yuck":  # Otherwise send the disliked restaurant to the user's model for training
+    elif rating == "yuck":  # Send the disliked restaurant to the user's model for training
         user.disliked(rest_id)
     elif rating == "maybe later": # User wants to go there but at a later time
         pass # Do nothing but still cache the restaurant
