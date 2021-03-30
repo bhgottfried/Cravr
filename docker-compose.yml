@@ -11,7 +11,7 @@ services:
     container_name: mysql_container
     restart: always
     volumes:
-      - /app/database
+      - /app/database:/docker-entrypoint-initdb.d/:ro
     expose:
       - '3306'
     ports:
