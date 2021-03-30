@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.7'
 
 services:
   mysql:
@@ -19,12 +19,15 @@ services:
   flask:
     container_name: flask_container
     restart: always
+    depends_on:
+      - mysql
     build:
       dockerfile: Dockerfile
-      context: ./backend
+      context: .
       target: flask
+    env_file: ./backend/.env
     volumes:
-      - /app/backend
+      - ./app/backend:/app
     expose: 
       - '5000'
     ports:
@@ -32,14 +35,16 @@ services:
   react:
     container_name: react_container
     restart: always
+    depends_on:
+      - flask
     build:
       dockerfile: Dockerfile
-      context: ./frontend
+      context: .
       target: react
+    environment:
+      NODE_ENV: development
     volumes:
       - /frontend/node_modules
-      - /frontend/package.json
-      - ./frontend:/app
     expose: 
       - '3000'
     ports:
