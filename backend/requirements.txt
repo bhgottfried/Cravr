@@ -6,7 +6,7 @@ Flask-Cors==3.0.10
 Flask-MySQL==1.5.2
 Jinja2==2.11.3
 MarkupSafe==1.1.1
-pylint==2.7.2
+pylint==2.7.3
 pymysql==1.0.2
 requests==2.25.1
 six==1.15.0
