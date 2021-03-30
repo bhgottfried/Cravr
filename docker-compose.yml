@@ -2,14 +2,20 @@ version: '3.4'
 
 services:
   mysql:
+    image: mysql:8.0.23
+    environment:
+      - MYSQL_DATABASE=cravr
+      - MYSQL_ROOT_PASSWORD=ece49595bois!
+      - MYSQL_USER=backend
+      - MYSQL_PASSWORD=ece49595bois!
     container_name: mysql_container
     restart: always
-    build:
-      dockerfile: Dockerfile
-      context: ./mysql
-      target: mysql
     volumes:
-      - /app/mysql
+      - /app/database
+    expose:
+      - '3306'
+    ports:
+      - '3306:3306'
   flask:
     container_name: flask_container
     restart: always
