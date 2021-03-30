@@ -25,9 +25,11 @@ services:
       dockerfile: Dockerfile
       context: .
       target: flask
-    env_file: ./backend/.env
-    volumes:
-      - ./app/backend:/app
+    environment:
+      - FLASK_ENV=development
+      - FLASK_APP=flaskr/app.py
+      - FLASK_RUN_HOST=0.0.0.0
+      - MYSQL_DATABASE_HOST=mysql_container
     expose: 
       - '5000'
     ports:
@@ -42,7 +44,7 @@ services:
       context: .
       target: react
     environment:
-      NODE_ENV: development
+      - REACT_APP_API_ENDPOINT=http://flask_container:5000
     volumes:
       - /frontend/node_modules
     expose: 
