@@ -50,20 +50,20 @@ class FindQuizContainer extends React.Component {
         let restaurant = this.state.Restaurants.pop();
         this.setState({ Restaurants: [] });
         this.setState({ showRes: false });
-        this.rateRestaurant(1, restaurant.id);
+        this.rateRestaurant("yummy", restaurant.id);
         alert("Have a nice meal! After you eat, don't forget to rate your experience for even better recommendations!");
     }
     later = (e) =>{
         e.preventDefault()
         let restaurant = this.state.Restaurants.pop();
         this.handleSubmit(e);   // Get new restaurant
-        this.rateRestaurant(0, restaurant.id);
+        this.rateRestaurant("maybe later", restaurant.id);
     }
     reject = (e) => {
         e.preventDefault()
         let restaurant = this.state.Restaurants.pop();
         this.handleSubmit(e);   // Get new restaurant
-        this.rateRestaurant(-1, restaurant.id);
+        this.rateRestaurant("yuck", restaurant.id);
     }
 
     rateRestaurant = (rating, restaurantID) => {
