@@ -13,8 +13,13 @@ const Restaurant = (props) => {
         <div>
             <h1>{props.name}</h1>
             <h3> Distance:{props.distance} mi</h3>
-            <h5>Price:{props.price} Rating:{props.rating}/5</h5>
-            <button onClick={props.accept}>Yummy!</button> <button onClick={props.reject}>Yuck</button>
+            <h4>Price:{props.price} Rating:{props.rating}/5</h4>
+            <h4>Address:{props.addr.address1}</h4>
+            <img className="Image" src={props.image} alt=""/>
+            <br/>
+            <button className="submit-button" onClick={props.accept}>Yummy!</button> 
+            <button className="submit-button" onClick={props.later}>Maybe Later</button>
+            <button className="submit-button" onClick={props.reject}>Yuck</button>
         </div>
     )
 }
@@ -45,15 +50,20 @@ class FindQuizContainer extends React.Component {
         let restaurant = this.state.Restaurants.pop();
         this.setState({ Restaurants: [] });
         this.setState({ showRes: false });
-        this.rateRestaurant(true, restaurant.id);
+        this.rateRestaurant("yummy", restaurant.id);
         alert("Have a nice meal! After you eat, don't forget to rate your experience for even better recommendations!");
     }
-
+    later = (e) =>{
+        e.preventDefault()
+        let restaurant = this.state.Restaurants.pop();
+        this.handleSubmit(e);   // Get new restaurant
+        this.rateRestaurant("maybe later", restaurant.id);
+    }
     reject = (e) => {
         e.preventDefault()
         let restaurant = this.state.Restaurants.pop();
         this.handleSubmit(e);   // Get new restaurant
-        this.rateRestaurant(false, restaurant.id);
+        this.rateRestaurant("yuck", restaurant.id);
     }
 
     rateRestaurant = (rating, restaurantID) => {
@@ -112,7 +122,6 @@ class FindQuizContainer extends React.Component {
                     <form onSubmit={this.handleSubmit}>
                         <label id="q1">
                             1. What are you in the mood for?
-                        {/* TODO Allow multiple boxes to be checked */}
                             <select value={this.state.q1.value} className="textbox" required onChange={this.handleChange} name="q1">
                                 <option value="Bar & Grill">Bar & Grill</option>
                                 <option value="Sandwiches">Sandwiches</option>
@@ -150,7 +159,7 @@ class FindQuizContainer extends React.Component {
                         </label>
                         <br />
                         <label id="q3">
-                            3. Maxmimum Distance (mi.)&emsp;
+                            3. Preferred Distance (mi.)&emsp;
                         <input type="number" className="textbox" defaultValue="1" min="1" max="24" value={this.state.q2.value} name="q3"
                                 required onChange={this.handleChange}>
                             </input>
@@ -161,6 +170,7 @@ class FindQuizContainer extends React.Component {
                         <br />
                         <br></br>
                     </form>
+                    
                 </div>
 
                 <div id="results" className="Rest">
@@ -175,8 +185,11 @@ class FindQuizContainer extends React.Component {
                                         distance={Rest.Distance}
                                         price={Rest.Price}
                                         rating={Rest.Rating}
+                                        image={Rest.Image}
+                                        addr={Rest.Location}
                                         accept={this.accept.bind(this)}
-                                        reject={this.reject.bind(this)}>
+                                        reject={this.reject.bind(this)}
+                                        later={this.later.bind(this)}>
                                     </Restaurant>
                                     <br></br>
                                 </div>
