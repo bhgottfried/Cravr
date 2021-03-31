@@ -47,7 +47,7 @@ def test_get_reviews():
 
     # Ensure the object is properly parsed from Yelp
     user.add_review(rest_id)
-    assert user.get_reviews(yelp)[0]["name"] == "Harry's Chocolate Shop"
+    assert user.get_reviews(yelp)[0]["restaurant"]["name"] == "Harry's Chocolate Shop"
 
 
 if __name__ == "__main__":

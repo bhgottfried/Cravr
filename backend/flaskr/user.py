@@ -41,13 +41,15 @@ class User:
         """
         if self.reviews != []:
             return [ {
-                key: yelp.business_details(rest_id)[key] for key in [
-                    "id",
-                    "name",
-                    "location"
-                    ]
-                } for rest_id in self.reviews
-            ]
+                "restaurant": yelp.business_details(rest_id),
+                "review": {     # Frontend default values
+                    "food": "5",
+                    "service": "5",
+                    "atmosphere": "5",
+                    "overall": "5",
+                    "repeat": "1"
+                }
+            } for rest_id in self.reviews]
         return [{"None":"1"}]
 
     def submit_review(self, rest_id, review):
