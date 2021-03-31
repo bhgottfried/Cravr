@@ -44,7 +44,8 @@ class Recommender:
                         "Location": restaurant["location"],
                         "Distance": round(restaurant["distance"] / 1609.34, ndigits=1),
                         "Price": restaurant["price"],
-                        "Rating": restaurant["rating"]
+                        "Rating": restaurant["rating"],
+                        "Image": restaurant["image_url"]
                     }
 
         # We exhausted all the available restaurants or there were none at all
