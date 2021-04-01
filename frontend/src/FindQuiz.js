@@ -57,7 +57,7 @@ class FindQuizContainer extends React.Component {
     }
 
     rateRestaurant = (rating, restaurantID) => {
-        return fetch("/rate_suggestion", {
+        return fetch("/cravr/rate_suggestion", {
             method: "POST",
             cache: "no-cache",
             headers: {
@@ -73,7 +73,7 @@ class FindQuizContainer extends React.Component {
     }
 
     getRestaurant = (position) => {
-        fetch("/restaurants", {
+        fetch("/cravr/restaurants", {
             method: "POST",
             cache: "no-cache",
             headers: {

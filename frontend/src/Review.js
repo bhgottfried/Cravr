@@ -21,7 +21,7 @@ class ReviewContainer extends React.Component {
     }
     sendData = (Repeat, Rating, id) => {
         //get restaurant data from backend to formulate the review
-        fetch("/user-rating", {
+        fetch("/cravr/user-rating", {
             method: "POST",
             cache: "no-cache",
             headers: {
