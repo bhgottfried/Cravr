@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   mysql:
-    image: mysql:8.0.23
+    image: mysql:latest
     environment:
       - MYSQL_DATABASE=cravr
       - MYSQL_ROOT_PASSWORD=ece49595bois!
@@ -11,9 +11,7 @@ services:
     container_name: mysql_container
     restart: always
     volumes:
-      - /app/database:/docker-entrypoint-initdb.d/:ro
-    expose:
-      - '3306'
+      - ./database:/docker-entrypoint-initdb.d
     ports:
       - '3306:3306'
   flask:
@@ -30,8 +28,6 @@ services:
       - FLASK_APP=flaskr/app.py
       - FLASK_RUN_HOST=0.0.0.0
       - MYSQL_DATABASE_HOST=mysql_container
-    expose: 
-      - '5000'
     ports:
       - '5000:5000'
   react:
@@ -47,7 +43,5 @@ services:
       - REACT_APP_API_ENDPOINT=http://flask_container:5000
     volumes:
       - /frontend/node_modules
-    expose: 
-      - '3000'
     ports:
       - '3000:3000'
