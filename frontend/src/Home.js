@@ -1,9 +1,13 @@
 import React from 'react';
 import './Home.css';
 import FindQuizContainer from './FindQuiz.js';
-
+import { useHistory } from "react-router-dom";
+import { getCookie } from "./FindQuiz"
 
 export default function Home() {
+    if(getCookie("Username") === ""){
+        GoLogin()
+    }
     return (
         <div className="Home">
             <nav>
@@ -19,4 +23,8 @@ export default function Home() {
             <FindQuizContainer></FindQuizContainer>
         </div>
     );
+}
+function GoLogin(){
+    const history = useHistory();
+    history.push('/Login');
 }

@@ -27,7 +27,7 @@ export function attemptLogin(email, password) {
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const cookies = new Cookies();
+  const cookies = new Cookies();  
 
   const history = useHistory();
   const routeChange = path => { 
@@ -36,9 +36,11 @@ function Login() {
 
   function handleSubmit(event) {
 		event.preventDefault();
+   
+    var CryptoJS = require("crypto-js");
     cookies.set('Username', email, { path: '/' });
-    cookies.set('Password', password, { path: '/' });
-    console.log(cookies.get('Username'));
+    cookies.set('Password', CryptoJS.AES.encrypt(password, 'CravrisCool').toString(), { path: '/' });
+    console.log(cookies.get('Password'));
     
     attemptLogin(email, password).then(function(res){
       routeChange(res);
@@ -47,6 +49,8 @@ function Login() {
 
   return (
     <div className="App">
+      {cookies.remove('Username', { path: '/' })}
+      {cookies.remove('Password', { path: '/' })}
       <nav className="bar">
         <span>Cravr</span>
       </nav>

@@ -1,6 +1,7 @@
 import React from 'react';
 import './Home.css';
-// import { getCookie } from "./Home"
+import { useHistory } from "react-router-dom";
+import { getCookie } from "./FindQuiz"
 class SettingsContainer extends React.Component {
     //essentially scrollable list of reviews
     constructor(props) {
@@ -47,6 +48,9 @@ class SettingsContainer extends React.Component {
 }
 
 export default function Preferences() {
+    if(getCookie("Username") === ""){
+        GoLogin()
+    }
     return (
         <div className="Home">
             <nav>
@@ -62,4 +66,8 @@ export default function Preferences() {
             <SettingsContainer></SettingsContainer>
         </div>
     );
+}
+function GoLogin(){
+    const history = useHistory();
+    history.push('/Login');
 }

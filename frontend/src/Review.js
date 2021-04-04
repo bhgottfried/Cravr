@@ -1,5 +1,6 @@
 import React from 'react';
 import './Home.css';
+import { useHistory } from "react-router-dom";
 import { getCookie } from "./FindQuiz"
 
 class ReviewContainer extends React.Component {
@@ -8,7 +9,6 @@ class ReviewContainer extends React.Component {
         this.sendData = this.sendData.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.setReview = this.setReview.bind(this);
-
         fetch("/get_reviews", {
             method: "POST",
             cache: "no-cache",
@@ -130,6 +130,9 @@ class ReviewContainer extends React.Component {
 }
 
 export default function Review() {
+    if(getCookie("Username") === ""){
+        GoLogin()
+    }
     return (
         <div className="Home">
             <nav>
@@ -145,4 +148,9 @@ export default function Review() {
             <ReviewContainer></ReviewContainer>
         </div>
     );
+}
+
+function GoLogin(){
+    const history = useHistory();
+    history.push('/Login');
 }
