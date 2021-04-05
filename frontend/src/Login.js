@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 
 export function attemptLogin(email, password) {
   var path = "/";
-  return fetch("/login", {
+  return fetch("/cravr/login", {
     method: "POST",
     cache: "no-cache",
     headers: {

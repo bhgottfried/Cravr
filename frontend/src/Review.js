@@ -9,7 +9,7 @@ class ReviewContainer extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.setReview = this.setReview.bind(this);
 
-        fetch("/get_reviews", {
+        fetch("/cravr/get_reviews", {
             method: "POST",
             cache: "no-cache",
             headers: {
@@ -42,7 +42,7 @@ class ReviewContainer extends React.Component {
     }
 
     sendData = (rest_id, review) => {
-        fetch("/submit_review", {
+        fetch("/cravr/submit_review", {
             method: "POST",
             cache: "no-cache",
             headers: {

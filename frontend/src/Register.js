@@ -28,7 +28,7 @@ export default function Register() {
 		cookies.set('Password', password, { path: '/' });
 		console.log(cookies.get('Username'));
 
-		fetch("/register", {
+		fetch("/cravr/register", {
 			method: "POST",
 			cache: "no-cache",
 			headers: {

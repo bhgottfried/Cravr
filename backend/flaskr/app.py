@@ -29,7 +29,7 @@ def _user(name):
     return users[name]
 
 
-@app.route('/login', methods=["POST"])
+@app.route('/cravr/login', methods=["POST"])
 def login():
     """Attempt to login the user with the provided credentials"""
     name, password = request.json.split('\n')
@@ -40,7 +40,7 @@ def login():
     return {'result': "/" if match else "/Login"}
 
 
-@app.route('/register', methods=["POST"])
+@app.route('/cravr/register', methods=["POST"])
 def register():
     """Attempt to create a new user entry in the authentication database"""
     user, password = request.json.split('\n')
@@ -48,7 +48,7 @@ def register():
     return {'result': "/Login" if registration_success else "/Register"}
 
 
-@app.route('/restaurants', methods=["POST"])
+@app.route('/cravr/restaurants', methods=["POST"])
 def restaurants():
     """Parse the user's restaurant request and get restaurants from Yelp"""
     args = request.json.split('\n')
@@ -65,7 +65,7 @@ def restaurants():
     return {"result": recommender.get_restaurant(_user(name), search_params)}
 
 
-@app.route('/rate_suggestion', methods=["POST"])
+@app.route('/cravr/rate_suggestion', methods=["POST"])
 def rate_suggestion():
     """Apply the user's rating to their profile and the restaurant's"""
     args     = request.json.split('\n')
@@ -89,7 +89,7 @@ def rate_suggestion():
     return {'result': "TODO"}
 
 
-@app.route('/get_reviews', methods=["POST"])
+@app.route('/cravr/get_reviews', methods=["POST"])
 def get_reviews():
     """Get the restaurants that this user needs to review"""
     args     = request.json.split('\n')
@@ -99,7 +99,7 @@ def get_reviews():
     return {'result': _user(name).get_reviews(yelp)}
 
 
-@app.route('/submit_review', methods=["POST"])
+@app.route('/cravr/submit_review', methods=["POST"])
 def submit_review():
     """Update the User object after a user reviews a restaurant they've visited"""
     args    = request.json.split('\n')
