@@ -24,10 +24,6 @@ export default function Register() {
 			return;
 		}
 
-		cookies.set('Username', email, { path: '/' });
-		cookies.set('Password', password, { path: '/' });
-		console.log(cookies.get('Username'));
-
 		fetch("/cravr/register", {
 			method: "POST",
 			cache: "no-cache",
@@ -39,6 +35,12 @@ export default function Register() {
 		.then(response => {
 			if (response.result === "/Login") {
 				attemptLogin(email, password).then(function(res){
+				    if (res === "/") {
+				        var CryptoJS = require("crypto-js");
+				        cookies.set('Username', email, { path: '/' });
+				        cookies.set('Password', CryptoJS.AES.encrypt(password, 'CravrisCool').toString(), { path: '/' });
+				        console.log(cookies.get('Password'));
+				    }
 					routeChange(res);
 				});
 			} else {
