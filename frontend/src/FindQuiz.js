@@ -28,6 +28,7 @@ const Restaurant = (props) => {
 class FindQuizContainer extends React.Component {
     constructor(props) {
         super(props);
+       
 
         this.state = {
             q1: 'Bar & Grill',
@@ -39,6 +40,7 @@ class FindQuizContainer extends React.Component {
         this.setRestaurant = this.setRestaurant.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
     }
 
     setRestaurant = (restaurant) => {

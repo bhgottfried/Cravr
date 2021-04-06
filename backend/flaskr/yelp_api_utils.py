@@ -1,6 +1,5 @@
 """Utilities for requesting data from the Yelp API"""
 
-import json
 import requests
 from backend.config import YelpConfig
 
@@ -36,7 +35,7 @@ class YelpAPI:
         :param params: Request parameters
         :return: JSON response
         """
-        response = requests.get(url, headers=self.headers, params=params)
+        response = requests.get(url, headers=self.headers, params=params).json()
         return response
 
     def business_search(self, term, location, **kwargs):
@@ -79,7 +78,7 @@ class YelpAPI:
                 elif arg == "open_now":
                     params["open_now"] = value
         response = self.request(url=BUSINESS_SEARCH_URL, params=params)
-        return json.loads(response.content)
+        return response
 
     def business_details(self, business_id):
         """
@@ -89,7 +88,7 @@ class YelpAPI:
         """
         url = BUSINESS_DETAILS_URL.replace("{id}", business_id)
         response = self.request(url=url)
-        return json.loads(response.content)
+        return response
 
     def business_reviews(self, business_id):
         """
@@ -99,4 +98,4 @@ class YelpAPI:
         """
         url = BUSINESS_REVIEWS_URL.replace("{id}", business_id)
         response = self.request(url=url)
-        return json.loads(response.content)
+        return response
