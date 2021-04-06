@@ -1,9 +1,9 @@
 """Utilities to create new users and authenticate existing users"""
 
+import json
 from backend.flaskr.database_utils import DBConnection
 
 
-# Help pls Eli :(
 def read_user_data(username):
     """
     Retrieve the user's User object with model and review data from the database and return it
@@ -11,21 +11,13 @@ def read_user_data(username):
     :return: Dictionary with list of restaurants to review and model if username exists in the DB
              Otherwise, return None
     """
-    # Get database instance
     db_conn = DBConnection()
+    result = db_conn.execute_query("SELECT data FROM user_profiles WHERE username = '{}'"
+                                   .format(username))
+    if result == -1 or result is None:
+        return None
+    return result[0]
 
-    if db_conn == "some condition that will fail":
-        return {
-            "reviews": [],
-            "model": None
-        }
-
-    print("TEMP " + str(username))
-
-    return None
-
-
-# Help pls Eli :(
 def write_user_data(username, data):
     """
     Create or modify a user's User object in the database
@@ -33,7 +25,23 @@ def write_user_data(username, data):
     :param data: User object to add or replace for username
     :return: None
     """
-    # Get database instance
     db_conn = DBConnection()
+    num_results = db_conn.execute_query("SELECT COUNT(*) FROM user_profiles WHERE username = '{}'"
+                                        .format(username))[0]
+    if num_results == 1:
+        # Update data for existing user
+        result = db_conn.execute_query("UPDATE user_profiles SET data = '{}' WHERE username = '{}'"
+                                       .format(json.dumps(data), username))
+    elif num_results == 0:
+        # Add data for new user
+        result = db_conn.execute_query("INSERT INTO user_profiles (username, data) VALUES "
+                                       "('{}', '{}')".format(username, json.dumps(data)))
+    else:
+        # Multiple instances of user found in profiles
+        print("{} user profiles found for user {}. Expected 0 or 1.".format(num_results, username))
+        return False
 
-    print("TEMP " + str(username) + str(data) + str(db_conn))
+    # True if write successful, false otherwise
+    if result == -1:
+        return False
+    return True
