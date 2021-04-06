@@ -38,7 +38,6 @@ function Login() {
 		event.preventDefault();
     
     attemptLogin(email, password).then(function(res){
-
       if (res === "/") {
         var CryptoJS = require("crypto-js");
         cookies.set('Username', email, { path: '/' });
