@@ -1,0 +1,265 @@
+\documentclass[11pt]{article}
+
+
+%%% Packages
+%%
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{url}
+\usepackage[margin = 1in, headheight = 13.6pt]{geometry}
+\usepackage[linktoc=all]{hyperref}
+%%
+%%%
+
+
+%%% Formatting
+%%
+\parindent 0em
+\parskip 1ex
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[L]{\slshape\MakeUppercase{{\myTitle}}}
+\fancyhead[R]{\slshape{\myName}}
+\fancyfoot[C]{\thepage}
+\setcounter{tocdepth}{3}
+%%
+%%%
+
+
+%%% User defined variables
+%%
+\def \myTitle {Cravr API Docs}
+\def \myName {Ben Gottfried, Elias Talcott, and Justin Hyndman}
+\def \myDate {Last Revised: April 7, 2021}
+%%
+%%%
+
+%%% Custom commands
+%%
+\newcommand*{\tabulardef}[3]{\begin{tabular}[t]{@{}lp{\dimexpr\linewidth-#1}@{}}
+    #2&#3
+  \end{tabular}}
+\newlist{deflist}{description}{2}
+\setlist[deflist]{labelwidth=2cm,leftmargin=!,font=\normalfont}
+%%
+%%%
+
+
+\begin{document}
+
+\begin{titlepage}
+\title{\myTitle}
+\author{\myName}
+\date{\myDate}
+\maketitle
+\tableofcontents
+\thispagestyle{empty}
+\end{titlepage}
+
+
+\section{Backend Function Index}
+\subsection{Authentication}
+Logs in existing users and creates new users. Located in \url{authentication\_utils.py}.
+
+\subsubsection{authenticate\_user}
+\textbf{Description}
+
+Log in an existing user. Fails if username/password do not match a database entry or if database connection cannot be established.
+
+\textbf{Arguments}
+\begin{deflist}
+	\item[username]String containing username. Must be a valid email address.
+	\item[password]String containing password.
+\end{deflist}
+
+\textbf{Return Value}
+
+True if authentication is successful. False otherwise.
+
+\subsubsection{register\_user}
+\textbf{Description}
+
+Create a new user in the database and log in. Fails if username is already associated with an account or if database connection cannot be established.
+
+\textbf{Arguments}
+\begin{deflist}
+	\item[username]String containing username. Must be a valid email address.
+	\item[password]String containing password.
+\end{deflist}
+
+\textbf{Return Value}
+
+True if registration is successful. False otherwise.
+
+
+\subsection{Database}
+Executes reads and writes to the database. Located in \url{database\_utils.py}.
+
+\subsubsection{setup}
+\textbf{Description}
+
+Class method to create a MySQL instance at the beginning of app execution. Uses a default configuration from a DatabaseConfig object and allows custom configuration parameters. Once configured, create one connection and add it to the connection pool.
+
+\textbf{Arguments}
+\begin{deflist}
+	\item[app]Flask app instance.
+	\item[**kwargs]Custom configuration parameters.
+	\begin{deflist}
+		\item[socket]Tuple containing hostname and port of the MySQL database. Defaults are 
+					 "MYSQL\_DATABASE\_HOST" environment variable and port 3306.
+		\item[credentials]Tuple containing user and password to access database.
+		\item[database]Name of database to use. Default is "cravr".
+		\item[charset]Character set used by database. Default is "utf8".
+	\end{deflist}
+\end{deflist}
+
+\textbf{Return Value}
+
+None.
+
+\subsubsection{execute\_query}
+\textbf{Description}
+
+Gets a connection from the connection pool, executes a query on the database, and gives the connection back. Fails if database connection cannot be established.
+
+\textbf{Arguments}
+\begin{deflist}
+	\item[query]String containing MySQL query to be executed.
+\end{deflist}
+
+\textbf{Return value}
+
+String containing the first result of the query. -1 if database connection failed.
+
+\subsection{Recommender}
+Suggests restaurants based on user and restaurant data. Located in \url{recommender.py}
+
+\subsubsection{get\_restaurant}
+\textbf{Description}
+
+\textbf{Arguments}
+\begin{deflist}
+	\item[]
+\end{deflist}
+
+\textbf{Return value}
+
+\subsubsection{cache\_restaurant}
+\textbf{Description}
+
+\textbf{Arguments}
+\begin{deflist}
+	\item[]
+\end{deflist}
+
+\textbf{Return value}
+
+\subsection{Routing}
+Interacts directly with the frontend for authentication, restaurant recommendations, and user feedback. Provides restaurant/review data and routing information. Located in \url{app.py}.
+
+\subsubsection{login}
+\textbf{Description}
+
+Uses authentication and database functionality to check if user's credentials are valid. Fails if username not found in database, hashed password does not match, or database connection cannot be established.
+
+\textbf{Return value}
+
+\{"result": "/"\} if authentication successful. \{"result": "/Login"\} otherwise.
+
+\subsubsection{register}
+\textbf{Description}
+
+Uses authentication and database functionality to register a new user. Fails if username already exists in database or database connection cannot be established.
+
+\textbf{Return value}
+
+\{"result": "/Login"\} if registration successful. \{"result": "/Register"\} otherwise.
+
+\subsubsection{get\_restaurant}
+\textbf{Description}
+
+Parses a user's search parameters and gives a restaurant recommendation. 
+
+\textbf{Return value}
+
+\{"result": RESTAURANT\_OBJECT\} where RESTAURANT\_OBJECT is the return value of the Recommender class's get\_restaurant method.
+
+\subsubsection{rate\_suggestion}
+\textbf{Description}
+
+Take a restaurant ID along with a user's rating of "Yummy", "Maybe later", or "Yuck" to update their review list and train the recommender.
+
+\textbf{Return value}
+
+None.
+
+\subsubsection{get\_reviews}
+\textbf{Description}
+
+Fetch a list of restaurants that the user needs to review.
+
+\textbf{Return value}
+
+\{"result": REVIEW\_LIST\} where REVIEW\_LIST is the return value of the User class's get\_reviews method.
+
+\subsubsection{submit\_review}
+\textbf{Description}
+
+Remove a restaurant from a user's review list and use review data to train their recommender.
+
+\textbf{Return value}
+
+None.
+
+\subsection{User Utilities}
+Manage users' restaurant caches, review lists, and recommender training data. Located in \url{user.py} and \url{user\_data\_utils.py}
+
+
+
+\subsection{Yelp Fusion API}
+Gets restaurant data from Yelp Fusion API. Located in \url{yelp\_api\_utils.py}
+
+\subsubsection{business\_search}
+\textbf{Description}
+
+\textbf{Arguments}
+\begin{deflist}
+	\item[]
+\end{deflist}
+
+\textbf{Return value}
+
+\subsubsection{business\_details}
+\textbf{Description}
+
+\textbf{Arguments}
+\begin{deflist}
+	\item[]
+\end{deflist}
+
+\textbf{Return value}
+
+\subsubsection{business\_reviews}
+\textbf{Description}
+
+\textbf{Arguments}
+\begin{deflist}
+	\item[]
+\end{deflist}
+
+\textbf{Return value}
+
+\pagebreak
+
+\section{Code Samples}
+\subsection{}
+
+
+\end{document}
