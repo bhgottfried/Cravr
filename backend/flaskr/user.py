@@ -1,6 +1,7 @@
 """Classes to store semi-permanent data associated with user"""
 
 from backend.flaskr.user_data_utils import read_user_data, write_user_data
+from backend.flaskr.model import RecommendationModel
 
 class User:
     """
@@ -21,7 +22,7 @@ class User:
             self.model = user_dict["model"]
         else:
             self.reviews = []
-            self.model = None
+            self.model = RecommendationModel()
 
     def add_review(self, rest_id):
         """
@@ -65,9 +66,9 @@ class User:
 
         self.is_dirty = True
         self.reviews.remove(rest_id)
-        self.train_model(rest_id, review)
+        self.handle_review(rest_id, review)
 
-    def train_model(self, rest_id, review):
+    def handle_review(self, rest_id, review):
         """
         Adjust model weights to based on the review for this restaurant
         :param rest_id: Restaurant ID that was rated
@@ -85,7 +86,7 @@ class User:
         :return: None
         """
         self.is_dirty = True
-        self.train_model(rest_id, {"standard bad review object"})
+        self.handle_review(rest_id, {"standard bad review object"})
 
 
 class UserList:
