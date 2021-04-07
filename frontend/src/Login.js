@@ -17,6 +17,9 @@ export function attemptLogin(email, password) {
   }).then(response => response.json())
   .then(response => {
     path = response.result;
+    if (path === "/Login") {
+      alert("Invalid username or password.");
+    }
     return response.result;
   }).catch((error) => {
     console.error(error);
