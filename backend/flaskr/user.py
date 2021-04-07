@@ -1,6 +1,6 @@
 """Classes to store semi-permanent data associated with user"""
 
-from backend.flaskr.user_data_utils import read_user_data, write_user_data
+from backend.flaskr.user_data_utils import read_user_data, write_user_data, get_quiz_answers
 from backend.flaskr.model import RecommendationModel
 
 class User:
@@ -18,11 +18,11 @@ class User:
         self.is_dirty = False
         user_dict = read_user_data(name)
         if user_dict:
-            self.reviews = user_dict["reviews"]
+            self.reviews = RecommendationModel.from_state(user_dict["reviews"])
             self.model = user_dict["model"]
         else:
             self.reviews = []
-            self.model = RecommendationModel()
+            self.model = RecommendationModel.from_quiz(get_quiz_answers(name))
 
     def add_review(self, rest_id):
         """

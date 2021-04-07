@@ -5,13 +5,30 @@ class RecommendationModel:
     Recommendation model class for a user to get personalized suggestions
     """
 
-    def __init__(self, quiz=None):
+    def __init__(self):
         """
-        Initialize the model weights according to the user's initialization quiz answers
-        :param quiz: Object containing the user's quiz answers
-        :return: None
+        Default constructor to create object.
+        More complex logic is handled in static factory methods.
         """
         self.model = None
+
+    @staticmethod
+    def from_quiz(quiz):
+        """
+        Static factory method to initialize the model weights according to the user's quiz answers
+        :param quiz: Object containing the user's quiz answers
+        :return: New RecommendationModel with initialized model weights
+        """
+        return RecommendationModel()
+    
+    @staticmethod
+    def from_state(json):
+        """
+        Static factory method to create a RecommendationModel object from json from the database
+        :param json: Model state JSON object as stored in the database
+        :return: New RecommendationModel with the state taken from the JSON
+        """
+        return RecommendationModel()
 
     def get_bestaurant(self, restaurants):
         """
