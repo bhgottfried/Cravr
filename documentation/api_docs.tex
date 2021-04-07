@@ -221,7 +221,83 @@ None.
 \subsection{User Utilities}
 Manage users' restaurant caches, review lists, and recommender training data. Located in \url{user.py} and \url{user\_data\_utils.py}
 
+\subsubsection{User}
+\textbf{Description}
 
+Class that maintains permanent user data such as the restaurants they need to review and their recommendation model.
+
+\textbf{Fields}
+\begin{deflist}
+	\item[str name] The user's username or email address.
+	\item[bool is\_dirty] Boolean for whether or not the User object has been modified since it was last written to the database.
+	\item[list reviews] List of Yelp business IDs (strings) that the user has clicked "Yummy" on and must review.
+	\item[Model model] Model object that serves as the user's individual recommendation model.
+\end{deflist}
+
+\textbf{Methods}
+\begin{deflist}
+	\item[add\_review]
+		\textbf{Description}\\Append a Yelp ID to the User's reviews list.\\
+		\textbf{Return value}\\None.
+	\item[get\_reviews]
+		\textbf{Description}\\Get list of restaurants that need to be reviewed by the User.\\
+		\textbf{Return value}\\List of dictionaries for each ID in the reviews list containing the following: \begin{deflist}
+			\item[restaurant] Yelp object returned by looking up the ID's business details.
+			\item[review] Dictionary containing the default review settings that are changed in the frontend.
+		\end{deflist}
+	\item[submit\_review]
+		\textbf{Description}\\The User reviewed a restaurant in the frontend and it must be removed from the User's reviews list passed to the model for training\\
+		\textbf{Return value}\\None.
+	\item[handle\_review]
+	\textbf{Description}\\Train the User's model based on the review for this restaurant.\\
+	\textbf{Return value}\\None.
+	\item[disliked]
+	\textbf{Description}\\Adjust model weights to discourage similar restaurants from being suggested when the "Yuck" button is clicked.\\
+	\textbf{Return value}\\None.
+\end{deflist}
+
+\subsubsection{UserList}
+\textbf{Description}
+
+Class that caches a dictionary in memory of unique usernames mapped to User objects.
+This is a subset of all of the user data stored in the database.
+When the UserList is deleted (e.g. when the app goes down), it writes all modified user data to the database in its destructor.
+Its default methods have been overridden so that it behaves similar to a standard dictionary in Python.
+
+\textbf{Fields}
+\begin{deflist}
+	\item[dictionary users] Mapping of unique usernames to their User objects.
+	\item[bool is\_prod] Boolean that when false, disables the destructor in order to pass unit tests.
+\end{deflist}
+
+\subsubsection{read\_user\_data}
+\textbf{Description}
+
+Read the user's data from the database
+
+\textbf{Arguments}
+\begin{deflist}
+	\item[str username] String for the User's username
+\end{deflist}
+
+\textbf{Return value}
+
+A dictionary containing the user's reviews list and model if the user exists in the database, otherwise None.
+
+\subsubsection{write\_user\_data}
+\textbf{Description}
+
+Modify the user's data in the database
+
+\textbf{Arguments}
+\begin{deflist}
+	\item[str username] String for the User's username
+	\item[User data] User object containing data that will be replace the value at the key 'username' in the database if it exists, otherwise a new entry in the database will be created.
+\end{deflist}
+
+\textbf{Return value}
+
+True if write successful, False otherwise
 
 \subsection{Yelp Fusion API}
 Gets restaurant data from Yelp Fusion API. Located in \url{yelp\_api\_utils.py}
