@@ -59,6 +59,7 @@
 \author{\myName}
 \date{\myDate}
 \maketitle
+\vspace{-4ex}
 \tableofcontents
 \thispagestyle{empty}
 \end{titlepage}
@@ -144,22 +145,41 @@ Suggests restaurants based on user and restaurant data. Located in \url{recommen
 \subsubsection{get\_restaurant}
 \textbf{Description}
 
+Suggests a restaurant depending on search criteria and the user's model.
+
 \textbf{Arguments}
 \begin{deflist}
-	\item[]
+	\item[user]String containing the username.
+	\item[search\_params]Dictionary of search parameters to be passed to a Yelp API business search.
 \end{deflist}
 
 \textbf{Return value}
+
+Dictionary containing the following key-value pairs:
+\begin{deflist}
+	\item[id]ID of the restaurant provided by Yelp API.
+	\item[Name]Name of the restaurant.
+	\item[Location]Tuple containing the restaurant's location coordinates.
+	\item[Distance]Distance from the user's location to the restaurant's location.
+	\item[Price]String containing between 1 and 4 \$ symbols.
+	\item[Rating]Numerical rating of the restaurant from Yelp reviews.
+	\item[Image]Link to an image of the restaurant.
+\end{deflist}
 
 \subsubsection{cache\_restaurant}
 \textbf{Description}
 
+Add recently rated restaurants to a user's cache. This keeps the user from seeing the same recommendation multiple times in a row.
+
 \textbf{Arguments}
 \begin{deflist}
-	\item[]
+	\item[user]String containing the username.
+	\item[restaurant\_id]ID of the restaurant provided by Yelp API.
 \end{deflist}
 
 \textbf{Return value}
+
+None.
 
 \subsection{Routing}
 Interacts directly with the frontend for authentication, restaurant recommendations, and user feedback. Provides restaurant/review data and routing information. Located in \url{app.py}.
@@ -305,9 +325,18 @@ Gets restaurant data from Yelp Fusion API. Located in \url{yelp\_api\_utils.py}
 \subsubsection{business\_search}
 \textbf{Description}
 
+Find restaurants matching a provided search term, location, and other custom parameters.
+
 \textbf{Arguments}
 \begin{deflist}
-	\item[]
+	\item[term]String containing the search term.
+	\item[location]Location of the user. Can be provided as a string (e.g. "New York City") or as a tuple of coordinates (e.g. (40.4167, -86.8753)).
+	\item[**kwargs]Custom search parameters.
+	\begin{deflist}
+		\item[radius]Search radius from provided location in miles. If this value converts to over 40km (maximum for Yelp API), the radius will be set to 40km.
+		\item[price]String containing between 1 and 4 \$ symbols denoting the desired price range.
+		\item[open\_now]Boolean value for whether or not the restaurant is currently open. Default is True.
+	\end{deflist}
 \end{deflist}
 
 \textbf{Return value}
@@ -315,27 +344,29 @@ Gets restaurant data from Yelp Fusion API. Located in \url{yelp\_api\_utils.py}
 \subsubsection{business\_details}
 \textbf{Description}
 
+Get details about a restaurant from Yelp Fusion API.
+
 \textbf{Arguments}
 \begin{deflist}
-	\item[]
+	\item[business\_id]ID of the business provided by Yelp API.
 \end{deflist}
 
 \textbf{Return value}
+
+Dictionary containing details for the given business ID.
 
 \subsubsection{business\_reviews}
 \textbf{Description}
 
+Get reviews for a restaurant from Yelp Fusion API.
+
 \textbf{Arguments}
 \begin{deflist}
-	\item[]
+	\item[business\_id]ID of the business provided by Yelp API.
 \end{deflist}
 
 \textbf{Return value}
 
-\pagebreak
-
-\section{Code Samples}
-\subsection{}
-
+Dictionary containing reviews for the given business ID.
 
 \end{document}
