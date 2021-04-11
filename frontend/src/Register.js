@@ -10,11 +10,11 @@ export default function Register() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirm, setConfirm] = useState("");
-	const [fav,setFav] = useState("");
-	const [leastfav,setLeastFav] = useState("");
-	const [atmos,setAtmos] = useState("");
-	const [serv,setServ] = useState("");
-	const [food,setFood] = useState("");
+	const [fav, setFav] = useState("");
+	const [leastfav, setLeastFav] = useState("");
+	const [atmos, setAtmos] = useState("");
+	const [serv, setServ] = useState("");
+	const [food, setFood] = useState("");
 	const cookies = new Cookies();
 
 	const history = useHistory();
@@ -32,30 +32,37 @@ export default function Register() {
 			alert("Error: Quiz responses must not be blank")
 			return;
 		}
+
 		fetch("/cravr/register", {
 			method: "POST",
 			cache: "no-cache",
 			headers: {
 				"content_type": "application/json"
 			},
-			body: JSON.stringify(email + "\n" + password + "\n"+ fav +"\n"+leastfav+"\n"+atmos+"\n"+serv+"\n"+food)
+			body: JSON.stringify(email + "\n" + password + "\n" + JSON.stringify( {
+				"favorite": fav,
+				"leastFavorite": leastfav,
+				"food": food,
+				"service": serv,
+				"atmosphere": atmos
+			}))
 		}).then(response => response.json())
-			.then(response => {
-				if (response.result === "/Login") {
-					attemptLogin(email, password).then(function (res) {
-						if (res === "/") {
-							var CryptoJS = require("crypto-js");
-							cookies.set('Username', email, { path: '/' });
-							cookies.set('Password', CryptoJS.AES.encrypt(password, 'CravrisCool').toString(), { path: '/' });
-							console.log(cookies.get('Password'));
-						}
-						routeChange(res);
-					});
-				} else {
-					alert("An account for that email already exists.");
-					routeChange("/Register");
-				}
-			});
+		.then(response => {
+			if (response.result === "/Login") {
+				attemptLogin(email, password).then(function (res) {
+					if (res === "/") {
+						var CryptoJS = require("crypto-js");
+						cookies.set('Username', email, { path: '/' });
+						cookies.set('Password', CryptoJS.AES.encrypt(password, 'CravrisCool').toString(), { path: '/' });
+						console.log(cookies.get('Password'));
+					}
+					routeChange(res);
+				});
+			} else {
+				alert("An account for that email already exists.");
+				routeChange("/Register");
+			}
+		});
 	}
 
 	return (
@@ -95,9 +102,11 @@ export default function Register() {
 							onChange={(e) => setConfirm(e.target.value)}
 						/>
 					</Form.Group>
-					<h3 >Please fill out this initialization quiz below.</h3>
+					<body className="App-body">
+						<h1 >Personalize your recommendations</h1>
+					</body>
 					<Form.Group>
-						<Form.Label>1. Favorite Food?</Form.Label>
+						<Form.Label>Favorite Food? </Form.Label>
 						<Form.Control as="select" value={fav} onChange={(e) => setFav(e.target.value)}>
 							<option value=""> </option>
 							<option value="Bar & Grill">Bar & Grill</option>
@@ -125,7 +134,7 @@ export default function Register() {
 						</Form.Control>
 					</Form.Group>
 					<Form.Group>
-						<Form.Label>2. Least Favorite Food?</Form.Label>
+						<Form.Label>Least Favorite Food? </Form.Label>
 						<Form.Control as="select" value={leastfav} onChange={(e) => setLeastFav(e.target.value)}>
 							<option value=""> </option>
 							<option value="Bar & Grill">Bar & Grill</option>
@@ -152,37 +161,25 @@ export default function Register() {
 							<option value="Southeast Asian">Southeast Asian</option>
 						</Form.Control>
 					</Form.Group>
+					<body className="App-body">
+						<h3 >When choosing a restaurant, please rate from 1-5 (5 is best) how important each of the following are to you: </h3>
+					</body>
 					<Form.Group>
-						<Form.Label>3. How important is Atmosphere to you when you eat on a scale form 1-5?</Form.Label>
-						<Form.Control as="select" value={atmos} onChange={(e) => setAtmos(e.target.value)}>
-							<option value=""> </option>
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
+						<Form.Label>Food: </Form.Label>
+						<Form.Control
+							as="input" type="number" min="1" max="5" onChange={(e) => setFood(e.target.value)} value={food}>
 						</Form.Control>
 					</Form.Group>
 					<Form.Group>
-						<Form.Label>4. How important is the Service to you when you eat on a scale form 1-5?</Form.Label>
-						<Form.Control as="select" value={serv} onChange={(e) => setServ(e.target.value)}>
-							<option value=""> </option>
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
+						<Form.Label>Service: </Form.Label>
+						<Form.Control
+							as="input" type="number" min="1" max="5" onChange={(e) => setServ(e.target.value)} value={serv}>
 						</Form.Control>
 					</Form.Group>
 					<Form.Group>
-						<Form.Label>5. How important is the Food to you when you eat on a scale form 1-5?</Form.Label>
-						<Form.Control as="select" value={food} onChange={(e) => setFood(e.target.value)}>
-							<option value=""> </option>
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
+						<Form.Label>Atmosphere: </Form.Label>
+						<Form.Control
+							as="input" type="number" min="1" max="5" onChange={(e) => setAtmos(e.target.value)} value={atmos}>
 						</Form.Control>
 					</Form.Group>
 					<br/>
