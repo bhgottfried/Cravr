@@ -11,10 +11,10 @@ export default function Register() {
 	const [password, setPassword] = useState("");
 	const [confirm, setConfirm] = useState("");
 	const [fav,setFav] = useState("");
-	const [Leastfav,setLeastFav] = useState("");
-	const [Atmos,setAtmos] = useState("");
-	const [Serv,setServ] = useState("");
-	const [Food,setFood] = useState("");
+	const [leastfav,setLeastFav] = useState("");
+	const [atmos,setAtmos] = useState("");
+	const [serv,setServ] = useState("");
+	const [food,setFood] = useState("");
 	const cookies = new Cookies();
 
 	const history = useHistory();
@@ -28,7 +28,7 @@ export default function Register() {
 			alert("Error: Passwords must match!");
 			return;
 		}
-		if(fav==="" || Leastfav==="" || Atmos==="" || Serv==="" || Food===""){
+		if(fav==="" || leastfav==="" || atmos==="" || serv==="" || food===""){
 			alert("Error: Quiz responses must not be blank")
 			return;
 		}
@@ -38,7 +38,7 @@ export default function Register() {
 			headers: {
 				"content_type": "application/json"
 			},
-			body: JSON.stringify(email + "\n" + password + "\n"+ fav +"\n"+Leastfav+"\n"+Atmos+"\n"+Serv+"\n"+Food)
+			body: JSON.stringify(email + "\n" + password + "\n"+ fav +"\n"+leastfav+"\n"+atmos+"\n"+serv+"\n"+food)
 		}).then(response => response.json())
 			.then(response => {
 				if (response.result === "/Login") {
@@ -126,7 +126,7 @@ export default function Register() {
 					</Form.Group>
 					<Form.Group>
 						<Form.Label>2. Least Favorite Food?</Form.Label>
-						<Form.Control as="select" value={Leastfav} onChange={(e) => setLeastFav(e.target.value)}>
+						<Form.Control as="select" value={leastfav} onChange={(e) => setLeastFav(e.target.value)}>
 							<option value=""> </option>
 							<option value="Bar & Grill">Bar & Grill</option>
 							<option value="Sandwiches">Sandwiches</option>
@@ -154,7 +154,7 @@ export default function Register() {
 					</Form.Group>
 					<Form.Group>
 						<Form.Label>3. How important is Atmosphere to you when you eat on a scale form 1-5?</Form.Label>
-						<Form.Control as="select" value={Atmos} onChange={(e) => setAtmos(e.target.value)}>
+						<Form.Control as="select" value={atmos} onChange={(e) => setAtmos(e.target.value)}>
 							<option value=""> </option>
 							<option value="1">1</option>
 							<option value="2">2</option>
@@ -165,7 +165,7 @@ export default function Register() {
 					</Form.Group>
 					<Form.Group>
 						<Form.Label>4. How important is the Service to you when you eat on a scale form 1-5?</Form.Label>
-						<Form.Control as="select" value={Serv} onChange={(e) => setServ(e.target.value)}>
+						<Form.Control as="select" value={serv} onChange={(e) => setServ(e.target.value)}>
 							<option value=""> </option>
 							<option value="1">1</option>
 							<option value="2">2</option>
@@ -176,7 +176,7 @@ export default function Register() {
 					</Form.Group>
 					<Form.Group>
 						<Form.Label>5. How important is the Food to you when you eat on a scale form 1-5?</Form.Label>
-						<Form.Control as="select" value={Food} onChange={(e) => setFood(e.target.value)}>
+						<Form.Control as="select" value={food} onChange={(e) => setFood(e.target.value)}>
 							<option value=""> </option>
 							<option value="1">1</option>
 							<option value="2">2</option>
