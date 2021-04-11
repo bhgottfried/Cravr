@@ -7,6 +7,7 @@ from backend.flaskr.database_utils import DBConnection
 from backend.flaskr.yelp_api_utils import YelpAPI
 from backend.flaskr.recommender import Recommender
 from backend.flaskr.user import UserList
+from backend.flaskr.model import RecommendationModel
 
 # Instantiate app
 app = Flask(__name__)
@@ -43,10 +44,14 @@ def login():
 @app.route('/cravr/register', methods=["POST"])
 def register():
     """Attempt to create a new user entry in the authentication database"""
-    user, password, quiz = request.json.split('\n')
-    print(quiz)
-    registration_success = register_user(user, password)
-    return {'result': "/Login" if registration_success else "/Register"}
+    name, password, quiz = request.json.split('\n')
+    registration_success = register_user(name, password)
+
+    if registration_success:
+        users.add(name, quiz)
+        return {'result': "/Login"}
+    else:
+        return {'result': "/Register"}
 
 
 @app.route('/cravr/restaurants', methods=["POST"])

@@ -8,21 +8,29 @@ class User:
     Container class for a user's data (e.g. restaurants to review and the user's model)
     """
 
-    def __init__(self, name):
+    def __init__(self, name, quiz=None):
         """
         Object to contain list of restaurants that need to be reviewed and user model
-        :param cache_timeout: Number of seconds to maintain stale restaurnt entries in cache
-        :return: None
+        :param name: User's name or email address
+        :param quiz: If the quiz exists, create a new model using it as an initialization.
+                     Otherwise, try to read the model state from the database.
+        :return: New User object
         """
         self.name = name
-        self.is_dirty = False
-        user_dict = read_user_data(name)
-        if user_dict:
-            self.reviews = RecommendationModel.from_state(user_dict["reviews"])
-            self.model = user_dict["model"]
-        else:
+
+        if quiz:
+            self.is_dirty = True
             self.reviews = []
-            self.model = RecommendationModel.from_quiz(get_quiz_answers(name))
+            self.model = RecommendationModel.from_quiz(quiz)
+        else:
+            self.is_dirty = False
+            user_dict = read_user_data(name)
+            if user_dict:
+                self.reviews = user_dict["reviews"]
+                self.model = RecommendationModel.from_state(user_dict["model"])
+            else:
+                raise ValueError("{} must have previously registered, \
+                    but could not be found in the database!".format(name))
 
     def add_review(self, rest_id):
         """
@@ -103,14 +111,14 @@ class UserList:
         self.users = {}
         self.is_prod = is_prod
 
-    def add(self, name):
+    def add(self, name, quiz=None):
         """
         Add User object to the list for the given name if it is not already in it
         :param name: Username entered on the registration screen
         :return: None
         """
         if name not in self.users:
-            self.users[name] = User(name)
+            self.users[name] = User(name, quiz)
         else:
             raise ValueError("{} already exists in the user list!".format(name))
 

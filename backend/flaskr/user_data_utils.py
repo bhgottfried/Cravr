@@ -18,6 +18,7 @@ def read_user_data(username):
         return None
     return result[0]
 
+
 def write_user_data(username, data):
     """
     Create or modify a user's User object in the database
@@ -45,11 +46,3 @@ def write_user_data(username, data):
     if result == -1:
         return False
     return True
-
-def get_quiz_answers(username):
-    """
-    Look up the user's initialization quiz answers in the database
-    :param username: User's username or email address
-    :return: Object containing the user's quiz answers.
-    """
-    return {}
