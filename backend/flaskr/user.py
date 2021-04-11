@@ -70,7 +70,7 @@ class User:
 
     def handle_review(self, rest_id, review):
         """
-        Adjust model weights to based on the review for this restaurant
+        Train the User's model based on the review for this restaurant
         :param rest_id: Restaurant ID that was rated
         :return: None
         """
