@@ -65,11 +65,11 @@ class User:
 
         self.is_dirty = True
         self.reviews.remove(rest_id)
-        self.train_model(rest_id, review)
+        self.handle_review(rest_id, review)
 
-    def train_model(self, rest_id, review):
+    def handle_review(self, rest_id, review):
         """
-        Adjust model weights to based on the review for this restaurant
+        Train the User's model based on the review for this restaurant
         :param rest_id: Restaurant ID that was rated
         :return: None
         """
@@ -85,7 +85,7 @@ class User:
         :return: None
         """
         self.is_dirty = True
-        self.train_model(rest_id, {"standard bad review object"})
+        self.handle_review(rest_id, {"standard bad review object"})
 
 
 class UserList:
