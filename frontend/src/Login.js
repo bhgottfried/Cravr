@@ -5,7 +5,7 @@ import Cookies from 'universal-cookie';
 import { useHistory } from "react-router-dom";
 
 export function attemptLogin(email, password) {
-  var path = "/";
+  var path = "/Login";
   return fetch("/cravr/login", {
     method: "POST",
     cache: "no-cache",
@@ -17,6 +17,9 @@ export function attemptLogin(email, password) {
   }).then(response => response.json())
   .then(response => {
     path = response.result;
+    if (path === "/Login") {
+      alert("Invalid username or password.");
+    }
     return response.result;
   }).catch((error) => {
     console.error(error);
@@ -36,13 +39,14 @@ function Login() {
 
   function handleSubmit(event) {
 		event.preventDefault();
-   
-    var CryptoJS = require("crypto-js");
-    cookies.set('Username', email, { path: '/' });
-    cookies.set('Password', CryptoJS.AES.encrypt(password, 'CravrisCool').toString(), { path: '/' });
-    console.log(cookies.get('Password'));
     
     attemptLogin(email, password).then(function(res){
+      if (res === "/") {
+        var CryptoJS = require("crypto-js");
+        cookies.set('Username', email, { path: '/' });
+        cookies.set('Password', CryptoJS.AES.encrypt(password, 'CravrisCool').toString(), { path: '/' });
+        console.log(cookies.get('Password'));
+      }
       routeChange(res);
     });
   }
