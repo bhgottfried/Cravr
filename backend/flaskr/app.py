@@ -43,7 +43,8 @@ def login():
 @app.route('/cravr/register', methods=["POST"])
 def register():
     """Attempt to create a new user entry in the authentication database"""
-    user, password = request.json.split('\n')
+    user, password,fav,Leastfav,Atmos,Serv,Food = request.json.split('\n')
+    print(fav,Leastfav,Atmos,Serv,Food)
     registration_success = register_user(user, password)
     return {'result': "/Login" if registration_success else "/Register"}
 
