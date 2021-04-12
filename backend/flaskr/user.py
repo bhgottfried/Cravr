@@ -1,6 +1,6 @@
 """Classes to store semi-permanent data associated with user"""
 
-from backend.flaskr.user_data_utils import read_user_data, write_user_data, get_quiz_answers
+from backend.flaskr.user_data_utils import read_user_data, write_user_data
 from backend.flaskr.model import RecommendationModel
 
 class User:
@@ -95,6 +95,16 @@ class User:
         """
         self.is_dirty = True
         self.handle_review(rest_id, {"standard bad review object"})
+    
+    def to_json(self):
+        """
+        Serialize data fields to store in database (need to skip dirty bit so we can't just dump)
+        :return: This object as a JSON
+        """
+        return {
+            "reviews": self.reviews,
+            "model": self.model.to_json()
+        }
 
 
 class UserList:

@@ -92,7 +92,7 @@ def rate_suggestion():
     # Cache the reviewed restaurant
     recommender.cache_restaurant(user, rest_id)
 
-    return {'result': "TODO"}
+    return {'result': "Success"}
 
 
 @app.route('/cravr/get_reviews', methods=["POST"])

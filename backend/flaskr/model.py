@@ -1,11 +1,14 @@
 """Recommendation model for user to get personalized suggestions"""
 
 import json
+from backend.flaskr.yelp_api_utils import YelpAPI
 
 class RecommendationModel:
     """
     Recommendation model class for a user to get personalized suggestions
     """
+
+    yelp = YelpAPI()
 
     def __init__(self, method, data):
         """
@@ -25,7 +28,7 @@ class RecommendationModel:
             self.num_requests = 0
 
             self.food_genres = {
-                "Bar & Gril": 5,
+                "Bar & Grill": 5,
                 "Sandwiches": 5,
                 "Pizza": 5,
                 "Fast Food": 5,

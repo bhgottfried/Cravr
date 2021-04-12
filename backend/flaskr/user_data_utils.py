@@ -1,6 +1,5 @@
 """Utilities to create new users and authenticate existing users"""
 
-import json
 from backend.flaskr.database_utils import DBConnection
 
 
@@ -23,7 +22,7 @@ def write_user_data(username, data):
     """
     Create or modify a user's User object in the database
     :param username: Username entered on the registration screen
-    :param data: User object to add or replace for username
+    :param data: User object JSON to add or replace for username
     :return: None
     """
     db_conn = DBConnection()
@@ -32,11 +31,11 @@ def write_user_data(username, data):
     if num_results == 1:
         # Update data for existing user
         result = db_conn.execute_query("UPDATE user_profiles SET data = '{}' WHERE username = '{}'"
-                                       .format(json.dumps(data), username))
+                                       .format(data, username))
     elif num_results == 0:
         # Add data for new user
         result = db_conn.execute_query("INSERT INTO user_profiles (username, data) VALUES "
-                                       "('{}', '{}')".format(username, json.dumps(data)))
+                                       "('{}', '{}')".format(username, data))
     else:
         # Multiple instances of user found in profiles
         print("{} user profiles found for user {}. Expected 0 or 1.".format(num_results, username))
