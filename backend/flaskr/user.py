@@ -139,7 +139,7 @@ class UserList:
             for user in self.users:
                 if user.is_dirty:
                     user.is_dirty = False
-                    write_user_data(user.name, user)
+                    write_user_data(user.name, user.to_json())
 
     def __contains__(self, name):
         """
