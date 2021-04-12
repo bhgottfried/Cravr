@@ -15,6 +15,7 @@ export default function Register() {
 	const [atmos, setAtmos] = useState("");
 	const [serv, setServ] = useState("");
 	const [food, setFood] = useState("");
+	const [value, setValue] = useState("");
 	const cookies = new Cookies();
 
 	const history = useHistory();
@@ -28,7 +29,7 @@ export default function Register() {
 			alert("Error: Passwords must match!");
 			return;
 		}
-		if(fav==="" || leastfav==="" || atmos==="" || serv==="" || food===""){
+		if(fav==="" || leastfav==="" || atmos==="" || serv==="" || food==="" || value===""){
 			alert("Error: Quiz responses must not be blank")
 			return;
 		}
@@ -44,7 +45,8 @@ export default function Register() {
 				"leastFavorite": leastfav,
 				"food": food,
 				"service": serv,
-				"atmosphere": atmos
+				"atmosphere": atmos,
+				"value": value
 			}))
 		}).then(response => response.json())
 		.then(response => {
@@ -180,6 +182,12 @@ export default function Register() {
 						<Form.Label>Atmosphere: </Form.Label>
 						<Form.Control
 							as="input" type="number" min="1" max="5" onChange={(e) => setAtmos(e.target.value)} value={atmos}>
+						</Form.Control>
+					</Form.Group>
+					<Form.Group>
+						<Form.Label>Value: </Form.Label>
+						<Form.Control
+							as="input" type="number" min="1" max="5" onChange={(e) => setValue(e.target.value)} value={value}>
 						</Form.Control>
 					</Form.Group>
 					<br/>
