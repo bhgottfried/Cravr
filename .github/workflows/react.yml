@@ -25,7 +25,5 @@ jobs:
     - name: Create SBOM
       run: |
         cd frontend
+        npm install -g @cyclonedx/bom
         cyclonedx-bom -o react-bom.json
-
-
-
