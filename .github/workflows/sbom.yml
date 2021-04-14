@@ -13,5 +13,5 @@ jobs:
         uses: CycloneDX/gh-node-module-generatebom@v1.0.0
 
       - name: CycloneDX Python Generate SBOM
-        uses: CycloneDX/gh-python-generate-sbom@v1.0.0
+      - uses: CycloneDX/gh-python-generate-sbom@v1.0.0
  
