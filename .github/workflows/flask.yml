@@ -24,25 +24,3 @@ jobs:
       - name: Test with pytest
         run: |
           python -m pytest --envfile ./backend/.env
-      - name: Create SBOM
-        run: |
-          pip freeze > ./backend/requirements.txt
-          cyclonedx-py -j -i ./backend/requirements.txt -o ./backend/flask-bom.json
-      - name: Commit SBOM changes
-        run: |
-          git status
-          git add ./backend/flask-bom.json
-          git config --local user.name ${{ github.actor }}
-          git commit -m "Auto updating backend SBOM"
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
-      - name: Print branch name
-        shell: bash
-        run: echo ${{ github.head_ref }}
-      # - name: Push SBOM to the current branch
-      #   uses: ad-m/github-push-action@${GITHUB_REF}
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     force: true
