@@ -31,12 +31,19 @@ class RecommendationModel:
                 data.pop("leastFavorite"): -7,
             }
             self.importances = {k: 2 * int(v) for k,v in data.items()}
-        
+
         elif method == "blank":
             self.num_requests = 0
             self.food_genres = {}
             self.importances = {
-                k: 5 for k in []
+                k: 5 for k in [
+                    "favorite",
+                    "leastFavorite",
+                    "food",
+                    "service",
+                    "atmosphere",
+                    "value"
+                ]
             }
 
         else:
@@ -91,4 +98,3 @@ class RecommendationModel:
         :return: None
         """
         print(self.num_requests, review) # Temp Pylint
-        return None
