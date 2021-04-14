@@ -22,8 +22,5 @@ jobs:
       run: |
         cd frontend
         npm run build --if-present
-  sbom:
-    steps:
-    - name: CycloneDX Node.js Generate SBOM
-      uses: CycloneDX/gh-node-module-generatebom@v1.0.0
+
 
