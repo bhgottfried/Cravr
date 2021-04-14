@@ -39,7 +39,7 @@ jobs:
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
       - name: Push SBOM to the current branch
-        uses: ad-m/github-push-action@${{ steps.extract_branch.outputs.branch }}
+        uses: ad-m/github-push-action@${{ extract_branch.outputs.branch }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           force: true
