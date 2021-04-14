@@ -22,5 +22,10 @@ jobs:
       run: |
         cd frontend
         npm run build --if-present
+    - name: Create SBOM
+      run: |
+        cd frontend
+        cyclonedx-bom -o react-bom.json
+
 
 
