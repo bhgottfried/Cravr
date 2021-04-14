@@ -24,3 +24,18 @@ jobs:
       - name: Test with pytest
         run: |
           python -m pytest --envfile ./backend/.env
+      - name: Create SBOM
+        run: |
+          pip freeze > .\backend\requirements.txt
+          cyclonedx-py -j -i .\backend\requirements.txt -o .\backend\flask-bom.json
+      - name: Commit SBOM changes
+        run: |
+          git status
+          git add .\backend\flask-bom.json
+          git config --local user.name ${{ github.actor }}
+          git commit -m "Auto updating backend SBOM"
+      - name: Push SBOM to master
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
