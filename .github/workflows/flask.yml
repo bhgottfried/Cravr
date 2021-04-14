@@ -26,6 +26,5 @@ jobs:
           python -m pytest --envfile ./backend/.env
       - name: Create SBOM
         run: |
-          pip install cyclonedx-bom
           pip freeze > .\backend\requirements.txt
           cyclonedx-py -j -i .\backend\requirements.txt -o .\backend\flask-bom.json
