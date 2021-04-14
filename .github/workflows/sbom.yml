@@ -1,7 +1,9 @@
+name: SBOM Gen
+jobs:
+  sbom:
+    - name: CycloneDX Node.js Generate SBOM
+      uses: CycloneDX/gh-node-module-generatebom@v1.0.0
 
-- name: CycloneDX Node.js Generate SBOM
-  uses: CycloneDX/gh-node-module-generatebom@v1.0.0
-
-- name: CycloneDX Python Generate SBOM
-  uses: CycloneDX/gh-python-generate-sbom@v1.0.0
+    - name: CycloneDX Python Generate SBOM
+      uses: CycloneDX/gh-python-generate-sbom@v1.0.0
  
