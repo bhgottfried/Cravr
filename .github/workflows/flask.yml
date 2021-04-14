@@ -40,9 +40,7 @@ jobs:
         id: extract_branch
       - name: Print branch name
         shell: bash
-        run: |
-          echo ${{ steps.extract_branch.outputs.branch }}
-          echo ${{ github.payload.pull_request.head.ref }}
+        run: echo ${{ github.head_ref }}
       # - name: Push SBOM to the current branch
       #   uses: ad-m/github-push-action@${GITHUB_REF}
       #   with:
