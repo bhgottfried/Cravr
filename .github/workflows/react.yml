@@ -25,5 +25,5 @@ jobs:
   sbom:
     steps:
     - name: CycloneDX Node.js Generate SBOM
-    - uses: CycloneDX/gh-node-module-generatebom@v1.0.0
+      uses: CycloneDX/gh-node-module-generatebom@v1.0.0
 
