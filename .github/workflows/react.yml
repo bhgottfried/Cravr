@@ -25,4 +25,4 @@ jobs:
     - name: Create SBOM
       run: |
         cd frontend
-        npm exec -- @cyclonedx/bom -o .\react-bom.json
+        npx -- @cyclonedx/bom -o .\react-bom.json
