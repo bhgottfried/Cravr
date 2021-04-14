@@ -1,4 +1,4 @@
-name: Flask Application
+name: Create SBOMs
 
 on:
   pull_request:
@@ -10,9 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        run: |
-          python -m pytest --envfile ./backend/.env
-      - name: Create SBOM
+      - name: Create backend SBOM
         run: |
           pip freeze > ./backend/requirements.txt
           cyclonedx-py -j -i ./backend/requirements.txt -o ./backend/flask-bom.json
