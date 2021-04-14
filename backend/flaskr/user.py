@@ -29,8 +29,8 @@ class User:
                 self.reviews = user_dict["reviews"]
                 self.model = RecommendationModel.from_state(user_dict["model"])
             else:
-                raise ValueError("{} must have previously registered, \
-                    but could not be found in the database!".format(name))
+                self.reviews = []
+                self.model = RecommendationModel.from_blank()
 
     def add_review(self, rest_id):
         """
@@ -95,7 +95,7 @@ class User:
         """
         self.is_dirty = True
         self.handle_review(rest_id, {"standard bad review object"})
-    
+
     def to_json(self):
         """
         Serialize data fields to store in database (need to skip dirty bit so we can't just dump)

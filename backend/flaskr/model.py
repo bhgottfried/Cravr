@@ -16,8 +16,8 @@ class RecommendationModel:
         Initialization logic is handled in static factory methods.
         Description of fields:
             num_requests = number of times this model has been used to generate a suggestion
-            food_genres  = dict of floats for how much a user likes each key (1-10)
-            importances  = dict of floats for which restaurant features are most important (1-10)
+            food_genres  = dict of floats for how much a user likes each key [-10,10]
+            importances  = dict of floats for which restaurant features are most important {1-10}
         """
         if method == "state":
             self.num_requests = data["num_requests"]
@@ -26,39 +26,22 @@ class RecommendationModel:
 
         elif method == "quiz":
             self.num_requests = 0
-
             self.food_genres = {
-                "Bar & Grill": 5,
-                "Sandwiches": 5,
-                "Pizza": 5,
-                "Fast Food": 5,
-                "Breakfast": 5,
-                "Steakhouse": 5,
-                "Fine Dining": 5,
-                "Sushi": 5,
-                "Seafood": 5,
-                "Barbeque": 5,
-                "American": 5,
-                "Mexican": 5,
-                "South American": 5,
-                "Italian": 5,
-                "Eastern European": 5,
-                "Mediterranean": 5,
-                "Middle Eastern": 5,
-                "Indian": 5,
-                "Chinese": 5,
-                "Japanese": 5,
-                "Korean": 5,
-                "Southeast Asian": 5
+                data.pop("favorite"): 7,
+                data.pop("leastFavorite"): -7,
             }
-            self.food_genres[data.pop("favorite")] = 10
-            self.food_genres[data.pop("leastFavorite")] = 0
-
             self.importances = {k: 2 * int(v) for k,v in data.items()}
+        
+        elif method == "blank":
+            self.num_requests = 0
+            self.food_genres = {}
+            self.importances = {
+                k: 5 for k in []
+            }
 
         else:
             raise ValueError("{} is not a valid method".format(method))
-    
+
     @staticmethod
     def from_state(state):
         """
@@ -76,7 +59,15 @@ class RecommendationModel:
         :return: New RecommendationModel with initialized model weights
         """
         return RecommendationModel("quiz", quiz)
-    
+
+    @staticmethod
+    def from_blank():
+        """
+        Static factory method to initialize default model weights used for testing only
+        :return: New RecommendationModel with default initialized model weights
+        """
+        return RecommendationModel("blank", None)
+
     def to_json(self):
         """
         Serialize fields to store in database
@@ -90,6 +81,7 @@ class RecommendationModel:
         :param restaurants: List of restaurant objects to be evaluated
         :return: Optimal item in restaurants
         """
+        print(self.num_requests) # Temp Pylint
         return restaurants[0] # Yeet
 
     def train_model(self, review):
@@ -98,4 +90,5 @@ class RecommendationModel:
         :param review: Review object sent from the frontend
         :return: None
         """
-        pass
+        print(self.num_requests, review) # Temp Pylint
+        return None

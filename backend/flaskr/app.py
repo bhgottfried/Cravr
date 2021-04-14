@@ -7,7 +7,6 @@ from backend.flaskr.database_utils import DBConnection
 from backend.flaskr.yelp_api_utils import YelpAPI
 from backend.flaskr.recommender import Recommender
 from backend.flaskr.user import UserList
-from backend.flaskr.model import RecommendationModel
 
 # Instantiate app
 app = Flask(__name__)
@@ -50,8 +49,7 @@ def register():
     if registration_success:
         users.add(name, quiz)
         return {'result': "/Login"}
-    else:
-        return {'result': "/Register"}
+    return {'result': "/Register"}
 
 
 @app.route('/cravr/restaurants', methods=["POST"])

@@ -36,11 +36,11 @@ class Recommender:
                                            price=price, open_now=open_now)
 
         if "businesses" in result:
-            restaurants = filter(
-                lambda restaurant: not self.cache.is_cached(user.name, restaurant["id"]),
-                result["businesses"]
-            )
-            
+            restaurants = [
+                restaurant for restaurant in result["businesses"] if
+                not self.cache.is_cached(user.name, restaurant["id"])
+            ]
+
             if len(restaurants) > 0:
                 bestaurant = user.model.get_bestaurant(restaurants)
                 return {
