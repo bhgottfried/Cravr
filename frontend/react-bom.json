@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.2",
-  "serialNumber": "urn:uuid:a0d3f0b6-2963-4791-9345-989170a4d122",
+  "serialNumber": "urn:uuid:7a36e6cc-cfed-414e-a851-bd0bfe02caa7",
   "version": 1,
   "metadata": {
-    "timestamp": "2021-04-15T20:53:40.825Z",
+    "timestamp": "2021-04-15T20:57:45.139Z",
     "tools": [
       {
         "vendor": "CycloneDX",
@@ -3565,15 +3565,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40testing-library/user-event@13.1.2",
+      "bom-ref": "pkg:npm/%40testing-library/user-event@13.1.3",
       "group": "@testing-library",
       "name": "user-event",
-      "version": "13.1.2",
+      "version": "13.1.3",
       "description": "Fire events the same way the user does",
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "f3d4bf4042d50976dc1e68007cfae4d14f240aef6a112a95f3f4106947b9078fbbaa2de42657d0602881ecf7e2d9722706d3b4aa6eef0e625bfbf39af9315dc9"
+          "content": "3c34c06fb083856cf1744161dbdbe74b2345c7f8228053ec5658b6960c685fe71b5fa0f2da44deb41d49ddd2e6e532a1e1de6751615f2e968f32866e2cb6750e"
         }
       ],
       "licenses": [
@@ -3583,7 +3583,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40testing-library/user-event@13.1.2",
+      "purl": "pkg:npm/%40testing-library/user-event@13.1.3",
       "externalReferences": [
         {
           "type": "website",
