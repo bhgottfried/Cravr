@@ -21,7 +21,7 @@ jobs:
           git config --local user.name ${{ github.actor }}
           git commit -m "Auto updating backend SBOM"
       - name: Push SBOM to the current branch
-        uses: ad-m/github-push-action@${{ GITHUB_HEAD_REF }}
+        uses: ad-m/github-push-action@$GITHUB_HEAD_REF
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           force: true
