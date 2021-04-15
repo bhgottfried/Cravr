@@ -19,7 +19,7 @@ jobs:
         run: |
           cd frontend
           npm install @cyclonedx/bom
-          npx -- @cyclonedx/bom -o ./frontend/react-bom.json
+          cyclonedx-bom -o ./frontend/react-bom.json
       - name: Commit SBOM changes
         run: |
           git status
