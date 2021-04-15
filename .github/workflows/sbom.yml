@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HEAD_REF: ${{github.head_ref}}
+      NOT_YOUR_MOMMAS_HEAD_REF: ${{ github.head_ref }}
     steps:
       - uses: actions/checkout@v2
       - name: Create backend SBOM
@@ -23,7 +23,7 @@ jobs:
           git config --local user.name ${{ github.actor }}
           git commit -m "Auto updating backend SBOM"
       - name: Push SBOM to the current branch
-        uses: ad-m/github-push-action@${{ HEAD_REF }}
+        uses: ad-m/github-push-action@${{ env.NOT_YOUR_MOMMAS_HEAD_REF }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           force: true
