@@ -1,13 +1,13 @@
 ﻿astroid==2.5
 atomicwrites==1.4.0
 attrs==20.3.0
-bcrypt==3.1.7
+bcrypt==3.2.0
 certifi==2020.12.5
 cffi==1.14.5
 chardet==3.0.4
-Click==7.0
+Click==7.1.2
 colorama==0.4.4
-cryptography==3.4.6
+cryptography==3.4.7
 elementpath==2.2.1
 Flask==1.1.2
 Flask-Cors==3.0.10
