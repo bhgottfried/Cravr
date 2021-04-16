@@ -25,7 +25,7 @@ MarkupSafe==1.1.1
 mccabe==0.6.1
 numpy==1.20.1
 packageurl-python==0.9.3
-packaging==20.7
+packaging==20.9
 pluggy==0.13.1
 py==1.10.0
 pycparser==2.20
