@@ -39,7 +39,7 @@ python-dotenv==0.15.0
 requests==2.25.0
 requirements-parser==0.2.0
 scipy==1.6.2
-six==1.14.0
+six==1.15.0
 toml==0.10.2
 typed-ast==1.4.3
 typing-extensions==3.7.4.3
