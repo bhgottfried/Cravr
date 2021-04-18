@@ -29,14 +29,14 @@ class FindQuizContainer extends React.Component {
     constructor(props) {
         super(props);
        
-
         this.state = {
-            q1: 'Bar & Grill',
+            q1: '',
             q2: '$',
             q3: '1',
             showRes: false,
             Restaurants: []     // Probably shouldn't be a list since there's at most one, but refactor is hard...
         };
+
         this.setRestaurant = this.setRestaurant.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -55,12 +55,14 @@ class FindQuizContainer extends React.Component {
         this.rateRestaurant("yummy", restaurant.id);
         alert("Have a nice meal! After you eat, don't forget to rate your experience for even better recommendations!");
     }
+
     later = (e) =>{
         e.preventDefault()
         let restaurant = this.state.Restaurants.pop();
         this.handleSubmit(e);   // Get new restaurant
         this.rateRestaurant("maybe later", restaurant.id);
     }
+
     reject = (e) => {
         e.preventDefault()
         let restaurant = this.state.Restaurants.pop();
@@ -80,8 +82,7 @@ class FindQuizContainer extends React.Component {
                 rating + "\n" +
                 restaurantID
             )
-        }).then(response => response.json())
-            .then(response => response.result);
+        })
     }
 
     getRestaurant = (position) => {
@@ -100,7 +101,7 @@ class FindQuizContainer extends React.Component {
                 position.coords.longitude
             )
         }).then(response => response.json())
-            .then(response => this.setRestaurant(response.result));
+        .then(response => this.setRestaurant(response.result));
 
         this.setState({ showRes: true });
     }
@@ -123,36 +124,15 @@ class FindQuizContainer extends React.Component {
                     <h2>Search Filters</h2>
                     <form onSubmit={this.handleSubmit}>
                         <label id="q1">
-                            1. What are you in the mood for?
-                            <select value={this.state.q1.value} className="textbox" required onChange={this.handleChange} name="q1">
-                                <option value="Bar & Grill">Bar & Grill</option>
-                                <option value="Sandwiches">Sandwiches</option>
-                                <option value="Pizza">Pizza</option>
-                                <option value="Fast Food">Fast Food</option>
-                                <option value="Breakfast">Breakfast</option>
-                                <option value="Steakhouse">Steakhouse</option>
-                                <option value="Fine Dining">Fine Dining</option>
-                                <option value="Sushi">Sushi</option>
-                                <option value="Seafood">Seafood</option>
-                                <option value="Barbeque">Barbeque</option>
-                                <option value="American">American</option>
-                                <option value="Mexican">Mexican</option>
-                                <option value="South American">South American</option>
-                                <option value="Italian">Italian</option>
-                                <option value="Eastern European">Eastern European</option>
-                                <option value="Mediterranean">Mediterranean</option>
-                                <option value="Middle Eastern">Middle Eastern</option>
-                                <option value="Indian">Indian</option>
-                                <option value="Chinese">Chinese</option>
-                                <option value="Japanese">Japanese</option>
-                                <option value="Korean">Korean</option>
-                                <option value="Southeast Asian">Southeast Asian</option>
-                            </select>
+                            1. What are you in the mood for? 
+                            <input type="text" className="textbox" value={this.state.q1.value} name="q1"
+                                required onChange={this.handleChange}>
+                            </input>
                         </label>
                         <br />
                         <label id="q2">
                             2. How much are you willing to spend?&emsp;&emsp;
-                        <select value={this.state.q2.value} className="textbox" required onChange={this.handleChange} name="q2">
+                            <select value={this.state.q2.value} className="textbox" required onChange={this.handleChange} name="q2">
                                 <option value="$">$</option>
                                 <option value="$$">$$</option>
                                 <option value="$$$">$$$</option>
@@ -161,8 +141,8 @@ class FindQuizContainer extends React.Component {
                         </label>
                         <br />
                         <label id="q3">
-                            3. Preferred Distance (mi.)&emsp;
-                        <input type="number" className="textbox" defaultValue="1" min="1" max="24" value={this.state.q2.value} name="q3"
+                            3. Maximum Distance (mi.)&emsp;
+                            <input type="number" className="textbox" defaultValue="1" min="1" max="24" value={this.state.q3.value} name="q3"
                                 required onChange={this.handleChange}>
                             </input>
                         </label>
