@@ -2,7 +2,7 @@ FROM ubuntu:latest as flask
 WORKDIR /app/backend
 RUN apt-get update -y && apt-get install -y python3-pip python-dev
 COPY ./backend/requirements.txt /app/backend/requirements.txt
-RUN pip3 install -r requirements.txt python-dotenv
+RUN pip3 install -r requirements.txt
 COPY . /app
 ENTRYPOINT [ "flask" ]
 CMD [ "run" ]
