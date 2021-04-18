@@ -1,49 +1,77 @@
 .Home {
     text-align: center;
     font-family:'Courier New', Courier, monospace;
+    
   }
 #nav {
     width: 100%;
     float: left;
-    margin: 0 0 3em 0;
+    margin: 0 0 4em 0;
     padding: 0;
     list-style: none;
-    background-color: rgb(236, 98, 17);
-    border-bottom: 3px solid rgb(0, 0, 0); 
-    border-top: 3px solid rgb(0, 0, 0)}
+    background-image: radial-gradient( rgb(236, 98, 17), rgb(255, 139, 72));
+    border-bottom: 4px solid rgb(0, 0, 0); 
+    border-top: 4px solid rgb(0, 0, 0)}
     
 #nav li {
-      float: left; }
+    float: inline-start;
+    display: inline-flex;}
 #nav li a {
-        display: block;
-        padding: 8px 15px;
-        text-decoration: none;
-        font-weight: bold;
-        color: rgb(255, 217, 0);
-        border-right: 3px solid rgb(0, 0, 0);
-        text-align: center;
-        font-family:'Courier New', Courier, monospace; }
-.Rest {
+    
+    padding: 8px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    color: rgb(255, 217, 0);
+    font-size:xx-large;
+    border-right: 4px solid rgb(0, 0, 0);
+    text-align: center;
+    font-family:'Courier New', Courier, monospace; }
+
+#nav li a:hover {
   background-color: rgb(236, 98, 17);
+        }
+
+.Rest {
+  background-image: radial-gradient(circle, rgb(236, 98, 17), rgb(255, 139, 72));
+  border-radius: 25px;
+  margin: 0 20em 1em 20em;
+  text-align: center;
+  font-family:'Courier New', Courier, monospace; 
+}
+.Results {
   margin: 0 20em 1em 20em;
   text-align: center;
   font-family:'Courier New', Courier, monospace; 
 }
 .Image {
+  display: block;
   margin: 0 20em 1em 10em;
   width: 50%;
 }
 .submit-button{
+  border-radius: 10px;
   font-size:x-large;
   text-align: center;
   font-family:'Courier New', Courier, monospace;
   background-color:rgb(248, 211, 0);
   color:rgb(0, 0, 0);
 }
+.submit-button:hover{
+  background-color: rgb(236, 98, 17);
+}
 .textbox{
-  font-size:large;
+  font-size:x-large;
   text-align: center;
   font-family:'Courier New', Courier, monospace;
   background-color:rgb(248, 211, 0);
+  color:rgb(0, 0, 0);
+}
+.textbox:focus-within{
+  background-color:rgb(236, 98, 17);
+}
+.largetext{
+  font-size:x-large;
+  text-align: center;
+  font-family:'Courier New', Courier, monospace;
   color:rgb(0, 0, 0);
 }

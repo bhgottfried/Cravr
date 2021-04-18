@@ -4,7 +4,7 @@
 }
 
 .bar{
-  background-color:rgb(236, 98, 17);
+  background-image: radial-gradient(rgb(236, 98, 17), rgb(255, 139, 72));
   color:rgb(248, 211, 0);
   font-size:xx-large;
   font-family:'Courier New', Courier, monospace;
@@ -13,19 +13,43 @@
 .App_Body{
   font-family:'Courier New', Courier, monospace;
 }
+.login-form{
+  font-size:large;
+}
+.drop-down{
+  border: 2px solid black;
+  border-radius: 4px;
+  font-size:large;
+}
+.text-box{
+  border: 2px solid black;
+  border-radius: 4px;
+  font-size:large;
+}
+.text-box:focus{
+  background-color: rgba(152, 229, 255, 0.507);
+  border: 3px solid #555;
+}
 
 .primary-button{
+  border-radius: 10px;
   font-size:xx-large;
   text-align: center;
   font-family:'Courier New', Courier, monospace;
-  background-color:rgb(236, 98, 17);
+  background-image: radial-gradient(rgb(236, 98, 17), rgb(255, 139, 72));
   color:rgb(248, 211, 0);
 }
-
+.primary-button:hover{
+  background-color: rgb(236, 98, 17);
+}
 .secondary-button{
+  border-radius: 10px;
   font-size:x-large;
   text-align: center;
   font-family:'Courier New', Courier, monospace;
-  background-color:rgb(236, 98, 17);
+  background-image: radial-gradient(rgb(236, 98, 17), rgb(255, 139, 72));
   color:rgb(248, 211, 0);
+}
+.secondary-button:hover{
+  background-color: rgb(236, 98, 17);
 }

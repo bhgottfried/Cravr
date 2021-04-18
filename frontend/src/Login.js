@@ -39,7 +39,6 @@ function Login() {
 
   function handleSubmit(event) {
 		event.preventDefault();
-    
     attemptLogin(email, password).then(function(res){
       if (res === "/") {
         var CryptoJS = require("crypto-js");
@@ -75,19 +74,21 @@ function Login() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="text-box"
             />
           </Form.Group>
-          <Form.Group size="lg" controlId="password">
+          <Form.Group size="lg" controlId="password" >
             <Form.Label>Password: </Form.Label>
             <Form.Control
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className="text-box"
             />
           </Form.Group>
           <br></br>
           <div name="login" className="login">
-            <button renderas="button" className="primary-button">
+            <button className="primary-button">
               <span>Login</span>
             </button>
           </div>
@@ -96,7 +97,7 @@ function Login() {
       <br></br>
       <i>New to Cravr? Sign up!</i>
       <div name="register" className="register">
-        <button renderas="button" className="secondary-button" onClick={() => routeChange("/Register")}>
+        <button className="secondary-button" onClick={() => routeChange("/Register")}>
           <span>Register</span>
         </button>
       </div>
