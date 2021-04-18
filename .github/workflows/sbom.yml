@@ -1,0 +1,37 @@
+name: Create SBOMs
+
+on:
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Create backend SBOM
+        run: |
+          pip install cyclonedx-bom
+          pip freeze > ./backend/requirements.txt
+          cyclonedx-py -j -i ./backend/requirements.txt -o ./backend/flask-bom.json
+      - name: Create frontend SBOM
+        run: |
+          cd frontend
+          npm install @cyclonedx/bom
+          npx -- @cyclonedx/bom -o ./react-bom.json
+      - name: Commit SBOM changes
+        run: |
+          git status
+          git add ./backend/flask-bom.json ./frontend/react-bom.json
+          git config --local user.name ${{ github.actor }}
+          git commit -m "Auto updating SBOM"
+      - name: Push SBOM to the current branch
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.head_ref }}
+          force: true

@@ -1,0 +1,1864 @@
+{
+    "bomFormat": "CycloneDX",
+    "components": [
+        {
+            "description": "Bash tab completion for argparse",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "cb5930e62e6c9f79da91f3785bc18c7f"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "17f01a9b9b9ece3e6b07058eae737ad6e10de8b4e149105f84614783913aba71"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "Apache Software License"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "argcomplete",
+            "publisher": "Andrey Kislyuk",
+            "purl": "pkg:pypi/argcomplete@1.12.2",
+            "type": "library",
+            "version": "1.12.2"
+        },
+        {
+            "description": "Classes Without Boilerplate",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "15c8ca1fd31e80e02b38064e835ddcd8"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "08a96c641c3a74e44eb59afb61a24f2cb9f4d7188748e76ba4bb5edfa3cb7d1c"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "attrs",
+            "publisher": "Hynek Schlawack",
+            "purl": "pkg:pypi/attrs@19.3.0",
+            "type": "library",
+            "version": "19.3.0"
+        },
+        {
+            "description": "Self-service finite-state machines for the programmer on the go.",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "3e78357fdeaa213cb3d54803d811e0da"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "81c93c55d2742c55e74e6497a48e048a859fa01d7aa0b91a032be432229837e2"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "Automat",
+            "publisher": "Glyph",
+            "purl": "pkg:pypi/automat@0.8.0",
+            "type": "library",
+            "version": "0.8.0"
+        },
+        {
+            "description": "Fast, simple object-to-object and broadcast signaling",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "8b3722381f83c2813c52de3016b68d33"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "471aee25f3992bd325afa3772f1063dbdbbca947a041b8b89466dc00d606f8b6"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT License"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "blinker",
+            "publisher": "Jason Kirtland",
+            "purl": "pkg:pypi/blinker@1.4",
+            "type": "library",
+            "version": "1.4"
+        },
+        {
+            "description": "Python package for providing Mozilla's CA Bundle.",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "fba2d61b9a2290906e6a77d7e57dfac5"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "017c25db2a153ce562900032d5bc68e9f191e44e9a0f762f373977de9df1fbb3"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MPL-2.0"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "certifi",
+            "publisher": "Kenneth Reitz",
+            "purl": "pkg:pypi/certifi@2019.11.28",
+            "type": "library",
+            "version": "2019.11.28"
+        },
+        {
+            "description": "Universal encoding detector for Python 2 and 3",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "0004b00caff7bb543a1d0d0bd0185a03"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "LGPL"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "chardet",
+            "publisher": "Daniel Blanchard",
+            "purl": "pkg:pypi/chardet@3.0.4",
+            "type": "library",
+            "version": "3.0.4"
+        },
+        {
+            "description": "Composable command line interface toolkit",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "4de489e31c57834a21b8be7111dab613"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "2335065e6395b9e67ca716de5f7526736bfa6ceead690adf616d925bdc622b13"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "BSD"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "Click",
+            "publisher": "Armin Ronacher",
+            "purl": "pkg:pypi/click@7.0",
+            "type": "library",
+            "version": "7.0"
+        },
+        {
+            "hashes": [],
+            "licenses": [],
+            "modified": false,
+            "name": "cloud-init",
+            "purl": "pkg:pypi/cloud-init@20.4",
+            "type": "library",
+            "version": "20.4"
+        },
+        {
+            "description": "Cross-platform colored terminal text.",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "1dcd07acf2b1875ed09428e1ddf7e028"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "BSD"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "colorama",
+            "publisher": "Jonathan Hartley",
+            "purl": "pkg:pypi/colorama@0.4.4",
+            "type": "library",
+            "version": "0.4.4"
+        },
+        {
+            "hashes": [],
+            "licenses": [],
+            "modified": false,
+            "name": "command-not-found",
+            "purl": "pkg:pypi/command-not-found@0.3",
+            "type": "library",
+            "version": "0.3"
+        },
+        {
+            "description": "Config file reading, writing and validation.",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "e472a3a1c2a67bb0ec9b5d54c13a47d6"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "a2f5650770e1c87fb335af19a9b7eb73fc05ccf22144eb68db7d00cd2bcb0902"
+                }
+            ],
+            "licenses": [],
+            "modified": false,
+            "name": "configobj",
+            "publisher": "Rob Dennis, Eli Courtwright (Michael Foord & Nicola Larosa original maintainers)",
+            "purl": "pkg:pypi/configobj@5.0.6",
+            "type": "library",
+            "version": "5.0.6"
+        },
+        {
+            "description": "Symbolic constants in Python",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "880584ee929edcb822da89eb23fe8e93"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "dd2fa9d6b1a51a83f0d7dd76293d734046aa176e384bf6e33b7e44880eb37c5d"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "constantly",
+            "publisher": "Twisted Matrix Labs Developers",
+            "purl": "pkg:pypi/constantly@15.1.0",
+            "type": "library",
+            "version": "15.1.0"
+        },
+        {
+            "description": "CRC Generator",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "2d5b92117d958dcead94f9e17f54cd32"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "dc7051a0db5f2bd48665a990d3ec1cc305a466a77358ca4492826f41f283601e"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "crcmod",
+            "publisher": "Ray Buvel",
+            "purl": "pkg:pypi/crcmod@1.7",
+            "type": "library",
+            "version": "1.7"
+        },
+        {
+            "hashes": [],
+            "licenses": [],
+            "modified": false,
+            "name": "crit",
+            "purl": "pkg:pypi/crit@0.0.1",
+            "type": "library",
+            "version": "0.0.1"
+        },
+        {
+            "description": "cryptography is a package which provides cryptographic recipes and primitives to Python developers.",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "5cba4a9940342222108fc146b303734d"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "971221ed40f058f5662a604bd1ae6e4521d84e6cad0b7b170564cc34169c8f13"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "BSD or Apache License, Version 2.0"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "cryptography",
+            "publisher": "The cryptography developers",
+            "purl": "pkg:pypi/cryptography@2.8",
+            "type": "library",
+            "version": "2.8"
+        },
+        {
+            "description": "CycloneDX software bill-of-material (SBOM) generation utility",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "e316ecb3f8581e568560e4b2df669939"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "2d0c7998c14a218a52399d955bd0c4a0dfe49befb76a065d03da7b44f4ba3998"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "Apache-2.0"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "cyclonedx-bom",
+            "publisher": "Steve Springett",
+            "purl": "pkg:pypi/cyclonedx-bom@0.4.3",
+            "type": "library",
+            "version": "0.4.3"
+        },
+        {
+            "description": "Python bindings for libdbus",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "51a45c973d82bedff033a4b57d69d5d8"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "11238f1d86c995d8aed2e22f04a1e3779f0d70e587caffeab4857f3c662ed5a4"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "Expat (MIT/X11)"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "dbus-python",
+            "publisher": "",
+            "purl": "pkg:pypi/dbus-python@1.2.16",
+            "type": "library",
+            "version": "1.2.16"
+        },
+        {
+            "description": "Distro - an OS platform information API",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "81fc137ea6700533b575dce004307c9e"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "eedf82a470ebe7d010f1872c17237c79ab04097948800029994fa458e52fb4b4"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "Apache License, Version 2.0"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "distro",
+            "publisher": "Nir Cohen",
+            "purl": "pkg:pypi/distro@1.4.0",
+            "type": "library",
+            "version": "1.4.0"
+        },
+        {
+            "hashes": [],
+            "licenses": [],
+            "modified": false,
+            "name": "distro-info",
+            "purl": "pkg:pypi/distro-info@0.23ubuntu1",
+            "type": "library",
+            "version": "0.23ubuntu1"
+        },
+        {
+            "description": "XPath 1.0/2.0 parsers and selectors for ElementTree and lxml",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "2681860f4106c5a46a302db32f27b2d4"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "5a00899c22623e0a1c1cd0f05d27cc73b77287a6d645fb6c2ee725d87b29806f"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "elementpath",
+            "publisher": "Davide Brunato",
+            "purl": "pkg:pypi/elementpath@2.2.1",
+            "type": "library",
+            "version": "2.2.1"
+        },
+        {
+            "description": "Discover and load entry points from installed packages.",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "c47396b6c43dadc81e25d29b9fac8bd3"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "589f874b313739ad35be6e0cd7efde2a4e9b6fea91edcc34e58ecbb8dbe56d19"
+                }
+            ],
+            "licenses": [],
+            "modified": false,
+            "name": "entrypoints",
+            "publisher": "Thomas Kluyver",
+            "purl": "pkg:pypi/entrypoints@0.3",
+            "type": "library",
+            "version": "0.3"
+        },
+        {
+            "description": "A comprehensive HTTP client library.",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "3dd90901a7c3e88d88dfa49764437e77"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "409fa5509298f739b34d5a652df762cb0042507dc93f6633e306b11289d6249d"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "httplib2",
+            "publisher": "Joe Gregorio",
+            "purl": "pkg:pypi/httplib2@0.14.0",
+            "type": "library",
+            "version": "0.14.0"
+        },
+        {
+            "description": "A featureful, immutable, and correct URL for Python.",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "65c8a23ce704206bc43d804926ac5a59"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "ab4a308feb039b04f855a020a6eda3b18ca5a68e6d8f8c899cbe9e653721d04f"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "hyperlink",
+            "publisher": "Mahmoud Hashemi and Glyph Lefkowitz",
+            "purl": "pkg:pypi/hyperlink@19.0.0",
+            "type": "library",
+            "version": "19.0.0"
+        },
+        {
+            "description": "Internationalized Domain Names in Applications (IDNA)",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "61392a071e4a3b0f84cd6d71f94f15cc"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "ea8b7f6188e6fa117537c3df7da9fc686d485087abf6ac197f9c46432f7e4a3c"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "BSD-like"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "idna",
+            "publisher": "Kim Davies",
+            "purl": "pkg:pypi/idna@2.8",
+            "type": "library",
+            "version": "2.8"
+        },
+        {
+            "description": "Read metadata from Python packages",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "643db3acd2fe1adfdfbe8b239d92a5a1"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "b97607a1a18a5100839aec1dc26a1ea17ee0d93b20b0f008d80a5a050afb200b"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "Apache Software License"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "importlib-metadata",
+            "publisher": "Barry Warsaw",
+            "purl": "pkg:pypi/importlib-metadata@1.5.0",
+            "type": "library",
+            "version": "1.5.0"
+        },
+        {
+            "description": "",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "0d718295ccafb866a8141c86fe037129"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "cc00a35f9e9621ddec0a5e7d17271f3f26244873c4aec67eda06f2db8302e04b"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "incremental",
+            "publisher": "Amber Brown",
+            "purl": "pkg:pypi/incremental@16.10.1",
+            "type": "library",
+            "version": "16.10.1"
+        },
+        {
+            "description": "A small but fast and easy to use stand-alone template engine written in pure python.",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "93ca8152bf9ca03214158a49d542402f"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "14dd6caf1527abb21f08f86c784eac40853ba93edb79552aa1e4b8aef1b61c7b"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "BSD"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "Jinja2",
+            "publisher": "Armin Ronacher",
+            "purl": "pkg:pypi/jinja2@2.10.1",
+            "type": "library",
+            "version": "2.10.1"
+        },
+        {
+            "description": "Apply JSON-Patches (RFC 6902)",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "8bf51332e43ef29df81b3fb141265921"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "4d7b55ff308cf93b1fa9929e069ed922b3d5a10fb88a3e2d25a0b718107a1f5c"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "Modified BSD License"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "jsonpatch",
+            "publisher": "Stefan K\u00f6gl",
+            "purl": "pkg:pypi/jsonpatch@1.22",
+            "type": "library",
+            "version": "1.22"
+        },
+        {
+            "description": "Identify specific nodes in a JSON document (RFC 6901)",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "55e20882b8e34bb8e47118ee425140e1"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "ff379fa021d1b81ab539f5ec467c7745beb1a5671463f9dcc2b2d458bd361c1e"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "Modified BSD License"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "jsonpointer",
+            "publisher": "Stefan K\u00f6gl",
+            "purl": "pkg:pypi/jsonpointer@2.0",
+            "type": "library",
+            "version": "2.0"
+        },
+        {
+            "description": "An implementation of JSON Schema validation for Python",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "7617cd8e4a79ba49cfd602eb921b08d8"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "4e5b3cf8216f577bee9ce139cbe72eca3ea4f292ec60928ff24758ce626cd163"
+                }
+            ],
+            "licenses": [],
+            "modified": false,
+            "name": "jsonschema",
+            "publisher": "Julian Berman",
+            "purl": "pkg:pypi/jsonschema@3.2.0",
+            "type": "library",
+            "version": "3.2.0"
+        },
+        {
+            "description": "Store and access your passwords safely.",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "b42e5dfdadb3772540bba6cc73395e4d"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "7b29ebfcf8678c4da531b2478a912eea01e80007e5ddca9ee0c7038cb3489ec6"
+                }
+            ],
+            "licenses": [],
+            "modified": false,
+            "name": "keyring",
+            "publisher": "Kang Zhang",
+            "purl": "pkg:pypi/keyring@18.0.1",
+            "type": "library",
+            "version": "18.0.1"
+        },
+        {
+            "hashes": [],
+            "licenses": [],
+            "modified": false,
+            "name": "language-selector",
+            "purl": "pkg:pypi/language-selector@0.1",
+            "type": "library",
+            "version": "0.1"
+        },
+        {
+            "description": "Script Launchpad through its web services interfaces.  Officially supported.",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "84967ab72c9111b77ef7faa85c05bef1"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "5804d68ec93247194449d17d187e949086da0a4d044f12155fad269ef8515435"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "LGPL v3"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "launchpadlib",
+            "publisher": "The Launchpad developers",
+            "purl": "pkg:pypi/launchpadlib@1.10.13",
+            "type": "library",
+            "version": "1.10.13"
+        },
+        {
+            "description": "A programmable client library that takes advantage of the commonalities among",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "49b177b195ff68cb5c38778fd718bb10"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "1ee3acf3bb38861546251f2f158a5e5df403d93b4b040b08c3f297e24b3a035a"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "LGPL v3"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "lazr.restfulclient",
+            "publisher": "",
+            "purl": "pkg:pypi/lazr.restfulclient@0.14.2",
+            "type": "library",
+            "version": "0.14.2"
+        },
+        {
+            "description": "A self-contained, easily reusable library for parsing, manipulating,",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "1ae177e147092ae934b7edc3f8555665"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "5c620b5993c8c6a73084176bfc51de64972b8373620476ed841931a49752dc8b"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "LGPL v3"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "lazr.uri",
+            "publisher": "LAZR Developers",
+            "purl": "pkg:pypi/lazr.uri@1.0.3",
+            "type": "library",
+            "version": "1.0.3"
+        },
+        {
+            "description": "Safely add untrusted strings to HTML/XML markup.",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "cbc5d68b052ca6a39b05c735ca6821f3"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "7d263e5770efddf465a9e31b78362d84d015cc894ca2c131901a4445eaa61ee1"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "BSD"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "MarkupSafe",
+            "publisher": "Armin Ronacher",
+            "purl": "pkg:pypi/markupsafe@1.1.0",
+            "type": "library",
+            "version": "1.1.0"
+        },
+        {
+            "description": "More routines for operating on iterables, beyond itertools",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "6c3bac88c1996a46a4edc7631883098a"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "6703844a52d3588f951883005efcf555e49566a48afd4db4e965d69b883980d3"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "more-itertools",
+            "publisher": "Erik Rose",
+            "purl": "pkg:pypi/more-itertools@4.2.0",
+            "type": "library",
+            "version": "4.2.0"
+        },
+        {
+            "description": "Portable network interface information.",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "f8a88f70738fc774ed54b24d06d63805"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "385c045b4e621eb4234fcacb77c9b1e1aecfdf277873e6263d98c74991d483b4"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT License"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "netifaces",
+            "publisher": "Alastair Houghton",
+            "purl": "pkg:pypi/netifaces@0.10.4",
+            "type": "library",
+            "version": "0.10.4"
+        },
+        {
+            "description": "A generic, spec-compliant, thorough implementation of the OAuth request-signing logic",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "de4829861f156a7fd7404f9f8d9ca444"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "df884cd6cbe20e32633f1db1072e9356f53638e4361bef4e8b03c9127c9328ea"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "BSD"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "oauthlib",
+            "publisher": "The OAuthlib Community",
+            "purl": "pkg:pypi/oauthlib@3.1.0",
+            "type": "library",
+            "version": "3.1.0"
+        },
+        {
+            "description": "A \"purl\" aka. Package URL parser and builder",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "d051230d016990f856c14ceb6ec7836c"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "0682b2eddab16151da5bd4ef38081e9b27f8eb33cd29baf41f4996d4e88e6e70"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "packageurl-python",
+            "publisher": "the purl authors",
+            "purl": "pkg:pypi/packageurl-python@0.9.3",
+            "type": "library",
+            "version": "0.9.3"
+        },
+        {
+            "description": "Core utilities for Python packages",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "da81732f29c8f3d3bd3ff16f85c42b7c"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "eb41423378682dadb7166144a4926e443093863024de508ca5c9737d6bc08376"
+                }
+            ],
+            "licenses": [],
+            "modified": false,
+            "name": "packaging",
+            "publisher": "Donald Stufft and individual contributors",
+            "purl": "pkg:pypi/packaging@20.7",
+            "type": "library",
+            "version": "20.7"
+        },
+        {
+            "description": "Pexpect allows easy control of interactive console applications.",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "01c6e598410e31fc837b73ef43b2b55d"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "3fbd41d4caf27fa4a377bfd16fef87271099463e6fa73e92a52f92dfee5d425b"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "ISC license"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "pexpect",
+            "publisher": "Noah Spurrier; Thomas Kluyver; Jeff Quast",
+            "purl": "pkg:pypi/pexpect@4.6.0",
+            "type": "library",
+            "version": "4.6.0"
+        },
+        {
+            "description": "Install and Run Python Applications in Isolated Environments",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "04ceeae59d0403746851842b623ef051"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "c620f2933c5000e23d2eabf515b1629f73904165f13880a906ee06fc3d570144"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "License :: OSI Approved :: MIT License"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "pipx",
+            "publisher": "Chad Smith",
+            "purl": "pkg:pypi/pipx@0.16.1.0",
+            "type": "library",
+            "version": "0.16.1.0"
+        },
+        {
+            "description": "Protocol Buffers",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "e3a5fa30289ca077bb82eaeab4903d98"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "196d3a80f93c537f27d2a19a4fafb826fb4c331b0b99110f985119391d170f96"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "3-Clause BSD License"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "protobuf",
+            "publisher": "protobuf@googlegroups.com",
+            "purl": "pkg:pypi/protobuf@3.6.1",
+            "type": "library",
+            "version": "3.6.1"
+        },
+        {
+            "description": "ASN.1 types and codecs",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "766a80e17caafe179f0b6d56569c63d4"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "d5cd6ed995dba16fad0c521cfe31cd2d68400b53fcc2bce93326829be73ab6d1"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "BSD"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "pyasn1",
+            "publisher": "Ilya Etingof <etingof@gmail.com>",
+            "purl": "pkg:pypi/pyasn1@0.4.2",
+            "type": "library",
+            "version": "0.4.2"
+        },
+        {
+            "description": "A collection of ASN.1-based protocols modules.",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "a62c92a7d3cfa97df384adc27ea54796"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "47fb6757ab78fe966e7c58b2030b546854f78416d653163f0ce9290cf2278e8b"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "BSD"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "pyasn1-modules",
+            "publisher": "Ilya Etingof <etingof@gmail.com>",
+            "purl": "pkg:pypi/pyasn1-modules@0.2.1",
+            "type": "library",
+            "version": "0.2.1"
+        },
+        {
+            "description": "Pygments is a syntax highlighting package written in Python.",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "2f3b7509e109b04321923a3b2c1e33ab"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "e8218dd399a61674745138520d0d4cf2621d7e032439341bc3f647bff125818d"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "BSD License"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "Pygments",
+            "publisher": "Georg Brandl",
+            "purl": "pkg:pypi/pygments@2.3.1",
+            "type": "library",
+            "version": "2.3.1"
+        },
+        {
+            "description": "Python bindings for GObject Introspection",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "f191a160d492a154beccc4c20f30cbc0"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "b97f570e55017fcd3732164811f24ecf63983a4834f61b55b0aaf64ecefac856"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "GNU LGPL"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "PyGObject",
+            "publisher": "James Henstridge",
+            "purl": "pkg:pypi/pygobject@3.36.0",
+            "type": "library",
+            "version": "3.36.0"
+        },
+        {
+            "description": "Hamcrest framework for matcher objects",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "c19e2fa6d567fb7542d8023dcd8f6f3e"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "6b672c02fdf7470df9674ab82263841ce8333fb143f32f021f6cb26f0e512420"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "New BSD"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "PyHamcrest",
+            "publisher": "Chris Rose",
+            "purl": "pkg:pypi/pyhamcrest@1.9.0",
+            "type": "library",
+            "version": "1.9.0"
+        },
+        {
+            "description": "JSON Web Token implementation in Python",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "634a1763b3201f7670adb981b06b1b26"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "5c6eca3c2940464d106b99ba83b00c6add741c9becaec087fb7ccdefea71350e"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "PyJWT",
+            "publisher": "Jose Padilla",
+            "purl": "pkg:pypi/pyjwt@1.7.1",
+            "type": "library",
+            "version": "1.7.1"
+        },
+        {
+            "description": "Macaroon library for Python",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "e51e5700476ef5a35d78ed0ddd920977"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "3e14dff6a262fdbf1a15e769ce635a8aea72e6f8f91e408f9a97166c53b91907"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "pymacaroons",
+            "publisher": "Evan Cordell",
+            "purl": "pkg:pypi/pymacaroons@0.13.0",
+            "type": "library",
+            "version": "0.13.0"
+        },
+        {
+            "description": "Python binding to the Networking and Cryptography (NaCl) library",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "bbe3a1832d7a7c64ff94871f0caa168e"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "bf459128feb543cfca16a95f8da31e2e65e4c5257d2f3dfa8c0c1031139c9c92"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "Apache License 2.0"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "PyNaCl",
+            "publisher": "The PyNaCl developers",
+            "purl": "pkg:pypi/pynacl@1.3.0",
+            "type": "library",
+            "version": "1.3.0"
+        },
+        {
+            "description": "Python wrapper module around the OpenSSL library",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "40f378b09c5e4658cbd80f618aad0ab6"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "c727930ad54b10fc157015014b666f2d8b41f70c0d03e83ab67624fd3dd5d1e6"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "Apache License, Version 2.0"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "pyOpenSSL",
+            "publisher": "The pyOpenSSL developers",
+            "purl": "pkg:pypi/pyopenssl@19.0.0",
+            "type": "library",
+            "version": "19.0.0"
+        },
+        {
+            "description": "Python parsing module",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "dbfd0a241aad2595f43377ec7f1836ea"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT License"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "pyparsing",
+            "publisher": "Paul McGuire",
+            "purl": "pkg:pypi/pyparsing@2.4.7",
+            "type": "library",
+            "version": "2.4.7"
+        },
+        {
+            "description": "Python bindings for GNU parted",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "9477016f5a00bd2d7a280879cdeec3a4"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "04419363026a376c5afd1d189c15f5fa64129497a513533afaf2f7e0fb466dd1"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "GPLv2+"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "pyparted",
+            "publisher": "David Cantrell",
+            "purl": "pkg:pypi/pyparted@3.11.2",
+            "type": "library",
+            "version": "3.11.2"
+        },
+        {
+            "description": "Persistent/Functional/Immutable data structures",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "903c518c8829de4ee255cff68ff8da45"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "eb6545dbeb1aa69ab1fb4809bfbf5a8705e44d92ef8fc7c2361682a47c46c778"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "pyrsistent",
+            "publisher": "Tobias Gustafsson",
+            "purl": "pkg:pypi/pyrsistent@0.15.5",
+            "type": "library",
+            "version": "0.15.5"
+        },
+        {
+            "description": "Python Serial Port Extension",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "0e555d61700e0b95a15d8162092c5299"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "e0770fadba80c31013896c7e6ef703f72e7834965954a78e71a3049488d4d7d8"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "BSD"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "pyserial",
+            "publisher": "Chris Liechti",
+            "purl": "pkg:pypi/pyserial@3.4",
+            "type": "library",
+            "version": "3.4"
+        },
+        {
+            "hashes": [],
+            "licenses": [],
+            "modified": false,
+            "name": "python-apt",
+            "purl": "pkg:pypi/python-apt@2.0.0%2Bubuntu0.20.4.4",
+            "type": "library",
+            "version": "2.0.0+ubuntu0.20.4.4"
+        },
+        {
+            "hashes": [],
+            "licenses": [],
+            "modified": false,
+            "name": "python-debian",
+            "purl": "pkg:pypi/python-debian@0.1.36ubuntu1",
+            "type": "library",
+            "version": "0.1.36ubuntu1"
+        },
+        {
+            "description": "YAML parser and emitter for Python",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "7a5d2419898a6d4783b9694da7757670"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "6034f55dab5fea9e53f436aa68fa3ace2634918e8b5994d82f3621c04ff5ed2e"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "PyYAML",
+            "publisher": "Kirill Simonov",
+            "purl": "pkg:pypi/pyyaml@5.3.1",
+            "type": "library",
+            "version": "5.3.1"
+        },
+        {
+            "description": "Python HTTP for Humans.",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "2966d68a5a4e6832d967763d41f48d04"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "e786fa28d8c9154e6a4de5d46a1d921b8749f8b74e28bde23768e5e16eece998"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "Apache 2.0"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "requests",
+            "publisher": "Kenneth Reitz",
+            "purl": "pkg:pypi/requests@2.25.0",
+            "type": "library",
+            "version": "2.25.0"
+        },
+        {
+            "description": "Use requests to talk HTTP via a UNIX domain socket",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "8dbf7eec6d88d5e6981052ab9d735878"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "014d07bfb66dc805a011a8b4b306cf4ec96d2eddb589f6b2b5765e626f0dc0cc"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "Apache-2"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "requests-unixsocket",
+            "publisher": "Marc Abramowitz",
+            "purl": "pkg:pypi/requests-unixsocket@0.2.0",
+            "type": "library",
+            "version": "0.2.0"
+        },
+        {
+            "description": "Parses Pip requirement files",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "611b0cab139e9a35363ec4ffa1fe6c8c"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "76650b4a9d98fc65edf008a7920c076bb2a76c08eaae230ce4cfc6f51ea6a773"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "BSD"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "requirements-parser",
+            "publisher": "David Fischer",
+            "purl": "pkg:pypi/requirements-parser@0.2.0",
+            "type": "library",
+            "version": "0.2.0"
+        },
+        {
+            "description": "Python bindings to FreeDesktop.org Secret Service API",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "3b9465831b069e2622973afb7deb7bc2"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "3af65c87765323e6f64c83575b05393f9e003431959c9395d1791d51497f29b6"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "BSD"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "SecretStorage",
+            "publisher": "Dmitry Shachnev",
+            "purl": "pkg:pypi/secretstorage@2.3.1",
+            "type": "library",
+            "version": "2.3.1"
+        },
+        {
+            "description": "Service identity verification for pyOpenSSL & cryptography.",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "e6c5d5366021c5d915ea23806f30fbe7"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "001c0707759cb3de7e49c078a7c0c9cd12594161d3bf06b9c254fdcb1a60dc36"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "service-identity",
+            "publisher": "Hynek Schlawack",
+            "purl": "pkg:pypi/service-identity@18.1.0",
+            "type": "library",
+            "version": "18.1.0"
+        },
+        {
+            "description": "Simple, fast, extensible JSON encoder/decoder for Python",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "7274600eb21b63dffbeb80bbce74002f"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "75e3f0b12c28945c08f54350d91e624f8dd580ab74fd4f1bbea54bc6b0165610"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT License"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "simplejson",
+            "publisher": "Bob Ippolito",
+            "purl": "pkg:pypi/simplejson@3.16.0",
+            "type": "library",
+            "version": "3.16.0"
+        },
+        {
+            "description": "Python 2 and 3 compatibility utilities",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "eb7d3da1d4e6554cf48ff3e69cf49b0d"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "six",
+            "publisher": "Benjamin Peterson",
+            "purl": "pkg:pypi/six@1.14.0",
+            "type": "library",
+            "version": "1.14.0"
+        },
+        {
+            "hashes": [],
+            "licenses": [],
+            "modified": false,
+            "name": "sos",
+            "purl": "pkg:pypi/sos@4.0",
+            "type": "library",
+            "version": "4.0"
+        },
+        {
+            "description": "Authorize SSH public keys from trusted online identities",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "12d11d39d67840802f3840b57b1ac3b3"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "c63181db0b4f7db76cfa7617c4be6ba50d0e66dad4786a3bb35d559cbd962d2d"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "GPLv3"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "ssh-import-id",
+            "publisher": "Dustin Kirkland, Casey Marshall",
+            "purl": "pkg:pypi/ssh-import-id@5.10",
+            "type": "library",
+            "version": "5.10"
+        },
+        {
+            "description": "Python interface for libsystemd",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "5071ea5bcb976186e92a3f5e75df221d"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "fd0e44bf70eadae45aadc292cb0a7eb5b0b6372cd1b391228047d33895db83e7"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "LGPLv2+"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "systemd-python",
+            "publisher": "systemd developers",
+            "purl": "pkg:pypi/systemd-python@234",
+            "type": "library",
+            "version": "234"
+        },
+        {
+            "description": "An asynchronous networking framework written in Python",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "20fe2ec156e6e45b0b0d2ff06d9e828f"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "294be2c6bf84ae776df2fc98e7af7d6537e1c5e60a46d33c3ce2a197677da395"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "Twisted",
+            "publisher": "Twisted Matrix Laboratories",
+            "purl": "pkg:pypi/twisted@18.9.0",
+            "type": "library",
+            "version": "18.9.0"
+        },
+        {
+            "hashes": [],
+            "licenses": [],
+            "modified": false,
+            "name": "ubuntu-advantage-tools",
+            "purl": "pkg:pypi/ubuntu-advantage-tools@20.3",
+            "type": "library",
+            "version": "20.3"
+        },
+        {
+            "hashes": [],
+            "licenses": [],
+            "modified": false,
+            "name": "ufw",
+            "purl": "pkg:pypi/ufw@0.36",
+            "type": "library",
+            "version": "0.36"
+        },
+        {
+            "description": "HTTP library with thread-safe connection pooling, file post, and more.",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "5f6517ff625681ebb8e9e57a3b936fd7"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "2f3db8b19923a873b3e5256dc9c2dedfa883e33d87c690d9c7913e1f40673cdc"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "urllib3",
+            "publisher": "Andrey Petrov",
+            "purl": "pkg:pypi/urllib3@1.25.8",
+            "type": "library",
+            "version": "1.25.8"
+        },
+        {
+            "description": "Cross-platform tool for adding locations to the user PATH, no elevated privileges required!",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "0f59542b3f56e2a0912c1065f759ba44"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "98e0c1a5df626589724b4911b0bebf9bfd8dc88f98db4994db0e405c4f8b638b"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT OR Apache-2.0"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "userpath",
+            "publisher": "Ofek Lev",
+            "purl": "pkg:pypi/userpath@1.4.2",
+            "type": "library",
+            "version": "1.4.2"
+        },
+        {
+            "description": "Navigate HTTP resources using WADL files as guides.",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "09cb9d089f4f579b3051053aa0661047"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "1234cfe81e2cf223e56816f86df3aa18801d1770261865d93337b8b603be366e"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "LGPL v3"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "wadllib",
+            "publisher": "",
+            "purl": "pkg:pypi/wadllib@1.3.3",
+            "type": "library",
+            "version": "1.3.3"
+        },
+        {
+            "hashes": [],
+            "licenses": [],
+            "modified": false,
+            "name": "WALinuxAgent",
+            "purl": "pkg:pypi/walinuxagent@2.2.46",
+            "type": "library",
+            "version": "2.2.46"
+        },
+        {
+            "description": "An XML Schema validator and decoder",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "7a5623bbe80f43d96b1a77a8cdd95619"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "7c528e0ec3eac97276491e7657d843f6090cbc2ea9216eb4398553623859a23f"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "MIT"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "xmlschema",
+            "publisher": "Davide Brunato",
+            "purl": "pkg:pypi/xmlschema@1.2.5",
+            "type": "library",
+            "version": "1.2.5"
+        },
+        {
+            "description": "Backport of pathlib-compatible object wrapper for zip files",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "a9be7874fe9c8328117f0535ce8f574c"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "8dda78f06bd1674bd8720df8a50bb47b6e1233c503a4eed8e7810686bde37656"
+                }
+            ],
+            "licenses": [],
+            "modified": false,
+            "name": "zipp",
+            "publisher": "Jason R. Coombs",
+            "purl": "pkg:pypi/zipp@1.0.0",
+            "type": "library",
+            "version": "1.0.0"
+        },
+        {
+            "description": "Interfaces for Python",
+            "hashes": [
+                {
+                    "alg": "MD5",
+                    "content": "c75e2115e332e6713bbc12319a27e9c8"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "b47b1028be4758c3167e474884ccc079b94835f058984b15c145966c4df64d27"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "name": "ZPL 2.1"
+                    }
+                }
+            ],
+            "modified": false,
+            "name": "zope.interface",
+            "publisher": "Zope Foundation and Contributors",
+            "purl": "pkg:pypi/zope.interface@4.7.1",
+            "type": "library",
+            "version": "4.7.1"
+        }
+    ],
+    "specVersion": "1.2",
+    "version": 1
+}
