@@ -10,11 +10,11 @@ def test_get_categories():
 def test_create_genre_dict():
     # Test creating a genre dictionary
     genres = create_genre_dict("chinese", "burgers")
-    assert ("chinese" in genres and genres["chinese"] == 7) or \
-            ("hainanese" in genres and genres["hainanese"] == 7) or \
-            ("cantonese" in genres and genres["cantonese"] == 7)
-    assert ("burgers" in genres and genres["burgers"] == -7) or \
-            ("beerbar" in genres and genres["beerbar"] == 7)
+    assert ("chinese" in genres and genres["chinese"]["propensity"] == 7) or \
+            ("hainanese" in genres and genres["hainanese"]["propensity"] == 7) or \
+            ("cantonese" in genres and genres["cantonese"]["propensity"] == 7)
+    assert ("burgers" in genres and genres["burgers"]["propensity"] == -7) or \
+            ("beerbar" in genres and genres["beerbar"]["propensity"] == 7)
 
 
 if __name__ == "__main__":

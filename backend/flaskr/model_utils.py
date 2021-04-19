@@ -20,20 +20,29 @@ def get_categories(term):
     # This better get some hits...
     if "businesses" not in result:
         raise ValueError("No results found for {}".format(term))
-    
+
     # Otherwise, get up to 10 restaurants from the list
     restaurants = result["businesses"]
     if len(restaurants) > 10:
         restaurants = restaurants[:10]
-    
+
     # Parse the unique category aliases from the retaurants
-    categories = list(set().union(*[
-        set([
-            category_dict["alias"] for category_dict in restaurant["categories"]
-        ]) for restaurant in restaurants
+    categories = list(set.union(*[
+        {cat_dict["alias"] for cat_dict in restaurant["categories"]}
+        for restaurant in restaurants
     ]))
 
     return categories
+
+def get_categories_from_id(rest_id):
+    """
+    Get the categories associated with the restaurant ID
+    :param rest_id: Yelp restaurant ID string
+    :return: List of categories associated with the restaurant
+    """
+    yelp = YelpAPI()
+    restaurant = yelp.business_details(rest_id)
+    return [cat_dict["alias"] for cat_dict in restaurant["categories"]]
 
 def create_genre_dict(fav, least_fav):
     """
@@ -44,10 +53,14 @@ def create_genre_dict(fav, least_fav):
     """
     genres = {}
     for category in get_categories(fav):
-        genres[category] = 7
+        genres[category] = {
+            "count": 1,
+            "propensity": 7
+        }
     for category in get_categories(least_fav):
-        genres[category] = -7
-    
+        genres[category] = {
+            "count": 1,
+            "propensity": -7
+        }
+
     return genres
-
-
