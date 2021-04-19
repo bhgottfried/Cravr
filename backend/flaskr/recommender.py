@@ -36,17 +36,22 @@ class Recommender:
                                            price=price, open_now=open_now)
 
         if "businesses" in result:
-            for restaurant in result["businesses"]:
-                if not self.cache.is_cached(user.name, restaurant["id"]):
-                    return {
-                        "id": restaurant["id"],
-                        "Name": restaurant["name"],
-                        "Location": restaurant["location"],
-                        "Distance": round(restaurant["distance"] / 1609.34, ndigits=1),
-                        "Price": restaurant["price"],
-                        "Rating": restaurant["rating"],
-                        "Image": restaurant["image_url"]
-                    }
+            restaurants = [
+                restaurant for restaurant in result["businesses"] if
+                not self.cache.is_cached(user.name, restaurant["id"])
+            ]
+
+            if len(restaurants) > 0:
+                bestaurant = user.model.get_bestaurant(restaurants)
+                return {
+                    "id": bestaurant["id"],
+                    "Name": bestaurant["name"],
+                    "Location": bestaurant["location"],
+                    "Distance": round(bestaurant["distance"] / 1609.34, ndigits=1),
+                    "Price": bestaurant["price"],
+                    "Rating": bestaurant["rating"],
+                    "Image": bestaurant["image_url"]
+                }
 
         # We exhausted all the available restaurants or there were none at all
         print("Could not find any restaurants with the given parameters!")

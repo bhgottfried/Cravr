@@ -57,14 +57,14 @@ class ReviewContainer extends React.Component {
         let reviews = Object.assign([], this.state.Reviews);
         let removed = reviews.splice(index, 1);
         this.sendData(removed[0].restaurant.id, removed[0].review);
-        this.setState({ Reviews: reviews }) // must setState to update the actual render
+        this.setState({ Reviews: reviews, None: reviews.length === 0 })
         alert("Thank you for your review! Please keep reviewing and requesting suggestions for better recommendations")
     }
 
     handleChange(index, event) {
         let reviews = Object.assign([], this.state.Reviews);
         reviews[index].review[event.target.name] = event.target.value;
-        this.setState({ Reviews: reviews })
+        this.setState({ Reviews: reviews, None: reviews.length === 0 })
     }
 
     render() {
