@@ -1,6 +1,7 @@
 """Classes to store semi-permanent data associated with user"""
 
 import atexit
+import json
 from backend.flaskr.model import RecommendationModel, IMPORTANCE_KEYS
 from backend.flaskr.entity_data_utils import read_user_data, write_user_data, write_restaurant_data
 
@@ -67,6 +68,7 @@ class User:
         if rest_id not in self.reviews:
             raise ValueError("Attempted to review restaurant not in the user's review list")
 
+        review = {k: int(v) for k,v in json.loads(review).items()}
         self.is_dirty = True
         self.reviews.remove(rest_id)
         self.handle_review(rest_id, review)
@@ -78,11 +80,7 @@ class User:
         :return: None
         """
         self.is_dirty = True
-
-        # Would the user go back here?
-        is_liked = review.pop("repeat")
-
-        # Apply the review to the restaurant profile
+        self.model.train_review(rest_id, review)
         write_restaurant_data(rest_id, review)
 
     def pique(self, rest_id, sentiment):
@@ -120,10 +118,10 @@ class UserList:
 
         def cleanup():
             """Write the modified user data to the database when the app is shutting down."""
-            for user in self.users:
+            for name, user in self.users.items():
                 if user.is_dirty:
                     user.is_dirty = False
-                    write_user_data(user.name, user.to_json())
+                    write_user_data(name, user.to_json())
         if is_prod:
             atexit.register(cleanup)
 

@@ -18,24 +18,24 @@ class RecommendationModel:
         THIS CONSTRUCTOR IS "PRIVATE" AND SHOULD NOT BE CALLED.
         Initialization logic is handled in static factory methods.
         Description of fields:
-            num_requests = number of times this model has been used to generate a suggestion
+            num_reviews = number of reviews applied to this model
             food_genres  = dict of dicts:
                 count      = number of interactions the user has had this category
                 propensity = floats for how much the user likes each key [-10,10]
-            importances  = dict of floats for which restaurant features are most important {1-10}
+            importances  = dict of floats for which restaurant features are most important [0,10]
         """
         if method == "state":
-            self.num_requests = data["num_requests"]
+            self.num_reviews = data["num_requests"]
             self.food_genres = data["food_genres"]
             self.importances = data["importances"]
 
         elif method == "quiz":
-            self.num_requests = 0
+            self.num_reviews = 0
             self.food_genres = create_genre_dict(data.pop("favorite"), data.pop("leastFavorite"))
             self.importances = {k: 2 * int(v) - 1 for k,v in data.items()}
 
         elif method == "blank":
-            self.num_requests = 0
+            self.num_reviews = 0
             self.food_genres = {}
             self.importances = {
                 k: 5 for k in IMPORTANCE_KEYS
@@ -75,7 +75,7 @@ class RecommendationModel:
         Serialize fields to store in database
         :return: This object as a JSON
         """
-        return json.dumps(self)
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
     def get_bestaurant(self, restaurants):
         """
@@ -85,19 +85,39 @@ class RecommendationModel:
         """
         return restaurants[0] # Yeet
 
-    def train_review(self, review):
+    def train_review(self, rest_id, review):
         """
         Update the model weights after processing a user review.
+        :param rest_id: Yelp restaurant ID string
         :param review: Review object sent from the frontend
         :return: None
         """
-        self.num_requests += 1
+        self.num_reviews += 1
+        is_liked = bool(review.pop("repeat"))
+
+        # Adjust the user's importances based on which factors drove the sentiment of their review        
+        self.importances = {k: max(0, min(10,
+            v + (1 if is_liked else -1) * (2 * review[k] - v) / (1 + self.num_reviews / 5)))
+        for k,v in self.importances.items()}
+
+        # Invert the magnitude of the review if the user would not eat here again
+        if not is_liked:
+            review = {k: 6 - v for k,v in review.items()}
+
+        # Compute the review sentiment scaled based on the user's importances
+        sentiment = 0
+        for k in IMPORTANCE_KEYS:
+            sentiment += self.importances[k] * review[k] * (1 if is_liked else -1)
+        sentiment /= len(IMPORTANCE_KEYS) # Scale into [-10,10]
+
+        # Adjust the food_genre weights based on this sentiment
+        self.train_conversion(rest_id, sentiment)
 
     def train_conversion(self, rest_id, sentiment):
         """
         Update the food_genre weights for any conversion event
         :param rest_id: Yelp restaurant ID string
-        :param sentiment: Positive or negative float [-5,5] for how (dis)liked the restaurant was
+        :param sentiment: Positive or negative float [-10,10] for how (dis)liked the restaurant was
         """
         # Update the genre weights for the categories of the restaurant
         categories = get_categories_from_id(rest_id)
@@ -106,7 +126,8 @@ class RecommendationModel:
             if cat in self.food_genres:
                 # Update the count and use it as an attenuation factor
                 self.food_genres[cat]["count"] += 1
-                self.food_genres[cat]["propensity"] += sentiment / self.food_genres[cat]["count"]
+                self.food_genres[cat]["propensity"] += \
+                    sentiment / (1 + self.food_genres[cat]["count"] / 5)
 
                 # Clamp the value to be within [-10,10]
                 self.food_genres[cat]["propensity"] = max(
@@ -118,4 +139,3 @@ class RecommendationModel:
                     "count": 1,
                     "propensity": sentiment
                 }
-
