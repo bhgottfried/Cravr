@@ -76,7 +76,7 @@ class ReviewContainer extends React.Component {
                                 <h1>{Revs.restaurant.name}</h1>
                                 <h2>Location: {Revs.restaurant.location.address1}</h2>
                                 <h2>Please rate the following from 1-5 (5 is best)</h2>
-                                <form onSubmit={this.submit.bind(this, index)}>
+                                <form onSubmit={this.submit.bind(this, index)} className="find-form">
                                     <label id="Question 1" className="largetext">
                                         Food: 
                                         <input

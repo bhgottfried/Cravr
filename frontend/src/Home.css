@@ -36,6 +36,8 @@
   float: right;
 }
 .Rest {
+  max-width: 1300px;
+  min-width: 800px;
   background-image: radial-gradient(circle, rgb(236, 98, 17), rgb(255, 139, 72));
   border-radius: 25px;
   margin: 0 20em 1em 20em;
@@ -53,6 +55,8 @@
   width: 50%;
 }
 .submit-button{
+  min-width: 200px;
+  min-height: 50px;
   border-radius: 10px;
   font-size:x-large;
   text-align: center;
@@ -63,9 +67,20 @@
 .submit-button:hover{
   background-color: rgb(236, 98, 17);
 }
+
 .textbox{
+  max-width: 100px;
   font-size:x-large;
-  text-align: center;
+  text-align: right;
+  font-family:'Courier New', Courier, monospace;
+  background-color:rgb(248, 211, 0);
+  color:rgb(0, 0, 0);
+  
+}
+.text{
+  max-width: 400px;
+  font-size:x-large;
+  text-align: right;
   font-family:'Courier New', Courier, monospace;
   background-color:rgb(248, 211, 0);
   color:rgb(0, 0, 0);
@@ -73,9 +88,16 @@
 .textbox:focus-within{
   background-color:rgb(236, 98, 17);
 }
+.find-form{
+}
 .largetext{
-  font-size:x-large;
+  max-width: 600px;
+  margin: auto;
+  display: flex;
+  justify-content:space-evenly;
+  padding: 10px;
   text-align: center;
+  font-size:x-large;
   font-family:'Courier New', Courier, monospace;
   color:rgb(0, 0, 0);
 }

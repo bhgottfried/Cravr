@@ -122,10 +122,10 @@ class FindQuizContainer extends React.Component {
             <div>
                 <div id="Quiz" className="Rest">
                     <h1>Search Filters:</h1>
-                    <form onSubmit={this.handleSubmit}>
-                        <label id="q1">
+                    <form onSubmit={this.handleSubmit} className="find-form">
+                        <label id="q1" className="largetext">
                             1. What are you in the mood for? 
-                            <input type="text" className="textbox" value={this.state.q1.value} name="q1"
+                            <input type="text" className="text" value={this.state.q1.value} name="q1"
                                 required onChange={this.handleChange}>
                             </input>
                         </label>
@@ -140,7 +140,7 @@ class FindQuizContainer extends React.Component {
                             </select>
                         </label>
                         <br />
-                        <label id="q3">
+                        <label id="q3" className="largetext">
                             3. Maximum Distance (mi.)&emsp;
                             <input type="number" className="textbox" defaultValue="1" min="1" max="24" value={this.state.q3.value} name="q3"
                                 required onChange={this.handleChange}>

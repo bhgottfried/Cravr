@@ -32,6 +32,8 @@
 }
 
 .primary-button{
+  min-width: 200px;
+  min-height: 50px;
   border-radius: 10px;
   font-size:xx-large;
   text-align: center;
@@ -43,6 +45,8 @@
   background-color: rgb(236, 98, 17);
 }
 .secondary-button{
+  min-width: 200px;
+  min-height: 50px;
   border-radius: 10px;
   font-size:x-large;
   text-align: center;
