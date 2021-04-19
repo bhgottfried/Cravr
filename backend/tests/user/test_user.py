@@ -21,7 +21,7 @@ def test_user_list():
     
     # Ensure user object is created properly
     user_obj = users[user]
-    assert user_obj.reviews == [] and user_obj.model == None
+    assert user_obj.reviews == [] and user_obj.model != None
 
 def test_add_and_submit_review():
     # Initialize User and test params
