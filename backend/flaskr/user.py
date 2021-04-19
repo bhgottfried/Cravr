@@ -1,27 +1,36 @@
 """Classes to store semi-permanent data associated with user"""
 
 from backend.flaskr.user_data_utils import read_user_data, write_user_data
+from backend.flaskr.model import RecommendationModel
 
 class User:
     """
     Container class for a user's data (e.g. restaurants to review and the user's model)
     """
 
-    def __init__(self, name):
+    def __init__(self, name, quiz=None):
         """
         Object to contain list of restaurants that need to be reviewed and user model
-        :param cache_timeout: Number of seconds to maintain stale restaurnt entries in cache
-        :return: None
+        :param name: User's name or email address
+        :param quiz: If the quiz exists, create a new model using it as an initialization.
+                     Otherwise, try to read the model state from the database.
+        :return: New User object
         """
         self.name = name
-        self.is_dirty = False
-        user_dict = read_user_data(name)
-        if user_dict:
-            self.reviews = user_dict["reviews"]
-            self.model = user_dict["model"]
-        else:
+
+        if quiz:
+            self.is_dirty = True
             self.reviews = []
-            self.model = None
+            self.model = RecommendationModel.from_quiz(quiz)
+        else:
+            self.is_dirty = False
+            user_dict = read_user_data(name)
+            if user_dict:
+                self.reviews = user_dict["reviews"]
+                self.model = RecommendationModel.from_state(user_dict["model"])
+            else:
+                self.reviews = []
+                self.model = RecommendationModel.from_blank()
 
     def add_review(self, rest_id):
         """
@@ -87,6 +96,16 @@ class User:
         self.is_dirty = True
         self.handle_review(rest_id, {"standard bad review object"})
 
+    def to_json(self):
+        """
+        Serialize data fields to store in database (need to skip dirty bit so we can't just dump)
+        :return: This object as a JSON
+        """
+        return {
+            "reviews": self.reviews,
+            "model": self.model.to_json()
+        }
+
 
 class UserList:
     """
@@ -102,14 +121,14 @@ class UserList:
         self.users = {}
         self.is_prod = is_prod
 
-    def add(self, name):
+    def add(self, name, quiz=None):
         """
         Add User object to the list for the given name if it is not already in it
         :param name: Username entered on the registration screen
         :return: None
         """
         if name not in self.users:
-            self.users[name] = User(name)
+            self.users[name] = User(name, quiz)
         else:
             raise ValueError("{} already exists in the user list!".format(name))
 
@@ -130,7 +149,7 @@ class UserList:
             for user in self.users:
                 if user.is_dirty:
                     user.is_dirty = False
-                    write_user_data(user.name, user)
+                    write_user_data(user.name, user.to_json())
 
     def __contains__(self, name):
         """
