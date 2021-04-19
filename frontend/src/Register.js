@@ -109,58 +109,12 @@ export default function Register() {
 					</body>
 					<Form.Group>
 						<Form.Label>Favorite Food? </Form.Label>
-						<Form.Control as="select" value={fav} onChange={(e) => setFav(e.target.value)}>
-							<option value=""> </option>
-							<option value="Bar & Grill">Bar & Grill</option>
-							<option value="Sandwiches">Sandwiches</option>
-							<option value="Pizza">Pizza</option>
-							<option value="Fast Food">Fast Food</option>
-							<option value="Breakfast">Breakfast</option>
-							<option value="Steakhouse">Steakhouse</option>
-							<option value="Fine Dining">Fine Dining</option>
-							<option value="Sushi">Sushi</option>
-							<option value="Seafood">Seafood</option>
-							<option value="Barbeque">Barbeque</option>
-							<option value="American">American</option>
-							<option value="Mexican">Mexican</option>
-							<option value="South American">South American</option>
-							<option value="Italian">Italian</option>
-							<option value="Eastern European">Eastern European</option>
-							<option value="Mediterranean">Mediterranean</option>
-							<option value="Middle Eastern">Middle Eastern</option>
-							<option value="Indian">Indian</option>
-							<option value="Chinese">Chinese</option>
-							<option value="Japanese">Japanese</option>
-							<option value="Korean">Korean</option>
-							<option value="Southeast Asian">Southeast Asian</option>
+						<Form.Control as="input" type="text" value={fav} onChange={(e) => setFav(e.target.value)}>
 						</Form.Control>
 					</Form.Group>
 					<Form.Group>
 						<Form.Label>Least Favorite Food? </Form.Label>
-						<Form.Control as="select" value={leastfav} onChange={(e) => setLeastFav(e.target.value)}>
-							<option value=""> </option>
-							<option value="Bar & Grill">Bar & Grill</option>
-							<option value="Sandwiches">Sandwiches</option>
-							<option value="Pizza">Pizza</option>
-							<option value="Fast Food">Fast Food</option>
-							<option value="Breakfast">Breakfast</option>
-							<option value="Steakhouse">Steakhouse</option>
-							<option value="Fine Dining">Fine Dining</option>
-							<option value="Sushi">Sushi</option>
-							<option value="Seafood">Seafood</option>
-							<option value="Barbeque">Barbeque</option>
-							<option value="American">American</option>
-							<option value="Mexican">Mexican</option>
-							<option value="South American">South American</option>
-							<option value="Italian">Italian</option>
-							<option value="Eastern European">Eastern European</option>
-							<option value="Mediterranean">Mediterranean</option>
-							<option value="Middle Eastern">Middle Eastern</option>
-							<option value="Indian">Indian</option>
-							<option value="Chinese">Chinese</option>
-							<option value="Japanese">Japanese</option>
-							<option value="Korean">Korean</option>
-							<option value="Southeast Asian">Southeast Asian</option>
+						<Form.Control as="input" type="text" value={leastfav} onChange={(e) => setLeastFav(e.target.value)}>
 						</Form.Control>
 					</Form.Group>
 					<body className="App-body">
