@@ -17,7 +17,6 @@
     float: inline-start;
     display: inline-flex;}
 #nav li a {
-    
     padding: 8px 20px;
     text-decoration: none;
     font-weight: bold;
@@ -30,7 +29,12 @@
 #nav li a:hover {
   background-color: rgb(236, 98, 17);
         }
-
+#label {
+  float: left;
+}
+#select{
+  float: right;
+}
 .Rest {
   background-image: radial-gradient(circle, rgb(236, 98, 17), rgb(255, 139, 72));
   border-radius: 25px;
