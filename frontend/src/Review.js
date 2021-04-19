@@ -19,9 +19,8 @@ class ReviewContainer extends React.Component {
             body: JSON.stringify(
                 getCookie("Username")
             )
-        })
-            .then(response => response.json())
-            .then(response => this.setReview(response.result));
+        }).then(response => response.json())
+        .then(response => this.setReview(response.result));
     }
 
     state = {
