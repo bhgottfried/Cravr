@@ -2,6 +2,9 @@
 
 import json
 from backend.flaskr.yelp_api_utils import YelpAPI
+from backend.flaskr.model_utils import create_genre_dict, get_categories_from_id
+
+IMPORTANCE_KEYS = ["food", "service", "atmosphere", "value"]
 
 class RecommendationModel:
     """
@@ -16,7 +19,9 @@ class RecommendationModel:
         Initialization logic is handled in static factory methods.
         Description of fields:
             num_requests = number of times this model has been used to generate a suggestion
-            food_genres  = dict of floats for how much a user likes each key [-10,10]
+            food_genres  = dict of dicts:
+                count      = number of interactions the user has had this category
+                propensity = floats for how much the user likes each key [-10,10]
             importances  = dict of floats for which restaurant features are most important {1-10}
         """
         if method == "state":
@@ -26,24 +31,14 @@ class RecommendationModel:
 
         elif method == "quiz":
             self.num_requests = 0
-            self.food_genres = {
-                data.pop("favorite"): 7,
-                data.pop("leastFavorite"): -7,
-            }
-            self.importances = {k: 2 * int(v) for k,v in data.items()}
+            self.food_genres = create_genre_dict(data.pop("favorite"), data.pop("leastFavorite"))
+            self.importances = {k: 2 * int(v) - 1 for k,v in data.items()}
 
         elif method == "blank":
             self.num_requests = 0
             self.food_genres = {}
             self.importances = {
-                k: 5 for k in [
-                    "favorite",
-                    "leastFavorite",
-                    "food",
-                    "service",
-                    "atmosphere",
-                    "value"
-                ]
+                k: 5 for k in IMPORTANCE_KEYS
             }
 
         else:
@@ -88,13 +83,39 @@ class RecommendationModel:
         :param restaurants: List of restaurant objects to be evaluated
         :return: Optimal item in restaurants
         """
-        print(self.num_requests) # Temp Pylint
         return restaurants[0] # Yeet
 
-    def train_model(self, review):
+    def train_review(self, review):
         """
         Update the model weights after processing a user review.
         :param review: Review object sent from the frontend
         :return: None
         """
-        print(self.num_requests, review) # Temp Pylint
+        self.num_requests += 1
+
+    def train_conversion(self, rest_id, sentiment):
+        """
+        Update the food_genre weights for any conversion event
+        :param rest_id: Yelp restaurant ID string
+        :param sentiment: Positive or negative float [-5,5] for how (dis)liked the restaurant was
+        """
+        # Update the genre weights for the categories of the restaurant
+        categories = get_categories_from_id(rest_id)
+        for cat in categories:
+            # Have we seen this category before?
+            if cat in self.food_genres:
+                # Update the count and use it as an attenuation factor
+                self.food_genres[cat]["count"] += 1
+                self.food_genres[cat]["propensity"] += sentiment / self.food_genres[cat]["count"]
+
+                # Clamp the value to be within [-10,10]
+                self.food_genres[cat]["propensity"] = max(
+                    -10, min(10, self.food_genres[cat]["propensity"]
+                ))
+            # If not, create a new entry with this sentiment
+            else:
+                self.food_genres[cat] = {
+                    "count": 1,
+                    "propensity": sentiment
+                }
+
