@@ -1,4 +1,4 @@
-﻿astroid==2.5
+﻿astroid==2.5.3
 atomicwrites==1.4.0
 attrs==20.3.0
 bcrypt==3.2.0
