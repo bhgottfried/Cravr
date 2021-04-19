@@ -1,7 +1,7 @@
 """Classes to store semi-permanent data associated with user"""
 
-from backend.flaskr.user_data_utils import read_user_data, write_user_data
-from backend.flaskr.model import RecommendationModel
+from backend.flaskr.model import RecommendationModel, IMPORTANCE_KEYS
+from backend.flaskr.entity_data_utils import *
 
 class User:
     """
@@ -51,13 +51,7 @@ class User:
         if self.reviews != []:
             return [ {
                 "restaurant": yelp.business_details(rest_id),
-                "review": {     # Frontend default values
-                    "food": "5",
-                    "service": "5",
-                    "atmosphere": "5",
-                    "overall": "5",
-                    "repeat": "1"
-                }
+                "review": {k: 5 for k in IMPORTANCE_KEYS + ["repeat"]} # Frontend default values
             } for rest_id in self.reviews]
         return [{"None":"1"}]
 

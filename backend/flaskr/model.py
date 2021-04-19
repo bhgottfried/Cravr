@@ -2,6 +2,9 @@
 
 import json
 from backend.flaskr.yelp_api_utils import YelpAPI
+from backend.flaskr.model_utils import create_genre_dict
+
+IMPORTANCE_KEYS = ["food", "service", "atmosphere", "value"]
 
 class RecommendationModel:
     """
@@ -26,24 +29,14 @@ class RecommendationModel:
 
         elif method == "quiz":
             self.num_requests = 0
-            self.food_genres = {
-                data.pop("favorite"): 7,
-                data.pop("leastFavorite"): -7,
-            }
+            self.food_genres = create_genre_dict(data.pop("favorite"), data.pop("leastFavorite"))
             self.importances = {k: 2 * int(v) for k,v in data.items()}
 
         elif method == "blank":
             self.num_requests = 0
             self.food_genres = {}
             self.importances = {
-                k: 5 for k in [
-                    "favorite",
-                    "leastFavorite",
-                    "food",
-                    "service",
-                    "atmosphere",
-                    "value"
-                ]
+                k: 5 for k in IMPORTANCE_KEYS
             }
 
         else:
