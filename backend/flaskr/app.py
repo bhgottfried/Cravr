@@ -64,8 +64,6 @@ def restaurants():
         "location": (args[4], args[5])
     }
 
-    print(name, search_params)
-
     return {"result": recommender.get_restaurant(_user(name), search_params)}
 
 
@@ -80,12 +78,16 @@ def rate_suggestion():
     user = _user(name)
 
     # Process rating
-    if rating == "yummy":    # Add the accepted restaunt to the user's review list
+    if rating == "yummy":
+        # Add the accepted restaunt to the user's review list and apply the positive conversion
         user.add_review(rest_id)
-    elif rating == "yuck":  # Send the disliked restaurant to the user's model for training
-        user.disliked(rest_id)
+        user.pique(rest_id, 3)
+    elif rating == "yuck":
+        # Apply the negative conversion to the user's model for training
+        user.pique(rest_id, -1.5)
     elif rating == "maybe later": # User wants to go there but at a later time
-        pass # Do nothing but still cache the restaurant
+        # Add slight positive weight for interest and still cache the restaurant
+        user.pique(rest_id, 0.5)
 
     # Cache the reviewed restaurant
     recommender.cache_restaurant(user, rest_id)
@@ -96,8 +98,8 @@ def rate_suggestion():
 @app.route('/cravr/get_reviews', methods=["POST"])
 def get_reviews():
     """Get the restaurants that this user needs to review"""
-    args     = request.json.split('\n')
-    name     = args[0]
+    args = request.json.split('\n')
+    name = args[0]
 
     # Return list of restaurants the user must review
     return {'result': _user(name).get_reviews(yelp)}
