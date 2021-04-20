@@ -24,13 +24,6 @@ class RecommendationModel:
             importances  = dict of floats for which restaurant features are most important [0,10]
         """
         if method == "state":
-            # self.num_reviews = int(data["num_requests"])
-            # self.food_genres = {k: {
-            #     "count": int(v["count"]),
-            #     "propensity": float(v["propensity"])
-            # } for k,v in data["food_genres"].items()}
-            # self.importances = {k: float(v) for k,v in data["importances"].items()}
-
             self.num_reviews = data["num_requests"]
             self.food_genres = data["food_genres"]
             self.importances = data["importances"]
