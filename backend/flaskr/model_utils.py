@@ -19,9 +19,8 @@ def get_categories(term):
         open_now=False
     )
 
-    # This better get some hits...
     if "businesses" not in result:
-        raise ValueError("No results found for {}".format(term))
+        return []
 
     # Otherwise, get up to 10 restaurants from the list
     restaurants = result["businesses"]
@@ -44,7 +43,9 @@ def get_categories_from_id(rest_id):
     """
     yelp = YelpAPI()
     restaurant = yelp.business_details(rest_id)
-    return [cat_dict["alias"] for cat_dict in restaurant["categories"]]
+    if "categories" in restaurant:
+        return [cat_dict["alias"] for cat_dict in restaurant["categories"]]
+    return []
 
 def create_genre_dict(fav, least_fav):
     """

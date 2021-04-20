@@ -75,22 +75,23 @@ def rate_suggestion():
     rating   = args[1]
     rest_id  = args[2]
 
-    user = _user(name)
+    if rest_id != "N/A":
+        user = _user(name)
 
-    # Process rating
-    if rating == "yummy":
-        # Add the accepted restaunt to the user's review list and apply the positive conversion
-        user.add_review(rest_id)
-        user.pique(rest_id, 3)
-    elif rating == "yuck":
-        # Apply the negative conversion to the user's model for training
-        user.pique(rest_id, -1.5)
-    elif rating == "maybe later": # User wants to go there but at a later time
-        # Add slight positive weight for interest and still cache the restaurant
-        user.pique(rest_id, 0.5)
+        # Process rating
+        if rating == "yummy":
+            # Add the accepted restaunt to the user's review list and apply the positive conversion
+            user.add_review(rest_id)
+            user.pique(rest_id, 3)
+        elif rating == "yuck":
+            # Apply the negative conversion to the user's model for training
+            user.pique(rest_id, -1.5)
+        elif rating == "maybe later": # User wants to go there but at a later time
+            # Add slight positive weight for interest and still cache the restaurant
+            user.pique(rest_id, 0.5)
 
-    # Cache the reviewed restaurant
-    recommender.cache_restaurant(user, rest_id)
+        # Cache the reviewed restaurant
+        recommender.cache_restaurant(user, rest_id)
 
     return {'result': "Success"}
 

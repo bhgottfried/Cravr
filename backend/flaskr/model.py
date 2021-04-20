@@ -24,6 +24,13 @@ class RecommendationModel:
             importances  = dict of floats for which restaurant features are most important [0,10]
         """
         if method == "state":
+            # self.num_reviews = int(data["num_requests"])
+            # self.food_genres = {k: {
+            #     "count": int(v["count"]),
+            #     "propensity": float(v["propensity"])
+            # } for k,v in data["food_genres"].items()}
+            # self.importances = {k: float(v) for k,v in data["importances"].items()}
+
             self.num_reviews = data["num_requests"]
             self.food_genres = data["food_genres"]
             self.importances = data["importances"]
@@ -50,7 +57,7 @@ class RecommendationModel:
         :param state: Model state JSON object as stored in the database
         :return: New RecommendationModel with the state taken from the JSON
         """
-        return RecommendationModel("state", state)
+        return RecommendationModel("state", json.loads(state))
 
     @staticmethod
     def from_quiz(quiz):
@@ -88,10 +95,11 @@ class RecommendationModel:
             result = 10 * restaurant["rating"]
 
             # Adjust if the user likes or dislikes this genre of restaurant
-            categories = [cat_dict["alias"] for cat_dict in restaurant["categories"]]
-            for cat in categories:
-                if cat in self.food_genres:
-                    result += self.food_genres[cat]["propensity"]
+            if "categories" in restaurant:
+                categories = [cat_dict["alias"] for cat_dict in restaurant["categories"]]
+                for cat in categories:
+                    if cat in self.food_genres:
+                        result += self.food_genres[cat]["propensity"]
 
             # If we have Cravr review data, scale it based on the user's importances
             review_data = read_restaurant_data(restaurant["id"])

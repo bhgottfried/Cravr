@@ -2,6 +2,7 @@
 
 from backend.flaskr.database_utils import DBConnection
 from backend.flaskr.model_utils import IMPORTANCE_KEYS
+import json
 
 def read_user_data(username):
     """
@@ -59,7 +60,7 @@ def read_restaurant_data(rest_id):
                                    .format(rest_id))
     if result == -1 or result is None:
         return None
-    return result[0]
+    return json.loads(result[0])
 
 
 def write_restaurant_data(rest_id, data):
@@ -75,7 +76,8 @@ def write_restaurant_data(rest_id, data):
     if num_results == 1:
         # Get the existing reviews for this restaurant
         reviews = db_conn.execute_query("SELECT data FROM rest_profiles WHERE rest_id = '{}'"
-                                   .format(rest_id))
+                                   .format(rest_id))[0]
+        reviews = json.loads(reviews)
 
         # Recompute averages for each field with the new review data
         prev_num_reviews = reviews["num_reviews"]
@@ -87,12 +89,12 @@ def write_restaurant_data(rest_id, data):
 
         # Update data for existing restaurant
         result = db_conn.execute_query("UPDATE rest_profiles SET data = '{}' WHERE rest_id = '{}'"
-                                       .format(reviews, rest_id))
+                                       .format(json.dumps(reviews), rest_id))
     elif num_results == 0:
         # Add data for new restaurant
         data["num_reviews"] = 1
         result = db_conn.execute_query("INSERT INTO rest_profiles (rest_id, data) VALUES "
-                                       "('{}', '{}')".format(rest_id, data))
+                                       "('{}', '{}')".format(rest_id, json.dumps(data)))
     else:
         # Multiple instances of user found in profiles
         print("{} user profiles found for user {}. Expected 0 or 1.".format(num_results, rest_id))
