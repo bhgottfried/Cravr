@@ -2,6 +2,8 @@
 
 from backend.flaskr.yelp_api_utils import YelpAPI
 
+IMPORTANCE_KEYS = ["food", "service", "atmosphere", "value"]
+
 def get_categories(term):
     """
     Semantically parse a raw search term into Yelp categories

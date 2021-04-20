@@ -60,8 +60,8 @@ def restaurants():
     search_params = {
         "food": args[1],
         "price": args[2],
-        "distance": args[3],
-        "location": (args[4], args[5])
+        "distance": max(1, min(24, float(args[3]))),
+        "location": (float(args[4]), float(args[5]))
     }
 
     return {"result": recommender.get_restaurant(_user(name), search_params)}

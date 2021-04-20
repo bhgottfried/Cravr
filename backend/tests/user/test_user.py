@@ -1,4 +1,5 @@
 import pytest
+from json import JSONDecodeError
 from backend.flaskr.yelp_api_utils import YelpAPI
 from backend.flaskr.user import UserList, User
 
@@ -36,7 +37,7 @@ def test_add_and_submit_review():
     # Ensure reviewed restaurants are removed from the review list properly
     try:
         user.submit_review(rest_id, "It's bloody raw!")
-    except AttributeError:
+    except JSONDecodeError:
         pass # We don't need this trying to write to a restaurant profile database
     assert user.reviews == []
     with pytest.raises(ValueError):

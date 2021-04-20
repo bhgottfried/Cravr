@@ -2,7 +2,8 @@
 
 import atexit
 import json
-from backend.flaskr.model import RecommendationModel, IMPORTANCE_KEYS
+from backend.flaskr.model import RecommendationModel
+from backend.flaskr.model_utils import IMPORTANCE_KEYS
 from backend.flaskr.entity_data_utils import read_user_data, write_user_data, write_restaurant_data
 
 class User:
@@ -23,6 +24,9 @@ class User:
         if quiz:
             self.is_dirty = True
             self.reviews = []
+            quiz = json.loads(quiz)
+            for k in IMPORTANCE_KEYS:
+                quiz[k] = max(0, min(5, int(quiz[k])))
             self.model = RecommendationModel.from_quiz(quiz)
         else:
             self.is_dirty = False
@@ -68,9 +72,10 @@ class User:
         if rest_id not in self.reviews:
             raise ValueError("Attempted to review restaurant not in the user's review list")
 
-        review = {k: int(v) for k,v in json.loads(review).items()}
         self.is_dirty = True
         self.reviews.remove(rest_id)
+
+        review = {k: max(1, min(5, int(v))) for k,v in json.loads(review).items()}
         self.handle_review(rest_id, review)
 
     def handle_review(self, rest_id, review):

@@ -1,7 +1,7 @@
 """Utility functions for accessing databases for user and restaurant profiles"""
 
 from backend.flaskr.database_utils import DBConnection
-from backend.flaskr.model import IMPORTANCE_KEYS
+from backend.flaskr.model_utils import IMPORTANCE_KEYS
 
 def read_user_data(username):
     """

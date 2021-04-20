@@ -2,9 +2,8 @@
 
 import json
 from backend.flaskr.yelp_api_utils import YelpAPI
-from backend.flaskr.model_utils import create_genre_dict, get_categories_from_id
-
-IMPORTANCE_KEYS = ["food", "service", "atmosphere", "value"]
+from backend.flaskr.model_utils import create_genre_dict, get_categories_from_id, IMPORTANCE_KEYS
+from backend.flaskr.entity_data_utils import read_restaurant_data
 
 class RecommendationModel:
     """
@@ -32,7 +31,7 @@ class RecommendationModel:
         elif method == "quiz":
             self.num_reviews = 0
             self.food_genres = create_genre_dict(data.pop("favorite"), data.pop("leastFavorite"))
-            self.importances = {k: 2 * int(v) - 1 for k,v in data.items()}
+            self.importances = {k: max(0, min(10, 2 * int(v) - 1)) for k,v in data.items()}
 
         elif method == "blank":
             self.num_reviews = 0
@@ -83,7 +82,33 @@ class RecommendationModel:
         :param restaurants: List of restaurant objects to be evaluated
         :return: Optimal item in restaurants
         """
-        return restaurants[0] # Yeet
+        def score(restaurant):
+            """Compute a numerical score for how likely the user is to like this restaurant"""
+            # Start with a multiple of the yelp rating
+            result = 10 * restaurant["rating"]
+
+            # Adjust if the user likes or dislikes this genre of restaurant
+            categories = [cat_dict["alias"] for cat_dict in restaurant["categories"]]
+            for cat in categories:
+                if cat in self.food_genres:
+                    result += self.food_genres[cat]["propensity"]
+            
+            # If we have Cravr review data, scale it based on the user's importances
+            review_data = read_restaurant_data(restaurant["id"])
+            if review_data:
+                for k in IMPORTANCE_KEYS:
+                    result += self.importances[k] * (review_data[k] - 2.5)
+
+            # Penalize long distances by subtracting the squared distance
+            dist = restaurant["distance"] / 1609.34
+            result -= dist ** 2
+
+            return result
+
+        return max(
+            [(restaurant, score(restaurant)) for restaurant in restaurants],
+            key=lambda pair: pair[1]
+        )[0]
 
     def train_review(self, rest_id, review):
         """
@@ -95,7 +120,7 @@ class RecommendationModel:
         self.num_reviews += 1
         is_liked = bool(review.pop("repeat"))
 
-        # Adjust the user's importances based on which factors drove the sentiment of their review        
+        # Adjust the user's importances based on which factors drove the sentiment of their review
         self.importances = {k: max(0, min(10,
             v + (1 if is_liked else -1) * (2 * review[k] - v) / (1 + self.num_reviews / 5)))
         for k,v in self.importances.items()}
