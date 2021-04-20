@@ -92,7 +92,7 @@ class RecommendationModel:
             for cat in categories:
                 if cat in self.food_genres:
                     result += self.food_genres[cat]["propensity"]
-            
+
             # If we have Cravr review data, scale it based on the user's importances
             review_data = read_restaurant_data(restaurant["id"])
             if review_data:
