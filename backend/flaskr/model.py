@@ -74,7 +74,7 @@ class RecommendationModel:
         Serialize fields to store in database
         :return: This object as a JSON
         """
-        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True)
 
     def get_bestaurant(self, restaurants):
         """

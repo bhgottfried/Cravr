@@ -103,10 +103,10 @@ class User:
         Serialize data fields to store in database (need to skip dirty bit so we can't just dump)
         :return: This object as a JSON
         """
-        return {
+        return json.dumps({
             "reviews": self.reviews,
             "model": self.model.to_json()
-        }
+        })
 
 
 class UserList:
