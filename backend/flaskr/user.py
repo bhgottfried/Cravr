@@ -1,7 +1,10 @@
 """Classes to store semi-permanent data associated with user"""
 
-from backend.flaskr.user_data_utils import read_user_data, write_user_data
+import atexit
+import json
 from backend.flaskr.model import RecommendationModel
+from backend.flaskr.model_utils import IMPORTANCE_KEYS
+from backend.flaskr.entity_data_utils import read_user_data, write_user_data, write_restaurant_data
 
 class User:
     """
@@ -21,6 +24,9 @@ class User:
         if quiz:
             self.is_dirty = True
             self.reviews = []
+            quiz = json.loads(quiz)
+            for k in IMPORTANCE_KEYS:
+                quiz[k] = max(0, min(5, int(quiz[k])))
             self.model = RecommendationModel.from_quiz(quiz)
         else:
             self.is_dirty = False
@@ -51,13 +57,7 @@ class User:
         if self.reviews != []:
             return [ {
                 "restaurant": yelp.business_details(rest_id),
-                "review": {     # Frontend default values
-                    "food": "5",
-                    "service": "5",
-                    "atmosphere": "5",
-                    "overall": "5",
-                    "repeat": "1"
-                }
+                "review": {k: 5 for k in IMPORTANCE_KEYS + ["repeat"]} # Frontend default values
             } for rest_id in self.reviews]
         return [{"None":"1"}]
 
@@ -74,6 +74,8 @@ class User:
 
         self.is_dirty = True
         self.reviews.remove(rest_id)
+
+        review = {k: max(1, min(5, int(v))) for k,v in json.loads(review).items()}
         self.handle_review(rest_id, review)
 
     def handle_review(self, rest_id, review):
@@ -83,28 +85,28 @@ class User:
         :return: None
         """
         self.is_dirty = True
-        print("TEMP: " + str(rest_id) + str(review))
-        # This method is not yet implemented because we don't have a model
-        # This should be refactored into a separate model class as well
+        self.model.train_review(rest_id, review)
+        write_restaurant_data(rest_id, review)
 
-    def disliked(self, rest_id):
+    def pique(self, rest_id, sentiment):
         """
-        Adjust model weights to discourage similar restaurants from being suggested
-        :param rest_id: Restaurant ID that was disliked
+        Adjust model weights based on user interest to (en/dis)courage similar restaurants
+        :param rest_id: Restaurant ID that was rated
+        :param sentiment: Positive or negative float for the conversion event
         :return: None
         """
         self.is_dirty = True
-        self.handle_review(rest_id, {"standard bad review object"})
+        self.model.train_conversion(rest_id, sentiment)
 
     def to_json(self):
         """
         Serialize data fields to store in database (need to skip dirty bit so we can't just dump)
         :return: This object as a JSON
         """
-        return {
+        return json.dumps({
             "reviews": self.reviews,
             "model": self.model.to_json()
-        }
+        })
 
 
 class UserList:
@@ -115,11 +117,18 @@ class UserList:
     def __init__(self, is_prod=True):
         """
         Create an empty table of Users in memory. We add user data to memory as necessary
-        :param is_prod: Bool for testing without calling DB functions
         :return: None
         """
         self.users = {}
-        self.is_prod = is_prod
+
+        def cleanup():
+            """Write the modified user data to the database when the app is shutting down."""
+            for name, user in self.users.items():
+                if user.is_dirty:
+                    user.is_dirty = False
+                    write_user_data(name, user.to_json())
+        if is_prod:
+            atexit.register(cleanup)
 
     def add(self, name, quiz=None):
         """
@@ -139,17 +148,6 @@ class UserList:
         :return: User object with associated data
         """
         return self.users[name]
-
-    def __del__(self):
-        """
-        Write the modified user data to the database when the app is shutting down.
-        :return: None
-        """
-        if self.is_prod:
-            for user in self.users:
-                if user.is_dirty:
-                    user.is_dirty = False
-                    write_user_data(user.name, user.to_json())
 
     def __contains__(self, name):
         """
