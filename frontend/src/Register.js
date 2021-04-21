@@ -120,12 +120,12 @@ export default function Register() {
 					</body>
 					<Form.Group>
 						<Form.Label>Favorite Food? </Form.Label>
-						<Form.Control as="input" type="text" value={fav} onChange={(e) => setFav(e.target.value)}>
+						<Form.Control as="input" type="text" value={fav} onChange={(e) => setFav(e.target.value)} className="text-box">
 						</Form.Control>
 					</Form.Group>
 					<Form.Group>
 						<Form.Label>Least Favorite Food? </Form.Label>
-						<Form.Control as="input" type="text" value={leastfav} onChange={(e) => setLeastFav(e.target.value)}>
+						<Form.Control as="input" type="text" value={leastfav} onChange={(e) => setLeastFav(e.target.value)} className="text-box">
 						</Form.Control>
 					</Form.Group>
 					<body className="App-body">

@@ -73,10 +73,11 @@ class ReviewContainer extends React.Component {
                 {
                     this.state.None ? <div className="Rest"><h2>No restaurants to review at this time</h2></div> : this.state.Reviews.map((Revs, index) => { return (
                             <div className="Rest">
-                                <h1>{Revs.restaurant.name}</h1>
+                                <h1 className="underline">{Revs.restaurant.name}</h1>
                                 <h2>Location: {Revs.restaurant.location.address1}</h2>
                                 <h2>Please rate the following from 1-5 (5 is best)</h2>
                                 <form onSubmit={this.submit.bind(this, index)} className="find-form">
+                                    <div className="test">
                                     <label id="Question 1" className="largetext">
                                         Food: 
                                         <input
@@ -118,6 +119,7 @@ class ReviewContainer extends React.Component {
                                     </label>
                                     <br></br>
                                     <input className="submit-button" type="submit" value="Submit" />
+                                    </div>
                                 </form>
                                 <br></br>
                             </div>

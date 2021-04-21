@@ -38,9 +38,10 @@
 .Rest {
   max-width: 1300px;
   min-width: 800px;
+  min-height: 600px;
   background-image: radial-gradient(circle, rgb(236, 98, 17), rgb(255, 139, 72));
   border-radius: 25px;
-  margin: 0 20em 1em 20em;
+  margin: auto;
   text-align: center;
   font-family:'Courier New', Courier, monospace; 
 }
@@ -78,7 +79,7 @@
   
 }
 .text{
-  max-width: 400px;
+  max-width: 600px;
   font-size:x-large;
   text-align: right;
   font-family:'Courier New', Courier, monospace;
@@ -89,6 +90,10 @@
   background-color:rgb(236, 98, 17);
 }
 .find-form{
+  text-align: center;
+}
+.underline{
+  text-decoration: underline;
 }
 .largetext{
   max-width: 600px;

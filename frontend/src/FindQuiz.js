@@ -11,7 +11,7 @@ export function getCookie(key) {
 const Restaurant = (props) => {
     return (
         <div>
-            <h2>{props.name}</h2>
+            <h2 className="underline">{props.name}</h2>
             <h3> Distance:{props.distance} mi</h3>
             <h4>Price:{props.price} Rating:{props.rating}/5</h4>
             <h4>Address:{props.addr.address1}</h4>

@@ -1,4 +1,5 @@
 import './App.css';
+import './Home.css';
 import React, { useState } from 'react';
 import Form from "react-bootstrap/Form";
 import Cookies from 'universal-cookie';
@@ -58,7 +59,7 @@ function Login() {
         <span>Cravr</span>
       </nav>
       <body className="App-body">
-        <h1>
+        <h1 className="test2">
           Welcome to Cravr!
         </h1>
         <h2>
@@ -88,18 +89,14 @@ function Login() {
           </Form.Group>
           <br></br>
           <div name="login" className="login">
-            <button className="primary-button">
-              <span>Login</span>
-            </button>
+            <button className="primary-button"> Login </button>
           </div>
         </Form>
       </div>
       <br></br>
       <i>New to Cravr? Sign up!</i>
       <div name="register" className="register">
-        <button className="secondary-button" onClick={() => routeChange("/Register")}>
-          <span>Register</span>
-        </button>
+        <button className="secondary-button" onClick={() => routeChange("/Register")}> Register </button>
       </div>
     </div>
   );
