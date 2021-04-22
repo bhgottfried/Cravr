@@ -31,7 +31,7 @@ class RecommendationModel:
         elif method == "quiz":
             self.num_reviews = 0
             self.food_genres = create_genre_dict(data.pop("favorite"), data.pop("leastFavorite"))
-            self.importances = {k: max(0, min(10, 2 * int(v) - 1)) for k,v in data.items()}
+            self.importances = {k: max(1, min(9, 2 * int(v) - 1)) for k,v in data.items()}
 
         elif method == "blank":
             self.num_reviews = 0

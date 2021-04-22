@@ -8,9 +8,9 @@ def get_categories(term):
     """
     Semantically parse a raw search term into Yelp categories
     :param term: search term the user entered to be semantically parsed
-    :return: List of Yelp catefories that the search term best matches
+    :return: List of Yelp categories that the search term best matches
     """
-    # Query NYC with the search term in a 15 mile radius
+    # Query NYC with the search term in a 20 mile radius
     yelp = YelpAPI()
     result = yelp.business_search(
         term=term,
@@ -27,7 +27,7 @@ def get_categories(term):
     if len(restaurants) > 10:
         restaurants = restaurants[:10]
 
-    # Parse the unique category aliases from the retaurants
+    # Parse the unique category aliases from the restaurants
     categories = list(set.union(*[
         {cat_dict["alias"] for cat_dict in restaurant["categories"]}
         for restaurant in restaurants
