@@ -50,7 +50,7 @@ class RecommendationModel:
         :param state: Model state JSON object as stored in the database
         :return: New RecommendationModel with the state taken from the JSON
         """
-        return RecommendationModel("state", json.loads(state))
+        return RecommendationModel("state", state)
 
     @staticmethod
     def from_quiz(quiz):
