@@ -188,9 +188,9 @@
             "licenses": [],
             "modified": false,
             "name": "cloud-init",
-            "purl": "pkg:pypi/cloud-init@20.4",
+            "purl": "pkg:pypi/cloud-init@21.1",
             "type": "library",
-            "version": "20.4"
+            "version": "21.1"
         },
         {
             "description": "Cross-platform colored terminal text.",
@@ -1599,9 +1599,9 @@
             "licenses": [],
             "modified": false,
             "name": "sos",
-            "purl": "pkg:pypi/sos@4.0",
+            "purl": "pkg:pypi/sos@4.1",
             "type": "library",
-            "version": "4.0"
+            "version": "4.1"
         },
         {
             "description": "Authorize SSH public keys from trusted online identities",
