@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.2",
-  "serialNumber": "urn:uuid:6809c267-a655-4fe7-aa12-13dbbfdff45a",
+  "serialNumber": "urn:uuid:2c0325f7-ddb9-4aad-8aa4-e8001eae2fc8",
   "version": 1,
   "metadata": {
-    "timestamp": "2021-04-22T17:41:25.520Z",
+    "timestamp": "2021-04-23T08:49:07.697Z",
     "tools": [
       {
         "vendor": "CycloneDX",
@@ -1635,15 +1635,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40testing-library/jest-dom@5.11.10",
+      "bom-ref": "pkg:npm/%40testing-library/jest-dom@5.12.0",
       "group": "@testing-library",
       "name": "jest-dom",
-      "version": "5.11.10",
+      "version": "5.12.0",
       "description": "Custom jest matchers to test the state of the DOM",
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "16e2a2ab9c6e938e05aa6d34d3467dc3486339dc1944dce0c7bc461b14187a9585672f8e61430e4ffc0f2389cb61709a565b4d5695355bfaa60fcf302d60eca9"
+          "content": "37d63cd9bd99de3eb0cc8a00a9a8e529517566deec387d293de7b4b141d71dce5cbf615d9f6debfafa569b4301068189b4f3a5cb9f81771d659dcdc20fe03ea3"
         }
       ],
       "licenses": [
@@ -1653,7 +1653,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40testing-library/jest-dom@5.11.10",
+      "purl": "pkg:npm/%40testing-library/jest-dom@5.12.0",
       "externalReferences": [
         {
           "type": "website",
