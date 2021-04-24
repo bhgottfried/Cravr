@@ -69,13 +69,6 @@ class RecommendationModel:
         """
         return RecommendationModel("blank", None)
 
-    def to_json(self):
-        """
-        Serialize fields to store in database
-        :return: This object as a JSON
-        """
-        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True)
-
     def get_bestaurant(self, restaurants):
         """
         Portmanteau for get best restaurant according to the model parameters
