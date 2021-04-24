@@ -14,11 +14,7 @@ def test_create_genre_dict():
             ("hainanese" in genres and genres["hainanese"]["propensity"] == 7) or \
             ("cantonese" in genres and genres["cantonese"]["propensity"] == 7)
     assert ("burgers" in genres and genres["burgers"]["propensity"] == -7) or \
-<<<<<<< HEAD
-            ("beerbar" in genres and genres["beerbar"]["propensity"] == 7)
-=======
             ("beerbar" in genres and genres["beerbar"]["propensity"] == -7)
->>>>>>> master
 
 
 if __name__ == "__main__":
