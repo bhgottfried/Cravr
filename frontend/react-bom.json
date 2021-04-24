@@ -1,10 +1,17 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.2",
+<<<<<<< HEAD
   "serialNumber": "urn:uuid:f291433c-4645-4190-a86b-a3d6db525301",
   "version": 1,
   "metadata": {
     "timestamp": "2021-04-21T18:32:55.008Z",
+=======
+  "serialNumber": "urn:uuid:61847da2-a2da-4227-a5d6-62a4b1cc987b",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2021-04-23T16:41:08.253Z",
+>>>>>>> master
     "tools": [
       {
         "vendor": "CycloneDX",
@@ -1635,15 +1642,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40testing-library/jest-dom@5.11.10",
+      "bom-ref": "pkg:npm/%40testing-library/jest-dom@5.12.0",
       "group": "@testing-library",
       "name": "jest-dom",
-      "version": "5.11.10",
+      "version": "5.12.0",
       "description": "Custom jest matchers to test the state of the DOM",
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "16e2a2ab9c6e938e05aa6d34d3467dc3486339dc1944dce0c7bc461b14187a9585672f8e61430e4ffc0f2389cb61709a565b4d5695355bfaa60fcf302d60eca9"
+          "content": "37d63cd9bd99de3eb0cc8a00a9a8e529517566deec387d293de7b4b141d71dce5cbf615d9f6debfafa569b4301068189b4f3a5cb9f81771d659dcdc20fe03ea3"
         }
       ],
       "licenses": [
@@ -1653,7 +1660,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40testing-library/jest-dom@5.11.10",
+      "purl": "pkg:npm/%40testing-library/jest-dom@5.12.0",
       "externalReferences": [
         {
           "type": "website",
@@ -3565,15 +3572,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40testing-library/user-event@13.1.3",
+      "bom-ref": "pkg:npm/%40testing-library/user-event@13.1.5",
       "group": "@testing-library",
       "name": "user-event",
-      "version": "13.1.3",
+      "version": "13.1.5",
       "description": "Fire events the same way the user does",
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "3c34c06fb083856cf1744161dbdbe74b2345c7f8228053ec5658b6960c685fe71b5fa0f2da44deb41d49ddd2e6e532a1e1de6751615f2e968f32866e2cb6750e"
+          "content": "743d45447b9685f75c9dbe87f7fa1a208647c7d2d0286c5b4ed615de2e59aeef08dc65962681b65ad94095767fe7a7633bee93bdfb163e3e5c5d0be84c54004d"
         }
       ],
       "licenses": [
@@ -3583,7 +3590,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40testing-library/user-event@13.1.3",
+      "purl": "pkg:npm/%40testing-library/user-event@13.1.5",
       "externalReferences": [
         {
           "type": "website",
