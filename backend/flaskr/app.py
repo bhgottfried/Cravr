@@ -34,7 +34,6 @@ def _user(name):
 def login():
     """Attempt to login the user with the provided credentials"""
     name, password = unquote(request.json).split('\n')
-    print(name, password)
     match = authenticate_user(name, password)
     if match and name not in users:
         users.add(name)
