@@ -50,7 +50,7 @@ class RecommendationModel:
         :param state: Model state JSON object as stored in the database
         :return: New RecommendationModel with the state taken from the JSON
         """
-        return RecommendationModel("state", json.loads(state))
+        return RecommendationModel("state", state)
 
     @staticmethod
     def from_quiz(quiz):
@@ -68,13 +68,6 @@ class RecommendationModel:
         :return: New RecommendationModel with default initialized model weights
         """
         return RecommendationModel("blank", None)
-
-    def to_json(self):
-        """
-        Serialize fields to store in database
-        :return: This object as a JSON
-        """
-        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True)
 
     def get_bestaurant(self, restaurants):
         """
