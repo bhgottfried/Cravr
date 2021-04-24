@@ -1,6 +1,5 @@
 """Recommendation model for user to get personalized suggestions"""
 
-import json
 from backend.flaskr.yelp_api_utils import YelpAPI
 from backend.flaskr.model_utils import create_genre_dict, get_categories_from_id, IMPORTANCE_KEYS
 from backend.flaskr.entity_data_utils import read_restaurant_data
