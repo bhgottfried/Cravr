@@ -103,15 +103,15 @@ class ReviewContainer extends React.Component {
                                     </label>
                                     <br></br>
                                     <label id="Question 4" className="largetext">
-                                        Experience: 
+                                        Value: 
                                         <input
-                                            type="number" className="textbox" defaultValue="5" min="1" max="5" name="overall"
-                                            onChange={this.handleChange.bind(this, index)} value={Revs.review.overall}>
+                                            type="number" className="textbox" defaultValue="5" min="1" max="5" name="value"
+                                            onChange={this.handleChange.bind(this, index)} value={Revs.review.value}>
                                         </input>
                                     </label>
                                     <br></br>
-                                    <label id="Question 5" className="largetext">
-                                        Would you go here again? 
+                                    <label id="Question 5" className="largetext"> 
+                                        Would you eat here again? 
                                         <select  className="textbox" name="repeat" onChange={this.handleChange.bind(this, index)} value={Revs.review.repeat}>
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>

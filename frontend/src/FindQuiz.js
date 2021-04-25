@@ -52,22 +52,30 @@ class FindQuizContainer extends React.Component {
         let restaurant = this.state.Restaurants.pop();
         this.setState({ Restaurants: [] });
         this.setState({ showRes: false });
-        this.rateRestaurant("yummy", restaurant.id);
-        alert("Have a nice meal! After you eat, don't forget to rate your experience for even better recommendations!");
+        if (restaurant.id !== "N/A") {
+            this.rateRestaurant("yummy", restaurant.id);
+            alert("Have a nice meal! After you eat, don't forget to rate your experience for even better recommendations!");
+        } else {
+            this.handleSubmit(e);   // Try to get new restaurant
+        }
     }
 
     later = (e) =>{
         e.preventDefault()
         let restaurant = this.state.Restaurants.pop();
         this.handleSubmit(e);   // Get new restaurant
-        this.rateRestaurant("maybe later", restaurant.id);
+        if (restaurant.id !== "N/A") {
+            this.rateRestaurant("maybe later", restaurant.id);
+        }
     }
 
     reject = (e) => {
         e.preventDefault()
         let restaurant = this.state.Restaurants.pop();
         this.handleSubmit(e);   // Get new restaurant
-        this.rateRestaurant("yuck", restaurant.id);
+        if (restaurant.id !== "N/A") {
+            this.rateRestaurant("yuck", restaurant.id);
+        }
     }
 
     rateRestaurant = (rating, restaurantID) => {
