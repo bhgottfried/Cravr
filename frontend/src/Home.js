@@ -1,5 +1,6 @@
 import React from 'react';
 import './Home.css';
+import './App.css';
 import FindQuizContainer from './FindQuiz.js';
 import { useHistory } from "react-router-dom";
 import { getCookie } from "./FindQuiz"
@@ -19,7 +20,7 @@ export default function Home() {
                 </ul>
             </nav>
             <br></br>
-            <h1>Find restaurants near you</h1>
+            <h1 className="test2">Find restaurants near you</h1>
             <FindQuizContainer></FindQuizContainer>
         </div>
     );

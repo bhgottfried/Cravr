@@ -71,7 +71,7 @@ class ReviewContainer extends React.Component {
         return (
             <div>
                 {
-                    this.state.None ? <div className="Rest"><h2>No restaurants to review at this time</h2></div> : this.state.Reviews.map((Revs, index) => { return (
+                    this.state.None ? <div className="Rest"><h2 className="largetext">No restaurants to review at this time</h2></div> : this.state.Reviews.map((Revs, index) => { return (
                             <div className="Rest">
                                 <h1 className="underline">{Revs.restaurant.name}</h1>
                                 <h2>Location: {Revs.restaurant.location.address1}</h2>
@@ -146,7 +146,7 @@ export default function Review() {
                 </ul>
             </nav>
             <br></br>
-            <h1>Review</h1>
+            <h1 className="test2">Review</h1>
             <ReviewContainer></ReviewContainer>
         </div>
     );

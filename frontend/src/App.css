@@ -5,7 +5,7 @@
 
 .bar{
   background-image: radial-gradient(rgb(236, 98, 17), rgb(255, 139, 72));
-  color:rgb(248, 211, 0);
+  color:rgb(240, 213, 59);
   font-size:xx-large;
   font-family:'Courier New', Courier, monospace;
 }
@@ -39,11 +39,12 @@
   font-size:xx-large;
   text-align: center;
   font-family:'Courier New', Courier, monospace;
-  background-image: radial-gradient(rgb(236, 98, 17), rgb(255, 139, 72));
-  color:rgb(248, 211, 0);
+  background-color:rgb(236, 98, 17);
+  color:rgb(240, 213, 59);
 }
 .primary-button:hover{
-  background-color: rgb(0, 0, 0);
+  background-color:rgb(255, 98, 0);
+  color:rgb(255, 255, 255);
 }
 .secondary-button{
   min-width: 200px;
@@ -52,13 +53,15 @@
   font-size:x-large;
   text-align: center;
   font-family:'Courier New', Courier, monospace;
-  background-image: radial-gradient(rgb(236, 98, 17), rgb(255, 139, 72));
-  color:rgb(248, 211, 0);
+  background-color:rgb(236, 98, 17);
+  color: rgb(240, 213, 59);
 }
 .secondary-button:hover{
-  background-color: rgb(0, 0, 0);
+  background-color:rgb(255, 98, 0);
+  color:rgb(255, 255, 255);
 }
 .test2{
-  max-width:400px;
+  min-width: 800px;
   margin:auto;
+  text-align:center;
 }
