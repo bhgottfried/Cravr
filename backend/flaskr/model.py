@@ -110,7 +110,7 @@ class RecommendationModel:
             [(restaurant, score(restaurant)) for restaurant in restaurants],
             key=lambda pair: pair[1]
         )[0]
-    
+
     def get_favorite_foods(self):
         """
         Get the food categories the user is most likely to enjoy

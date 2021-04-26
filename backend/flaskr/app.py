@@ -76,7 +76,7 @@ def whats_good():
     cats = user.model.get_favorite_foods()
     if cats == []:
         cats = ["pizza", "chinese", "fast food", "food"] # Defaults if the model is unitialized
-    
+
     for cat in cats:
         search_params = {
             "food": cat,
