@@ -34,6 +34,7 @@ class FindQuizContainer extends React.Component {
             q2: '$',
             q3: '1',
             showRes: false,
+            lastSubmit: "",
             Restaurants: []     // Probably shouldn't be a list since there's at most one, but refactor is hard...
         };
 
@@ -56,6 +57,7 @@ class FindQuizContainer extends React.Component {
             this.rateRestaurant("yummy", restaurant.id);
             alert("Have a nice meal! After you eat, don't forget to rate your experience for even better recommendations!");
         } else {
+            e.target.name = this.lastSubmit;
             this.handleSubmit(e);   // Try to get new restaurant
         }
     }
@@ -63,6 +65,7 @@ class FindQuizContainer extends React.Component {
     later = (e) =>{
         e.preventDefault()
         let restaurant = this.state.Restaurants.pop();
+        e.target.name = this.lastSubmit;
         this.handleSubmit(e);   // Get new restaurant
         if (restaurant.id !== "N/A") {
             this.rateRestaurant("maybe later", restaurant.id);
@@ -72,6 +75,7 @@ class FindQuizContainer extends React.Component {
     reject = (e) => {
         e.preventDefault()
         let restaurant = this.state.Restaurants.pop();
+        e.target.name = this.lastSubmit;
         this.handleSubmit(e);   // Get new restaurant
         if (restaurant.id !== "N/A") {
             this.rateRestaurant("yuck", restaurant.id);
@@ -111,7 +115,25 @@ class FindQuizContainer extends React.Component {
         }).then(response => response.json())
         .then(response => this.setRestaurant(response.result));
 
-        this.setState({ showRes: true });
+        this.setState({ showRes: true, lastSubmit: "search" });
+    }
+
+    whatsGood = (position) => {
+        fetch("/cravr/whats_good", {
+            method: "POST",
+            cache: "no-cache",
+            headers: {
+                "content_type": "application/json"
+            },
+            body: JSON.stringify(
+                getCookie("Username") + "\n" +
+                position.coords.latitude + "\n" +
+                position.coords.longitude
+            )
+        }).then(response => response.json())
+        .then(response => this.setRestaurant(response.result));
+
+        this.setState({ showRes: true, lastSubmit: "whatsGood" });
     }
 
     handleChange(event) {
@@ -120,7 +142,20 @@ class FindQuizContainer extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        navigator.geolocation.getCurrentPosition(this.getRestaurant, () => {
+
+        let func = null;
+        switch (event.target.name) {
+            case "search":
+                func = this.getRestaurant;
+                break;
+            case "whatsGood":
+                func = this.whatsGood;
+                break;
+            default:
+                func = this.getRestaurant;
+        }
+
+        navigator.geolocation.getCurrentPosition(func, () => {
             alert("You must enable your location to receive personalized restaurant suggestions.");
         });
     }
@@ -128,9 +163,10 @@ class FindQuizContainer extends React.Component {
     render() {
         return (
             <div>
+            <h1>Find restaurants near you</h1>
                 <div id="Quiz" className="Rest">
                     <h2>Search Filters</h2>
-                    <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={this.handleSubmit} name="search">
                         <label id="q1">
                             1. What are you in the mood for? 
                             <input type="text" className="textbox" value={this.state.q1.value} name="q1"
@@ -156,11 +192,19 @@ class FindQuizContainer extends React.Component {
                         </label>
                         <br />
                         <br></br>
-                        <input type="submit" value="Submit" className="submit-button" />
+                        <input type="submit" value="Search" className="submit-button" />
                         <br />
                         <br></br>
                     </form>
-                    
+                </div>
+
+                <div id="whatsGood" className="Rest">
+                    <h2>Best local restaurants for you</h2>
+                    <form onSubmit={this.handleSubmit} name="whatsGood">
+                        <input type="submit" value="What's good?" className="submit-button" />
+                        <br />
+                        <br></br>
+                    </form>
                 </div>
 
                 <div id="results" className="Rest">

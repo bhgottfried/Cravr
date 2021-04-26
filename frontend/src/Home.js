@@ -5,9 +5,9 @@ import { useHistory } from "react-router-dom";
 import { getCookie } from "./FindQuiz"
 
 export default function Home() {
-    if(getCookie("Username") === ""){
-        GoLogin()
-    }
+    // if(getCookie("Username") === ""){
+    //     GoLogin()
+    // }
     return (
         <div className="Home">
             <nav>
@@ -19,7 +19,6 @@ export default function Home() {
                 </ul>
             </nav>
             <br></br>
-            <h1>Find restaurants near you</h1>
             <FindQuizContainer></FindQuizContainer>
         </div>
     );

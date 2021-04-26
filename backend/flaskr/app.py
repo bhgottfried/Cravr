@@ -67,6 +67,22 @@ def restaurants():
     return {"result": recommender.get_restaurant(_user(name), search_params)}
 
 
+@app.route('/cravr/whats_good', methods=["POST"])
+def whats_good():
+    """Recommend a restaurant to the user based on their profile"""
+    args = request.json.split('\n')
+    user = _user(args[0])
+    print(user.model.get_favorite_food())
+    search_params = {
+        "food": user.model.get_favorite_food(),
+        "price": "1, 2, 3, 4", # The Yelp API interprets this as don't filter out any prices
+        "distance": 5,
+        "location": (float(args[1]), float(args[2]))
+    }
+
+    return {"result": recommender.get_restaurant(user, search_params)}
+
+
 @app.route('/cravr/rate_suggestion', methods=["POST"])
 def rate_suggestion():
     """Apply the user's rating to their profile and the restaurant's"""

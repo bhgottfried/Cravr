@@ -110,6 +110,14 @@ class RecommendationModel:
             [(restaurant, score(restaurant)) for restaurant in restaurants],
             key=lambda pair: pair[1]
         )[0]
+    
+    def get_favorite_food(self):
+        """
+        Get the food category the user is most likely to enjoy
+        :return: Category key with highest value
+        """
+        return max(self.food_genres, key=lambda k: self.food_genres.get(k)["propensity"])
+
 
     def train_review(self, rest_id, review):
         """
