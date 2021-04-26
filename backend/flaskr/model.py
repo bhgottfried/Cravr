@@ -111,6 +111,14 @@ class RecommendationModel:
             key=lambda pair: pair[1]
         )[0]
 
+    def get_favorite_foods(self):
+        """
+        Get the food categories the user is most likely to enjoy
+        :return: Category keys with positive propensities in decreasing order
+        """
+        cats = {k: v["propensity"] for k,v in self.food_genres.items() if v["propensity"] > 0}
+        return sorted(cats, key=cats.get, reverse=True)
+
     def train_review(self, rest_id, review):
         """
         Update the model weights after processing a user review.

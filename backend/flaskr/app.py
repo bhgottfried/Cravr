@@ -67,6 +67,30 @@ def restaurants():
     return {"result": recommender.get_restaurant(_user(name), search_params)}
 
 
+@app.route('/cravr/whats_good', methods=["POST"])
+def whats_good():
+    """Recommend a restaurant to the user based on their profile"""
+    args = request.json.split('\n')
+    name = args[0]
+    user = _user(name)
+    cats = user.model.get_favorite_foods()
+    if cats == []:
+        cats = ["pizza", "chinese", "fast food", "food"] # Defaults if the model is unitialized
+
+    for cat in cats:
+        search_params = {
+            "food": cat,
+            "price": "1, 2, 3, 4", # Don't filter out any prices
+            "distance": 5,
+            "location": (float(args[1]), float(args[2]))
+        }
+        res = recommender.get_restaurant(user, search_params)
+        if res["id"] != "N/A":
+            break
+
+    return {"result": res}
+
+
 @app.route('/cravr/rate_suggestion', methods=["POST"])
 def rate_suggestion():
     """Apply the user's rating to their profile and the restaurant's"""
