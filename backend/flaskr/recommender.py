@@ -31,7 +31,7 @@ class Recommender:
         open_now = True
         if "open_now" in search_params.keys():
             open_now = search_params["open_now"]
-
+        
         result = self.yelp.business_search(term=food, location=location, distance=distance,
                                            price=price, open_now=open_now)
 
