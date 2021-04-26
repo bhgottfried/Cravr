@@ -111,13 +111,13 @@ class RecommendationModel:
             key=lambda pair: pair[1]
         )[0]
     
-    def get_favorite_food(self):
+    def get_favorite_foods(self):
         """
-        Get the food category the user is most likely to enjoy
-        :return: Category key with highest value
+        Get the food categories the user is most likely to enjoy
+        :return: Category keys with positive propensities in decreasing order
         """
-        return max(self.food_genres, key=lambda k: self.food_genres.get(k)["propensity"])
-
+        cats = {k: v["propensity"] for k,v in self.food_genres.items() if v["propensity"] > 0}
+        return sorted(cats, key=cats.get, reverse=True)
 
     def train_review(self, rest_id, review):
         """

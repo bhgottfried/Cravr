@@ -71,16 +71,24 @@ def restaurants():
 def whats_good():
     """Recommend a restaurant to the user based on their profile"""
     args = request.json.split('\n')
-    user = _user(args[0])
-    print(user.model.get_favorite_food())
-    search_params = {
-        "food": user.model.get_favorite_food(),
-        "price": "1, 2, 3, 4", # The Yelp API interprets this as don't filter out any prices
-        "distance": 5,
-        "location": (float(args[1]), float(args[2]))
-    }
+    name = args[0]
+    user = _user(name)
+    cats = user.model.get_favorite_foods()
+    if cats == []:
+        cats = ["pizza", "chinese", "fast food", "food"] # Defaults if the model is unitialized
+    
+    for cat in cats:
+        search_params = {
+            "food": cat,
+            "price": "1, 2, 3, 4", # Don't filter out any prices
+            "distance": 5,
+            "location": (float(args[1]), float(args[2]))
+        }
+        res = recommender.get_restaurant(user, search_params)
+        if res["id"] != "N/A":
+            break
 
-    return {"result": recommender.get_restaurant(user, search_params)}
+    return {"result": res}
 
 
 @app.route('/cravr/rate_suggestion', methods=["POST"])
