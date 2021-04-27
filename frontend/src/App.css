@@ -4,8 +4,8 @@
 }
 
 .bar{
-  background-color:rgb(236, 98, 17);
-  color:rgb(248, 211, 0);
+  background-image: radial-gradient(rgb(236, 98, 17), rgb(255, 139, 72));
+  color:rgb(240, 213, 59);
   font-size:xx-large;
   font-family:'Courier New', Courier, monospace;
 }
@@ -13,19 +13,55 @@
 .App_Body{
   font-family:'Courier New', Courier, monospace;
 }
+.login-form{
+  font-size:large;
+}
+.drop-down{
+  border: 2px solid black;
+  border-radius: 4px;
+  font-size:large;
+}
+.text-box{
+  border: 2px solid black;
+  border-radius: 4px;
+  font-size:large;
+}
+.text-box:focus{
+  background-color: rgba(152, 229, 255, 0.507);
+  border: 4px solid #555;
+  border-radius: 4px;
+}
 
 .primary-button{
+  min-width: 200px;
+  min-height: 50px;
+  border-radius: 10px;
   font-size:xx-large;
   text-align: center;
   font-family:'Courier New', Courier, monospace;
   background-color:rgb(236, 98, 17);
-  color:rgb(248, 211, 0);
+  color:rgb(240, 213, 59);
 }
-
+.primary-button:hover{
+  background-color:rgb(255, 98, 0);
+  color:rgb(255, 255, 255);
+}
 .secondary-button{
+  min-width: 200px;
+  min-height: 50px;
+  border-radius: 10px;
   font-size:x-large;
   text-align: center;
   font-family:'Courier New', Courier, monospace;
   background-color:rgb(236, 98, 17);
-  color:rgb(248, 211, 0);
+  color: rgb(240, 213, 59);
+}
+.secondary-button:hover{
+  background-color:rgb(255, 98, 0);
+  color:rgb(255, 255, 255);
+}
+.test2{
+  min-width: 800px;
+  margin:auto;
+  text-align:center;
 }

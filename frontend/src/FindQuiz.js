@@ -11,7 +11,7 @@ export function getCookie(key) {
 const Restaurant = (props) => {
     return (
         <div>
-            <h1>{props.name}</h1>
+            <h2 className="underline">{props.name}</h2>
             <h3> Distance:{props.distance} mi</h3>
             <h4>Price:{props.price} Rating:{props.rating}/5</h4>
             <h4>Address:{props.addr.address1}</h4>
@@ -129,16 +129,16 @@ class FindQuizContainer extends React.Component {
         return (
             <div>
                 <div id="Quiz" className="Rest">
-                    <h2>Search Filters</h2>
-                    <form onSubmit={this.handleSubmit}>
-                        <label id="q1">
+                    <h1>Search Filters:</h1>
+                    <form onSubmit={this.handleSubmit} className="find-form">
+                        <label id="q1" className="largetext">
                             1. What are you in the mood for? 
-                            <input type="text" className="textbox" value={this.state.q1.value} name="q1"
+                            <input type="text" className="text" value={this.state.q1.value} name="q1"
                                 required onChange={this.handleChange}>
                             </input>
                         </label>
                         <br />
-                        <label id="q2">
+                        <label id="q2" className="largetext">
                             2. How much are you willing to spend?&emsp;&emsp;
                             <select value={this.state.q2.value} className="textbox" required onChange={this.handleChange} name="q2">
                                 <option value="$">$</option>
@@ -148,7 +148,7 @@ class FindQuizContainer extends React.Component {
                             </select>
                         </label>
                         <br />
-                        <label id="q3">
+                        <label id="q3" className="largetext">
                             3. Maximum Distance (mi.)&emsp;
                             <input type="number" className="textbox" defaultValue="1" min="1" max="24" value={this.state.q3.value} name="q3"
                                 required onChange={this.handleChange}>
@@ -160,16 +160,12 @@ class FindQuizContainer extends React.Component {
                         <br />
                         <br></br>
                     </form>
-                    
-                </div>
-
-                <div id="results" className="Rest">
-                    <h2>Results:</h2>
+                    <h1>Results:</h1>
                     {this.state.showRes ?
                         //dynamic list element that is instantiated from state.Restaruants
                         this.state.Restaurants.map((Rest) => {
                             return (
-                                <div className="Rest">
+                                <div className="Results">
                                     <Restaurant id={Rest.id}
                                         name={Rest.Name}
                                         distance={Rest.Distance}
@@ -185,6 +181,7 @@ class FindQuizContainer extends React.Component {
                                 </div>
                             )
                         }) : null}
+                    <br/>
                 </div>
             </div>
         );

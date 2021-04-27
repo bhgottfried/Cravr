@@ -71,13 +71,14 @@ class ReviewContainer extends React.Component {
         return (
             <div>
                 {
-                    this.state.None ? <div className="Rest"><h2>No restaurants to review at this time</h2></div> : this.state.Reviews.map((Revs, index) => { return (
+                    this.state.None ? <div className="Rest"><h2 className="largetext">No restaurants to review at this time</h2></div> : this.state.Reviews.map((Revs, index) => { return (
                             <div className="Rest">
-                                <h1>{Revs.restaurant.name}</h1>
-                                <h3>Location: {Revs.restaurant.location.address1}</h3>
-                                <h3>Please rate the following from 1-5 (5 is best)</h3>
-                                <form onSubmit={this.submit.bind(this, index)}>
-                                    <label id="Question 1">
+                                <h1 className="underline">{Revs.restaurant.name}</h1>
+                                <h2>Location: {Revs.restaurant.location.address1}</h2>
+                                <h2>Please rate the following from 1-5 (5 is best)</h2>
+                                <form onSubmit={this.submit.bind(this, index)} className="find-form">
+                                    <div className="test">
+                                    <label id="Question 1" className="largetext">
                                         Food: 
                                         <input
                                             type="number" className="textbox" defaultValue="5" min="1" max="5" name="food"
@@ -85,7 +86,7 @@ class ReviewContainer extends React.Component {
                                         </input>
                                     </label>
                                     <br></br>
-                                    <label id="Question 2">
+                                    <label id="Question 2" className="largetext">
                                         Service: 
                                         <input
                                             type="number" className="textbox" defaultValue="5" min="1" max="5" name="service"
@@ -93,7 +94,7 @@ class ReviewContainer extends React.Component {
                                         </input>
                                     </label>
                                     <br></br>
-                                    <label id="Question 3">
+                                    <label id="Question 3" className="largetext">
                                         Atmosphere: 
                                         <input
                                             type="number" className="textbox" defaultValue="5" min="1" max="5" name="atmosphere"
@@ -101,7 +102,7 @@ class ReviewContainer extends React.Component {
                                         </input>
                                     </label>
                                     <br></br>
-                                    <label id="Question 4">
+                                    <label id="Question 4" className="largetext">
                                         Value: 
                                         <input
                                             type="number" className="textbox" defaultValue="5" min="1" max="5" name="value"
@@ -109,7 +110,7 @@ class ReviewContainer extends React.Component {
                                         </input>
                                     </label>
                                     <br></br>
-                                    <label id="Question 5">
+                                    <label id="Question 5" className="largetext"> 
                                         Would you eat here again? 
                                         <select  className="textbox" name="repeat" onChange={this.handleChange.bind(this, index)} value={Revs.review.repeat}>
                                             <option value="1">Yes</option>
@@ -118,6 +119,7 @@ class ReviewContainer extends React.Component {
                                     </label>
                                     <br></br>
                                     <input className="submit-button" type="submit" value="Submit" />
+                                    </div>
                                 </form>
                                 <br></br>
                             </div>
@@ -144,7 +146,7 @@ export default function Review() {
                 </ul>
             </nav>
             <br></br>
-            <h1>Review</h1>
+            <h1 className="test2">Review</h1>
             <ReviewContainer></ReviewContainer>
         </div>
     );
