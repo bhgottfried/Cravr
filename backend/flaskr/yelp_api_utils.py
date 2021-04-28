@@ -77,6 +77,8 @@ class YelpAPI:
                 elif arg == "price":
                     if value.count("$") == len(value):
                         params["price"] = value.count("$")
+                    elif value == "1, 2, 3, 4":
+                        params["price"] = value
                     else:
                         print("Price must be between $ and $$$$")
                         return None
