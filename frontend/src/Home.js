@@ -19,7 +19,6 @@ export default function Home() {
                 </ul>
             </nav>
             <br></br>
-            <h1>Find restaurants near you</h1>
             <FindQuizContainer></FindQuizContainer>
         </div>
     );
