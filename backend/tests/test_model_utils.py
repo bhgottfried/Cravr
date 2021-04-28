@@ -23,7 +23,7 @@ def test_get_favorite_foods():
     assert model.get_favorite_foods() == []
 
     model.food_genres = create_genre_dict("Pizza", "Chinese")
-    assert model.get_favorite_foods()[0] in ["pizza", "italian"]
+    assert "chinese" not in model.get_favorite_foods()
 
 
 if __name__ == "__main__":
