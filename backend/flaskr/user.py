@@ -105,7 +105,7 @@ class User:
         """
         return json.dumps({
             "reviews": self.reviews,
-            "model": self.model.to_json()
+            "model": self.model.__dict__
         })
 
 
