@@ -1,5 +1,6 @@
 """Utilities for requesting data from the Yelp API"""
 
+from json.decoder import JSONDecodeError
 import requests
 from backend.config import YelpConfig
 
@@ -35,8 +36,12 @@ class YelpAPI:
         :param params: Request parameters
         :return: JSON response
         """
-        response = requests.get(url, headers=self.headers, params=params).json()
-        return response
+        try:
+            response = requests.get(url, headers=self.headers, params=params).json()
+            return response
+        except JSONDecodeError:
+            print("Request to {} did not return valid JSON".format(url))
+            return {}
 
     def business_search(self, term, location, **kwargs):
         """

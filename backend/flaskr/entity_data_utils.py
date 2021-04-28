@@ -16,7 +16,7 @@ def read_user_data(username):
                                    .format(username))
     if result == -1 or result is None:
         return None
-    return result[0]
+    return json.loads(result[0])
 
 
 def write_user_data(username, data):
@@ -76,7 +76,7 @@ def write_restaurant_data(rest_id, data):
     if num_results == 1:
         # Get the existing reviews for this restaurant
         reviews = db_conn.execute_query("SELECT data FROM rest_profiles WHERE rest_id = '{}'"
-                                   .format(rest_id))[0]
+                                        .format(rest_id))[0]
         reviews = json.loads(reviews)
 
         # Recompute averages for each field with the new review data
