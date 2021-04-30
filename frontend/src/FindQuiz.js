@@ -163,18 +163,18 @@ class FindQuizContainer extends React.Component {
     render() {
         return (
             <div>
-            <h1>Find restaurants near you</h1>
+            <h1>Find Restaurants Near You</h1>
                 <div id="Quiz" className="Rest">
                     <h2>Search Filters</h2>
                     <form onSubmit={e => this.handleSubmit(e, "search")}>
-                        <label id="q1">
+                        <label id="q1" className="largetext">
                             1. What are you in the mood for? 
                             <input type="text" className="text" value={this.state.q1.value} name="q1"
                                 required onChange={this.handleChange}>
                             </input>
                         </label>
                         <br />
-                        <label id="q2">
+                        <label id="q2" className="largetext">
                             2. How much would you prefer to spend?&emsp;&emsp;
                             <select value={this.state.q2.value} className="textbox" required onChange={this.handleChange} name="q2">
                                 <option value="$">$</option>
@@ -196,18 +196,14 @@ class FindQuizContainer extends React.Component {
                         <br />
                         <br></br>
                     </form>
-                </div>
-
-                <div id="whatsGood" className="Rest">
-                    <h2>Best local restaurants for you</h2>
-                    <form onSubmit={e => this.handleSubmit(e, "whatsGood")}>
-                        <input type="submit" value="What's good?" className="submit-button" />
-                        <br />
-                        <br></br>
-                    </form>
-                </div>
-
-                <div id="results" className="Rest">
+                    <div id="whatsGood">
+                        <h2>Best Local Restaurants For You</h2>
+                        <form onSubmit={e => this.handleSubmit(e, "whatsGood")}>
+                            <input type="submit" value="What's good?" className="submit-button" />
+                        </form>
+                        <br/>
+                    </div>
+                    <div id="results" className="Rest">
                     <h2>Results:</h2>
                     {this.state.showRes ?
                         //dynamic list element that is instantiated from state.Restaruants
@@ -230,7 +226,13 @@ class FindQuizContainer extends React.Component {
                             )
                         }) : null}
                     <br/>
+                    <br/>
                 </div>
+                </div>
+
+                
+
+                <br></br>
             </div>
         );
     }

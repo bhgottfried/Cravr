@@ -15,12 +15,12 @@ export default function Home() {
                 <ul id="nav">
                     <li><a href="/">Find</a></li>
                     <li><a href="/Review">Review</a></li>
-                    <li><a href="/Preferences">Settings</a></li>
                     <li><a href="/Login">Logout</a></li>
                 </ul>
             </nav>
             <br></br>
             <FindQuizContainer></FindQuizContainer>
+            <br></br>
         </div>
     );
 }

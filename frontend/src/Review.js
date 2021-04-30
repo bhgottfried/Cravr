@@ -71,7 +71,7 @@ class ReviewContainer extends React.Component {
         return (
             <div>
                 {
-                    this.state.None ? <div className="Rest"><h2 className="largetext">No restaurants to review at this time</h2></div> : this.state.Reviews.map((Revs, index) => { return (
+                    this.state.None ? <div className="Rest"><h2 className="largetext">No Restaurants to Review at This Time</h2></div> : this.state.Reviews.map((Revs, index) => { return (
                             <div className="Rest">
                                 <h1 className="underline">{Revs.restaurant.name}</h1>
                                 <h2>Location: {Revs.restaurant.location.address1}</h2>
@@ -85,7 +85,6 @@ class ReviewContainer extends React.Component {
                                             onChange={this.handleChange.bind(this, index)} value={Revs.review.food}>
                                         </input>
                                     </label>
-                                    <br></br>
                                     <label id="Question 2" className="largetext">
                                         Service: 
                                         <input
@@ -93,7 +92,6 @@ class ReviewContainer extends React.Component {
                                             onChange={this.handleChange.bind(this, index)} value={Revs.review.service}>
                                         </input>
                                     </label>
-                                    <br></br>
                                     <label id="Question 3" className="largetext">
                                         Atmosphere: 
                                         <input
@@ -101,7 +99,6 @@ class ReviewContainer extends React.Component {
                                             onChange={this.handleChange.bind(this, index)} value={Revs.review.atmosphere}>
                                         </input>
                                     </label>
-                                    <br></br>
                                     <label id="Question 4" className="largetext">
                                         Value: 
                                         <input
@@ -109,7 +106,6 @@ class ReviewContainer extends React.Component {
                                             onChange={this.handleChange.bind(this, index)} value={Revs.review.value}>
                                         </input>
                                     </label>
-                                    <br></br>
                                     <label id="Question 5" className="largetext"> 
                                         Would you eat here again? 
                                         <select  className="textbox" name="repeat" onChange={this.handleChange.bind(this, index)} value={Revs.review.repeat}>
@@ -117,7 +113,6 @@ class ReviewContainer extends React.Component {
                                             <option value="0">No</option>
                                         </select>
                                     </label>
-                                    <br></br>
                                     <input className="submit-button" type="submit" value="Submit" />
                                     </div>
                                 </form>
@@ -141,7 +136,6 @@ export default function Review() {
                 <ul id="nav">
                     <li><a href="/">Find</a></li>
                     <li><a href="/Review">Review</a></li>
-                    <li><a href="/Preferences">Settings</a></li>
                     <li><a href="/Login">Logout</a></li>
                 </ul>
             </nav>
