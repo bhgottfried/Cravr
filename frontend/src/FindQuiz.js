@@ -34,13 +34,15 @@ class FindQuizContainer extends React.Component {
             q2: '$',
             q3: '1',
             showRes: false,
+            lastSubmit: '',
             Restaurants: []     // Probably shouldn't be a list since there's at most one, but refactor is hard...
         };
 
         this.setRestaurant = this.setRestaurant.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
+        this.getRestaurant = this.getRestaurant.bind(this);
+        this.whatsGood = this.whatsGood.bind(this);
     }
 
     setRestaurant = (restaurant) => {
@@ -50,20 +52,19 @@ class FindQuizContainer extends React.Component {
     accept = (e) => {
         e.preventDefault()
         let restaurant = this.state.Restaurants.pop();
-        this.setState({ Restaurants: [] });
-        this.setState({ showRes: false });
+        this.setState({ Restaurants: [], showRes: false });
         if (restaurant.id !== "N/A") {
             this.rateRestaurant("yummy", restaurant.id);
             alert("Have a nice meal! After you eat, don't forget to rate your experience for even better recommendations!");
         } else {
-            this.handleSubmit(e);   // Try to get new restaurant
+            this.handleSubmit(e, this.lastSubmit);   // Try to get new restaurant
         }
     }
 
     later = (e) =>{
         e.preventDefault()
         let restaurant = this.state.Restaurants.pop();
-        this.handleSubmit(e);   // Get new restaurant
+        this.handleSubmit(e, this.lastSubmit);   // Get new restaurant
         if (restaurant.id !== "N/A") {
             this.rateRestaurant("maybe later", restaurant.id);
         }
@@ -72,7 +73,7 @@ class FindQuizContainer extends React.Component {
     reject = (e) => {
         e.preventDefault()
         let restaurant = this.state.Restaurants.pop();
-        this.handleSubmit(e);   // Get new restaurant
+        this.handleSubmit(e, this.lastSubmit);   // Get new restaurant
         if (restaurant.id !== "N/A") {
             this.rateRestaurant("yuck", restaurant.id);
         }
@@ -111,16 +112,50 @@ class FindQuizContainer extends React.Component {
         }).then(response => response.json())
         .then(response => this.setRestaurant(response.result));
 
-        this.setState({ showRes: true });
+        this.setState({ showRes: true, lastSubmit: "search" });
     }
 
-    handleChange(event) {
+    whatsGood = (position) => {
+        fetch("/cravr/whats_good", {
+            method: "POST",
+            cache: "no-cache",
+            headers: {
+                "content_type": "application/json"
+            },
+            body: JSON.stringify(
+                getCookie("Username") + "\n" +
+                position.coords.latitude + "\n" +
+                position.coords.longitude
+            )
+        }).then(response => response.json())
+        .then(response => this.setRestaurant(response.result));
+
+        this.setState({ showRes: true, lastSubmit: "whatsGood" });
+    }
+
+    handleChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     }
 
-    handleSubmit(event) {
+    handleSubmit = (event, caller) => {
         event.preventDefault();
-        navigator.geolocation.getCurrentPosition(this.getRestaurant, () => {
+        if (caller === undefined) { // JS is so weird, but this fixes an issue I've spent an hour on...
+            caller = this.state.lastSubmit;
+        }
+
+        let func = null;
+        switch (caller) {
+            case "search":
+                func = this.getRestaurant;
+                break;
+            case "whatsGood":
+                func = this.whatsGood;
+                break;
+            default:
+                func = this.getRestaurant;
+        }
+
+        navigator.geolocation.getCurrentPosition(func, () => {
             alert("You must enable your location to receive personalized restaurant suggestions.");
         });
     }
@@ -128,18 +163,19 @@ class FindQuizContainer extends React.Component {
     render() {
         return (
             <div>
+            <h1>Find restaurants near you</h1>
                 <div id="Quiz" className="Rest">
-                    <h1>Search Filters:</h1>
-                    <form onSubmit={this.handleSubmit} className="find-form">
-                        <label id="q1" className="largetext">
+                    <h2>Search Filters</h2>
+                    <form onSubmit={e => this.handleSubmit(e, "search")}>
+                        <label id="q1">
                             1. What are you in the mood for? 
                             <input type="text" className="text" value={this.state.q1.value} name="q1"
                                 required onChange={this.handleChange}>
                             </input>
                         </label>
                         <br />
-                        <label id="q2" className="largetext">
-                            2. How much are you willing to spend?&emsp;&emsp;
+                        <label id="q2">
+                            2. How much would you prefer to spend?&emsp;&emsp;
                             <select value={this.state.q2.value} className="textbox" required onChange={this.handleChange} name="q2">
                                 <option value="$">$</option>
                                 <option value="$$">$$</option>
@@ -156,11 +192,23 @@ class FindQuizContainer extends React.Component {
                         </label>
                         <br />
                         <br></br>
-                        <input type="submit" value="Submit" className="submit-button" />
+                        <input type="submit" value="Search" className="submit-button" />
                         <br />
                         <br></br>
                     </form>
-                    <h1>Results:</h1>
+                </div>
+
+                <div id="whatsGood" className="Rest">
+                    <h2>Best local restaurants for you</h2>
+                    <form onSubmit={e => this.handleSubmit(e, "whatsGood")}>
+                        <input type="submit" value="What's good?" className="submit-button" />
+                        <br />
+                        <br></br>
+                    </form>
+                </div>
+
+                <div id="results" className="Rest">
+                    <h2>Results:</h2>
                     {this.state.showRes ?
                         //dynamic list element that is instantiated from state.Restaruants
                         this.state.Restaurants.map((Rest) => {

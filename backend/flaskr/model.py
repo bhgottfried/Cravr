@@ -1,6 +1,5 @@
 """Recommendation model for user to get personalized suggestions"""
 
-import json
 from backend.flaskr.yelp_api_utils import YelpAPI
 from backend.flaskr.model_utils import create_genre_dict, get_categories_from_id, IMPORTANCE_KEYS
 from backend.flaskr.entity_data_utils import read_restaurant_data
@@ -50,7 +49,7 @@ class RecommendationModel:
         :param state: Model state JSON object as stored in the database
         :return: New RecommendationModel with the state taken from the JSON
         """
-        return RecommendationModel("state", json.loads(state))
+        return RecommendationModel("state", state)
 
     @staticmethod
     def from_quiz(quiz):
@@ -68,13 +67,6 @@ class RecommendationModel:
         :return: New RecommendationModel with default initialized model weights
         """
         return RecommendationModel("blank", None)
-
-    def to_json(self):
-        """
-        Serialize fields to store in database
-        :return: This object as a JSON
-        """
-        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True)
 
     def get_bestaurant(self, restaurants):
         """
@@ -110,6 +102,14 @@ class RecommendationModel:
             [(restaurant, score(restaurant)) for restaurant in restaurants],
             key=lambda pair: pair[1]
         )[0]
+
+    def get_favorite_foods(self):
+        """
+        Get the food categories the user is most likely to enjoy
+        :return: Category keys with positive propensities in decreasing order
+        """
+        cats = {k: v["propensity"] for k,v in self.food_genres.items() if v["propensity"] > 0}
+        return sorted(cats, key=cats.get, reverse=True)
 
     def train_review(self, rest_id, review):
         """

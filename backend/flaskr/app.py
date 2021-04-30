@@ -1,5 +1,6 @@
 """Main backend routing file to respond to frontend API requests"""
 
+from urllib.parse import unquote
 from flask import Flask, request
 from flask_cors import CORS
 from backend.flaskr.authentication_utils import authenticate_user, register_user
@@ -32,7 +33,7 @@ def _user(name):
 @app.route('/cravr/login', methods=["POST"])
 def login():
     """Attempt to login the user with the provided credentials"""
-    name, password = request.json.split('\n')
+    name, password = unquote(request.json).split('\n')
     match = authenticate_user(name, password)
     if match and name not in users:
         users.add(name)
@@ -43,7 +44,7 @@ def login():
 @app.route('/cravr/register', methods=["POST"])
 def register():
     """Attempt to create a new user entry in the authentication database"""
-    name, password, quiz = request.json.split('\n')
+    name, password, quiz = unquote(request.json).split('\n')
     registration_success = register_user(name, password)
 
     if registration_success:
@@ -55,7 +56,7 @@ def register():
 @app.route('/cravr/restaurants', methods=["POST"])
 def restaurants():
     """Parse the user's restaurant request and get restaurants from Yelp"""
-    args = request.json.split('\n')
+    args = unquote(request.json).split('\n')
     name = args[0]
     search_params = {
         "food": args[1],
@@ -67,10 +68,34 @@ def restaurants():
     return {"result": recommender.get_restaurant(_user(name), search_params)}
 
 
+@app.route('/cravr/whats_good', methods=["POST"])
+def whats_good():
+    """Recommend a restaurant to the user based on their profile"""
+    args = request.json.split('\n')
+    name = args[0]
+    user = _user(name)
+    cats = user.model.get_favorite_foods()
+    if cats == []:
+        cats = ["pizza", "chinese", "fast food", "food"] # Defaults if the model is unitialized
+
+    for cat in cats:
+        search_params = {
+            "food": cat,
+            "price": "1, 2, 3, 4", # Don't filter out any prices
+            "distance": 5,
+            "location": (float(args[1]), float(args[2]))
+        }
+        res = recommender.get_restaurant(user, search_params)
+        if res["id"] != "N/A":
+            break
+
+    return {"result": res}
+
+
 @app.route('/cravr/rate_suggestion', methods=["POST"])
 def rate_suggestion():
     """Apply the user's rating to their profile and the restaurant's"""
-    args     = request.json.split('\n')
+    args     = unquote(request.json).split('\n')
     name     = args[0]
     rating   = args[1]
     rest_id  = args[2]
@@ -99,7 +124,7 @@ def rate_suggestion():
 @app.route('/cravr/get_reviews', methods=["POST"])
 def get_reviews():
     """Get the restaurants that this user needs to review"""
-    args = request.json.split('\n')
+    args = unquote(request.json).split('\n')
     name = args[0]
 
     # Return list of restaurants the user must review
@@ -109,7 +134,7 @@ def get_reviews():
 @app.route('/cravr/submit_review', methods=["POST"])
 def submit_review():
     """Update the User object after a user reviews a restaurant they've visited"""
-    args    = request.json.split('\n')
+    args    = unquote(request.json).split('\n')
     name    = args[0]
     rest_id = args[1]
     review  = args[2]
