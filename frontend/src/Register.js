@@ -25,6 +25,14 @@ export default function Register() {
 
 	function handleSubmit(event) {
 		event.preventDefault();
+		if(email === ""){
+			alert("Error: Email must not be blank");
+			return;
+		}
+		if(password === ""){
+			alert("Error: Password must not be blank");
+			return;
+		}
 		if (password !== confirm) {
 			alert("Error: Passwords must match!");
 			return;
@@ -86,6 +94,7 @@ export default function Register() {
 							type="email"
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
+							className="text-box"
 						/>
 					</Form.Group>
 					<Form.Group size="lg" controlId="password">
@@ -94,6 +103,7 @@ export default function Register() {
 							type="password"
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
+							className="text-box"
 						/>
 					</Form.Group>
 					<Form.Group size="lg" controlId="password">
@@ -102,6 +112,7 @@ export default function Register() {
 							type="password"
 							value={confirm}
 							onChange={(e) => setConfirm(e.target.value)}
+							className="text-box"
 						/>
 					</Form.Group>
 					<body className="App-body">
@@ -109,12 +120,12 @@ export default function Register() {
 					</body>
 					<Form.Group>
 						<Form.Label>Favorite Food? </Form.Label>
-						<Form.Control as="input" type="text" value={fav} onChange={(e) => setFav(e.target.value)}>
+						<Form.Control as="input" type="text" value={fav} onChange={(e) => setFav(e.target.value)} className="text-box">
 						</Form.Control>
 					</Form.Group>
 					<Form.Group>
 						<Form.Label>Least Favorite Food? </Form.Label>
-						<Form.Control as="input" type="text" value={leastfav} onChange={(e) => setLeastFav(e.target.value)}>
+						<Form.Control as="input" type="text" value={leastfav} onChange={(e) => setLeastFav(e.target.value)} className="text-box">
 						</Form.Control>
 					</Form.Group>
 					<body className="App-body">
@@ -123,25 +134,25 @@ export default function Register() {
 					<Form.Group>
 						<Form.Label>Food: </Form.Label>
 						<Form.Control
-							as="input" type="number" min="1" max="5" onChange={(e) => setFood(e.target.value)} value={food}>
+							as="input" type="number" min="1" max="5" onChange={(e) => setFood(e.target.value)} value={food} className="text-box">
 						</Form.Control>
 					</Form.Group>
 					<Form.Group>
 						<Form.Label>Service: </Form.Label>
 						<Form.Control
-							as="input" type="number" min="1" max="5" onChange={(e) => setServ(e.target.value)} value={serv}>
+							as="input" type="number" min="1" max="5" onChange={(e) => setServ(e.target.value)} value={serv} className="text-box">
 						</Form.Control>
 					</Form.Group>
 					<Form.Group>
 						<Form.Label>Atmosphere: </Form.Label>
 						<Form.Control
-							as="input" type="number" min="1" max="5" onChange={(e) => setAtmos(e.target.value)} value={atmos}>
+							as="input" type="number" min="1" max="5" onChange={(e) => setAtmos(e.target.value)} value={atmos} className="text-box">
 						</Form.Control>
 					</Form.Group>
 					<Form.Group>
 						<Form.Label>Value: </Form.Label>
 						<Form.Control
-							as="input" type="number" min="1" max="5" onChange={(e) => setValue(e.target.value)} value={value}>
+							as="input" type="number" min="1" max="5" onChange={(e) => setValue(e.target.value)} value={value} className="text-box">
 						</Form.Control>
 					</Form.Group>
 					<br/>
