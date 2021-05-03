@@ -426,11 +426,11 @@
             "hashes": [
                 {
                     "alg": "MD5",
-                    "content": "2681860f4106c5a46a302db32f27b2d4"
+                    "content": "3f43666a254a85eebc3ab6e1a07e716d"
                 },
                 {
                     "alg": "SHA-256",
-                    "content": "5a00899c22623e0a1c1cd0f05d27cc73b77287a6d645fb6c2ee725d87b29806f"
+                    "content": "7b0ac8e3e7a6a0b345e8b02187b5474a67c031b6b519dcc08b07f2cc42fbf627"
                 }
             ],
             "licenses": [
@@ -443,9 +443,9 @@
             "modified": false,
             "name": "elementpath",
             "publisher": "Davide Brunato",
-            "purl": "pkg:pypi/elementpath@2.2.1",
+            "purl": "pkg:pypi/elementpath@2.2.2",
             "type": "library",
-            "version": "2.2.1"
+            "version": "2.2.2"
         },
         {
             "description": "Discover and load entry points from installed packages.",
