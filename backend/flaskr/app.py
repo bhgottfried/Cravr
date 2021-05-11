@@ -71,7 +71,7 @@ def restaurants():
 @app.route('/cravr/whats_good', methods=["POST"])
 def whats_good():
     """Recommend a restaurant to the user based on their profile"""
-    args = request.json.split('\n')
+    args = unquote(request.json).split('\n')
     name = args[0]
     user = _user(name)
     cats = user.model.get_favorite_foods()
