@@ -8,7 +8,7 @@ chardet==4.0.0
 Click==7.1.2
 colorama==0.4.4
 cryptography==3.4.7
-elementpath==2.2.1
+elementpath==3.0.2
 Flask==1.1.2
 Flask-Cors==3.0.10
 Flask-Ext==0.1
