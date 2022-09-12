@@ -23,7 +23,7 @@ jsonschema==3.2.0
 lazy-object-proxy==1.6.0
 MarkupSafe==1.1.1
 mccabe==0.6.1
-numpy==1.20.2
+numpy==1.23.3
 packageurl-python==0.9.4
 packaging==20.9
 pluggy==0.13.1
